@@ -224,15 +224,23 @@ void swap_both(t_list **la, t_list **lb)
 }
 
 
-void add_front(t_list node, t_list **lb)
-{
-  lb->prev->next = node;
-  lb->prev = node;
-  node->next = lb;
-  node->prev = lst_last(lb);
+/* void add_front(t_list **la, t_list **lb) */
+/* { */
 
-}
 
+  /*  */
+  /* tmp->prev = lst_last(*la); */
+  /* tmp->next = *la; */
+  /* (*la)->prev = tmp; */
+  /* (*la)->start = false; */
+  /* tmp->start = true; */
+  /* tmp->prev->next = node; */
+  /* tmp->prev = node; */
+  /* node->next = tmp; */
+  /* node->prev = lst_last(*l); */
+  /* (*l)->start = false; */
+  /* node->start = true; */
+/* } */
 
 /* pa (push a): Take the first element at the top of b and put it at the top of a. */
 /* Do nothing if b is empty. */
@@ -240,21 +248,35 @@ void add_front(t_list node, t_list **lb)
 /* Do nothing if a is empty */
 void push(t_list **la, t_list **lb)
 {
+  //on met le 1er node en haut de lb, on le met en haut de la
+  (void)la;
+  t_list *last;
+  t_list *tmp;
+
+  tmp = *lb;
+  (*lb)->start = false;
+  last = (*lb)->prev;
+  *lb = (*lb)->next;
+  (*lb)->start = true;
+  (*lb)->prev = last;
+  last->next = *lb;  //lb a toujours son premier element
+  //la, lb a perdu un element (pas free !)
+  //il faut qu'on le branche sur la 
+  tmp->next = *la;
+  tmp->prev = (*la)->prev;
+  (*la)->prev = tmp;
+  tmp->prev->next = tmp;
+  (*la)->start = false;
+  tmp->start = true;
+  *la = tmp;
+
+  /* la->next.n = la.n; */
   // addfront sur lb, avec le premier node de la
   // la->next.n = la.n
   //
   /* t_list *tmp; */
   /**/
   /* tmp = la->next; */
-  //on branche le node sur la lb
-  // - la->next = lb : on pose le nouveau node sur la liste b
-  // - la->prev = lst_last(lb) : on boucle sur le dernier node de la liste b
-  // - la.start = true : on definit notre nouveau node comme le premier // le start est deja set normanelent
-  // - la->next->start = false : on vire le start de l'ancien premier 
-  //
-  // - lb->prev = la : on branche depuis la pile ou on ajoute, le nouveau node
-  // - ls_last(lb)->next = la : le dernier node de la lb doit avec un next sur le nouveau node
-  // - lb = la;
   //
   // on vire le premier node de la :
   //  - tmp.start = true
@@ -263,6 +285,23 @@ void push(t_list **la, t_list **lb)
   //  
   //
 }
+
+void free_list(t_list *l)
+{
+    t_list *tmp = l;
+    t_list *next_node;
+    
+    if (!l)
+        return;
+    l->prev->next = NULL;
+    while (tmp)
+    {
+        next_node = tmp->next;
+        free(tmp);
+        tmp = next_node;
+    }
+}
+
 
 void init_stackb(t_list **l)
 {
@@ -291,31 +330,67 @@ int main (int ac, char **av)
   init_stackb(&lb);
   printf("\ninit lb:\n");
   print_lst(lb);
-  printf("\nrotate la :\n");
-  rotate(&la);
-  print_lst(la);
-  printf("\nrotate lb :\n");
-  rotate(&lb);
-  print_lst(lb);
-  printf("\nrotate both :\n");
-  rotate_both(&la, &lb);
-  printf("\nla :\n");
-  print_lst(la);
-  printf("\nlb :\n");
-  print_lst(lb);
-  printf("\nreverse rotate la :\n");
-  reverse_rotate(&la);
-  print_lst(la);
-  printf("\nreverse rotate lb :\n");
-  reverse_rotate(&lb);
-  print_lst(lb);
+
   printf("\nswap la :\n");
   swap(&la);
   print_lst(la);
+  
   printf("\nswap lb :\n");
   swap(&lb);
   print_lst(lb);
+  
+  printf("\nss :\n");
+  swap_both(&la, &lb);
+  printf("la : \n");
+  print_lst(la);
+  printf("lb : \n");
+  print_lst(lb);
+  
+  printf("\npush a :\n");
+  push(&la, &lb);
+  printf("la : \n");
+  print_lst(la);
+  printf("lb : \n");
+  print_lst(lb);
+  
+  printf("\npush b :\n");
+  push(&lb, &la);
+  printf("la : \n");
+  print_lst(la);
+  printf("lb : \n");
+  print_lst(lb);
+  
+  printf("\nrotate la :\n");
+  rotate(&la);
+  print_lst(la);
+  
+  printf("\nrotate lb :\n");
+  rotate(&lb);
+  print_lst(lb);
+  
+  printf("\nrotate both :\n");
+  rotate_both(&la, &lb);
+  
+  printf("\nla :\n");
+  print_lst(la);
+  
+  printf("\nlb :\n");
+  print_lst(lb);
+  
+  printf("\nreverse rotate la :\n");
+  reverse_rotate(&la);
+  print_lst(la);
+  
+  printf("\nreverse rotate lb :\n");
+  reverse_rotate(&lb);
+  print_lst(lb);
 
+  printf("\nreverse rotate both :\n");
+  reverse_rotate_both(&la, &lb);
+  print_lst(la);
+  print_lst(lb);
+  free_list(la);
+  free_list(lb);
   /* pa(&la, &lb); */
 
 
