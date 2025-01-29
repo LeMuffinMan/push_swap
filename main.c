@@ -223,25 +223,6 @@ void swap_both(t_list **la, t_list **lb)
   swap(lb);  
 }
 
-
-/* void add_front(t_list **la, t_list **lb) */
-/* { */
-
-
-  /*  */
-  /* tmp->prev = lst_last(*la); */
-  /* tmp->next = *la; */
-  /* (*la)->prev = tmp; */
-  /* (*la)->start = false; */
-  /* tmp->start = true; */
-  /* tmp->prev->next = node; */
-  /* tmp->prev = node; */
-  /* node->next = tmp; */
-  /* node->prev = lst_last(*l); */
-  /* (*l)->start = false; */
-  /* node->start = true; */
-/* } */
-
 /* pa (push a): Take the first element at the top of b and put it at the top of a. */
 /* Do nothing if b is empty. */
 /* pb (push b): Take the first element at the top of a and put it at the top of b. */
@@ -389,17 +370,11 @@ int main (int ac, char **av)
   reverse_rotate_both(&la, &lb);
   print_lst(la);
   print_lst(lb);
+
   free_list(la);
   free_list(lb);
-  /* pa(&la, &lb); */
-
-
- 
-
-
-
-
-
+  return (0);
+}
   //dans fractol je declare une struct : ici je declare un pointeur sur la struct :
   //C'EST POUR CA QUE envoyer &l ici peut etre recupere en **lst
   /* t_list *a = NULL; */
@@ -421,8 +396,6 @@ int main (int ac, char **av)
   /* print_rev_lst(a); */
   /* printf("\n"); */
   /* print_rev_lst(b); */
-  return (0);
-}
 /**/
 /* (*lst) */
 /* *lst->next */
