@@ -22,9 +22,9 @@ void	free_list(t_list **l)
 	tmp = *l;
 	if (!*l)
 		return ;
-	//le premier element a la meme adresse que son prev ??? :
+	//le premier element a la meme adresse que son prev ??? : le VRAIS dernier element n'est plus dans a liste au free ?
 	printf("*l = %d\n", (*l)->n);
-	printf("l prev = %x | l prev next = %x\n\n", (*l)->prev, (*l)->prev->next);
+	printf("l prev = %x | l prev next = %x | l prev n = %d\n\n", (*l)->prev, (*l)->prev->next, (*l)->prev->n);
 	(*l)->prev->next = NULL;
 	while (tmp)
 	{
@@ -90,6 +90,8 @@ void	add_back(t_list **lst, int n)
 	t_list	*new;
 
 	/* write(1, "ici, 3", 1); */
+	//on a rajouter l'init parce que valgind parlait d'une variable non init
+	new = NULL;
 	new = malloc(sizeof(t_list));
 	/* if (new == NULL) */
 	/*   lst_clear(*lst); */
@@ -97,29 +99,31 @@ void	add_back(t_list **lst, int n)
 	if (*lst == NULL)
 	{
 		/* printf("la\n"); */
+		*lst = new;
+		new->prev = NULL;
 		new->prev = new;
+		printf("new->prev = %p\n", new->prev);
 		new->next = new;
 		new->n = n;
 		new->start = true;
-		*lst = new;
+		//*lst = new; 
 	}
 	// liste pas vide : on veut set :
 	//  - prev du premier
 	//  - prev & next du dernier (new)
 	else
 	{
-		ptr = *lst;
+		ptr = (*lst)->prev; // on est sur le dernier de la liste
 		//Ici, d'une maniere ou d'une autre, je cree un prev sur lui meme 
-		ptr->prev = lst_last(*lst);
-		ptr = ptr->prev;
+		ptr->next = new; //next etait sur la tete : on le passe sur le nouveau node 
+		/* ptr = ptr->prev; */
 		/* printf("ptr->n = %d\n", ptr->n); */
-		new->prev = ptr;
-		ptr->next = new;
+		new->prev = ptr; //le precedent du new, est l'ancien dernier 
 		new->next = *lst;
 		new->n = n;
 		new->start = false;
-	}
-	printf("n = %d\n", n); 
+	}  
+	printf("n = %d | %x | *new->next = %p | *new-prev = %p\n", n, *new, new->next, new->prev); 
 }
 
 void	print_lst(t_list *l)
