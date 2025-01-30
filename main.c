@@ -6,13 +6,17 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 22:49:41 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/01/29 01:21:30 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/01/30 16:04:59 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+//PAS d'OPERATION SI LA PILE EST DEJA TRIEE 
+////tester les ints min et les ints max 
+
 
 /* pa (push a): Take the first element at the top of b and put it at the top of a. */
 /* Do nothing if b is empty. */
@@ -57,73 +61,73 @@ int main (int ac, char **av)
   init_stack(&la, av);
   printf("---------------------------init la:\n");
   print_lst(la);
-  init_stackb(&lb);
-  printf("---------------------------\ninit lb:\n");
-  print_lst(lb);
+  /* init_stackb(&lb); */
+  /* printf("---------------------------\ninit lb:\n"); */
+  /* print_lst(lb); */
 
-  printf("---------------------------\nswap la :\n");
-  swap(&la);
-  print_lst(la);
-  
-  printf("---------------------------\nswap lb :\n");
-  swap(&lb);
-  print_lst(lb);
-  
-  printf("---------------------------\nss :\n");
-  swap_both(&la, &lb);
-  printf("la : \n");
-  print_lst(la);
-  printf("lb : \n");
-  print_lst(lb);
-  
-  printf("---------------------------\npush a :\n");
-  push(&la, &lb);
-  printf("la : \n");
-  print_lst(la);
-  printf("lb : \n");
-  print_lst(lb);
-  
-  printf("---------------------------\npush b :\n");
-  push(&lb, &la);
-  printf("la : \n");
-  print_lst(la);
-  printf("lb : \n");
-  print_lst(lb);
-  
-  printf("---------------------------\nrotate la :\n");
-  rotate(&la);
-  print_lst(la);
-  
-  printf("---------------------------\nrotate lb :\n");
-  rotate(&lb);
-  print_lst(lb);
-  
-  printf("---------------------------\nrotate both :\n");
-  rotate_both(&la, &lb);
-  
-  printf("\nla :\n");
-  print_lst(la);
-  
-  printf("\nlb :\n");
-  print_lst(lb);
-  
-  printf("---------------------------\nreverse rotate la :\n");
-  reverse_rotate(&la);
-  print_lst(la);
-  
-  printf("---------------------------\nreverse rotate lb :\n");
-  reverse_rotate(&lb);
-  print_lst(lb);
-
-  printf("---------------------------\nreverse rotate both :\n");
-  reverse_rotate_both(&la, &lb);
-  printf("\nla :\n");
-  print_lst(la);
-  printf("\nlb :\n");
-  print_lst(lb);
-
-  free_list(la);
-  free_list(lb);
+  /* printf("---------------------------\nswap la :\n"); */
+  /* swap(&la); */
+  /* print_lst(la); */
+  /*  */
+  /* printf("---------------------------\nswap lb :\n"); */
+  /* swap(&lb); */
+  /* print_lst(lb); */
+  /*  */
+  /* printf("---------------------------\nss :\n"); */
+  /* swap_both(&la, &lb); */
+  /* printf("la : \n"); */
+  /* print_lst(la); */
+  /* printf("lb : \n"); */
+  /* print_lst(lb); */
+  /*  */
+  /* printf("---------------------------\npush a :\n"); */
+  /* push(&la, &lb); */
+  /* printf("la : \n"); */
+  /* print_lst(la); */
+  /* printf("lb : \n"); */
+  /* print_lst(lb); */
+  /*  */
+  /* printf("---------------------------\npush b :\n"); */
+  /* push(&lb, &la); */
+  /* printf("la : \n"); */
+  /* print_lst(la); */
+  /* printf("lb : \n"); */
+  /* print_lst(lb); */
+  /*  */
+  /* printf("---------------------------\nrotate la :\n"); */
+  /* rotate(&la); */
+  /* print_lst(la); */
+  /*  */
+  /* printf("---------------------------\nrotate lb :\n"); */
+  /* rotate(&lb); */
+  /* print_lst(lb); */
+  /*  */
+  /* printf("---------------------------\nrotate both :\n"); */
+  /* rotate_both(&la, &lb); */
+  /*  */
+  /* printf("\nla :\n"); */
+  /* print_lst(la); */
+  /*  */
+  /* printf("\nlb :\n"); */
+  /* print_lst(lb); */
+  /*  */
+  /* printf("---------------------------\nreverse rotate la :\n"); */
+  /* reverse_rotate(&la); */
+  /* print_lst(la); */
+  /*  */
+  /* printf("---------------------------\nreverse rotate lb :\n"); */
+  /* reverse_rotate(&lb); */
+  /* print_lst(lb); */
+  /**/
+  /* printf("---------------------------\nreverse rotate both :\n"); */
+  /* reverse_rotate_both(&la, &lb); */
+  /* printf("\nla :\n"); */
+  /* print_lst(la); */
+  /* printf("\nlb :\n"); */
+  /* print_lst(lb); */
+  /**/
+  /* free_list(la); */
+  /* free_list(lb); */
   return (0);
 }
   //dans fractol je declare une struct : ici je declare un pointeur sur la struct :

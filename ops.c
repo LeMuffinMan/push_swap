@@ -1,157 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/30 13:30:43 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/01/30 13:53:52 by oelleaum         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "push_swap.h"
 #include <stdio.h>
 
-void print_lst(t_list *l)
-{
-  t_list *ptr;
-  int i;
 
-  i = 1;
-  if (l == NULL)
-    return ;
-  ptr = l;
-  printf("node #%d = %d | start = %d\n", i, ptr->n, ptr->start);
-  ptr = ptr->next;
-  // une fois sur le maillon inexistant : la boucle stop
-  while (ptr->start == false)
-  {
-    i++;
-    printf("node #%d = %d\n", i, ptr->n);
-    //comme pour le swap ! c'est deux pointeurs 
-    ptr = ptr->next;
-  }
-}
-
-t_list *lst_last(t_list *lst)
-{
-  t_list *ptr;
-
-  ptr = lst;
-  if (ptr == NULL)
-    return (NULL);
-  ptr = ptr->next;
-  //le pb etait que ptr->start me permet pas de checker l'element suivant : 
-  //on s'arrete quand "le prochain est le premier"
-  while (ptr->next->start != true)
-    ptr = ptr->next;
-  return (ptr);
-}
-
-//pour init : il manque le "circulaire"
-void add_back(t_list **lst, int n)
-{
-  t_list *ptr;
-  t_list *new;
-
-  new = malloc(sizeof(t_list) * 1);
-  /* if (new == NULL) */
-  /*   lst_clear(*lst); */
-  //si ma liste est vide 
-  if (*lst == NULL)
-  {
-    /* printf("la\n"); */
-    new->prev = new;
-    new->next = new;
-    new->n = n;
-    new->start = true;
-    *lst = new;
-  }
-  // liste pas vide : on veut set : 
-  //  - prev du premier 
-  //  - prev & next du dernier (new) 
-  else 
-  { 
-    ptr = *lst;
-    ptr->prev = lst_last(*lst);
-    ptr = ptr->prev;
-    /* printf("ptr->n = %d\n", ptr->n); */
-    new->prev = ptr;
-    ptr->next = new;
-    new->next = *lst;
-    new->n = n;
-    new->start = false;
-  }
-}
-
-int	ft_atoi(const char *nptr)
-{
-	char			sign;
-	long long int	n;
-
-	n = 0;
-	while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		sign = *nptr;
-		nptr++;
-	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		n += *nptr - '0';
-		nptr++;
-		if (*nptr >= '0' && *nptr <= '9')
-			n *= 10;
-	}
-	if (sign == '-')
-		n *= -1;
-	return (n);
-}
-
- //INIT !
-  //on doit creer la liste en respectant l'ordre dans lequel on recoit les int 
-  //donc on add back pour que le premier arg soit le premier de la pile 
-  /* add_back(&l, atoi(av[i]) */
-
-  // creer une liste de 5 elements
-  // chaque element a 
-  //  - un next vers le suivant
-  //  - un prev vers le precedent
-  //Le next du dernier element pointe vers le premier
-  //le prev du premier elment pointe vers le dernier
-  //
-
-t_list *split_int(char **av)
-{
-  int i;
-  int j;
-  int sign;
-  int n;
-  t_list *l;
-
-  i = 0;
-  j = 0;
-  sign = 1;
-  while (av[1][i])
-  {
-    while ((!(is_digit(av[1][i])) || av[1][i] == '-') &&) // ils mettent un + ?
-      i++;
-    if (av[1][i] == '-')
-    {
-      sign = -1;
-      i++;
-    }
-    while (is_digit(av[1][i]))
-      j++;
-    //n = atoi(ft_substr(av[1], i, j)) * sign;
-      /* l = lst_new() ajouter un node pour chaque int et le relier  */
-    i = i + j;
-  }
-  return (l);
-}
-
-int init_stack(t_list **l, char **av)
-{
-  int i;
-  int j;
-
-  j = 0;
-  i = 0;
-  if (!av[1][0])
-    return (-1);
-  l = split_int(av); // *l ?
-}
 
 /* ra (rotate a): Shift up all elements of stack a by 1. */
 /* The first element becomes the last one. */
@@ -253,29 +116,4 @@ void push(t_list **la, t_list **lb) //encore des pb ici
   //
 }
 
-void free_list(t_list *l)
-{
-    t_list *tmp = l;
-    t_list *next_node;
-    
-    if (!l)
-        return;
-    l->prev->next = NULL;
-    while (tmp)
-    {
-        next_node = tmp->next;
-        free(tmp);
-        tmp = next_node;
-    }
-}
 
-
-void init_stackb(t_list **l)
-{
-  int i;
-
-  i = -6;
-  while (++i < 0)
-    add_back(l, i);
-  //Dabuche parsing warning ./a.out " 4 5 6"
-}
