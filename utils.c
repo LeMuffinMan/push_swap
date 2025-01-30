@@ -6,99 +6,139 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 13:32:38 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/01/30 16:06:10 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/01/30 18:13:44 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void free_list(t_list *l)
+void	free_list(t_list **l)
 {
-    t_list *tmp = l;
-    t_list *next_node;
-    
-    if (!l)
-        return;
-    l->prev->next = NULL;
-    while (tmp)
-    {
-        next_node = tmp->next;
-        free(tmp);
-        tmp = next_node;
-    }
+	t_list	*tmp;
+	t_list	*next_node;
+
+	tmp = *l;
+	if (!*l)
+		return ;
+	//le premier element a la meme adresse que son prev ??? :
+	printf("*l = %d\n", (*l)->n);
+	printf("l prev = %x | l prev next = %x\n\n", (*l)->prev, (*l)->prev->next);
+	(*l)->prev->next = NULL;
+	while (tmp)
+	{
+		next_node = tmp->next;
+	  printf("n = %d | start = %d | next = %x | %x\n", tmp->n, tmp->start, tmp, tmp->next);
+		free(tmp);
+		tmp = next_node;
+	}
+	/* free(tmp); */
+	*l = NULL;
 }
 
-t_list *lst_last(t_list *lst)
-{
-  t_list *ptr;
+/* void free_list(t_list **l) */
+/* { */
+/*   t_list *tmp; */
+/*    */
+/*   if (!*l) */
+/*     return ; */
+/*   *l = (*l)->next; */
+/*   while ((*l)->start != true) */
+/*   { */
+/*     tmp = *l; */
+/*     *l = (*l)->next; */
+/*     free(tmp); */
+/*   } */
+/*   tmp = *l; */
+/*     (*l)->next; */
+/*   free(tmp); */
+/*   free(l); */
+/* } */
 
-  ptr = lst;
-  if (ptr == NULL)
-    return (NULL);
-  ptr = ptr->next;
-  //le pb etait que ptr->start me permet pas de checker l'element suivant : 
-  //on s'arrete quand "le prochain est le premier"
-  while (ptr->next->start != true)
-    ptr = ptr->next;
-  return (ptr);
+/* void free_list(t_list **lst) */
+/* { */
+/*   t_list *tmp; */
+/**/
+/*   while (*lst) */
+/*   { */
+/*     tmp = *lst; */
+/*     *lst = (*lst)->next; */
+/*     free(tmp); */
+/*   } */
+/* } */
+
+t_list	*lst_last(t_list *lst)
+{
+	t_list	*ptr;
+
+	ptr = lst;
+	if (ptr == NULL)
+		return (NULL);
+	ptr = ptr->next;
+	// le pb etait que ptr->start me permet pas de checker l'element suivant :
+	// on s'arrete quand "le prochain est le premier"
+	while (ptr->next->start != true)
+		ptr = ptr->next;
+	return (ptr);
 }
 
-//pour init : il manque le "circulaire"
-void add_back(t_list **lst, int n)
+// pour init : il manque le "circulaire"
+void	add_back(t_list **lst, int n)
 {
-  t_list *ptr;
-  t_list *new;
+	t_list	*ptr;
+	t_list	*new;
 
-  /* write(1, "ici, 3", 1); */
-  new = malloc(sizeof(t_list) * 1);
-  /* if (new == NULL) */
-  /*   lst_clear(*lst); */
-  //si ma liste est vide 
-  if (*lst == NULL)
-  {
-    /* printf("la\n"); */
-    new->prev = new;
-    new->next = new;
-    new->n = n;
-    new->start = true;
-    *lst = new;
-  }
-  // liste pas vide : on veut set : 
-  //  - prev du premier 
-  //  - prev & next du dernier (new) 
-  else 
-  { 
-    ptr = *lst;
-    ptr->prev = lst_last(*lst);
-    ptr = ptr->prev;
-    /* printf("ptr->n = %d\n", ptr->n); */
-    new->prev = ptr;
-    ptr->next = new;
-    new->next = *lst;
-    new->n = n;
-    new->start = false;
-  }
+	/* write(1, "ici, 3", 1); */
+	new = malloc(sizeof(t_list));
+	/* if (new == NULL) */
+	/*   lst_clear(*lst); */
+	// si ma liste est vide
+	if (*lst == NULL)
+	{
+		/* printf("la\n"); */
+		new->prev = new;
+		new->next = new;
+		new->n = n;
+		new->start = true;
+		*lst = new;
+	}
+	// liste pas vide : on veut set :
+	//  - prev du premier
+	//  - prev & next du dernier (new)
+	else
+	{
+		ptr = *lst;
+		//Ici, d'une maniere ou d'une autre, je cree un prev sur lui meme 
+		ptr->prev = lst_last(*lst);
+		ptr = ptr->prev;
+		/* printf("ptr->n = %d\n", ptr->n); */
+		new->prev = ptr;
+		ptr->next = new;
+		new->next = *lst;
+		new->n = n;
+		new->start = false;
+	}
+	printf("n = %d\n", n); 
 }
 
-void print_lst(t_list *l)
+void	print_lst(t_list *l)
 {
-  t_list *ptr;
-  int i;
+	t_list	*ptr;
+	int		i;
 
-  i = 1;
-  if (l == NULL)
-    return ;
-  ptr = l;
-  printf("node #%d = %d | start = %d\n", i, ptr->n, ptr->start);
-  ptr = ptr->next;
-  // une fois sur le maillon inexistant : la boucle stop
-  while (ptr->start == false)
-  {
-    i++;
-    printf("node #%d = %d\n", i, ptr->n);
-    //comme pour le swap ! c'est deux pointeurs 
-    ptr = ptr->next;
-  }
+	i = 1;
+	if (l == NULL)
+		return ;
+	ptr = l;
+	printf("node #%d = %d | start = %d\n", i, ptr->n, ptr->start);
+	ptr = ptr->next;
+	// une fois sur le maillon inexistant : la boucle stop
+	while (ptr->start == false)
+	{
+		i++;
+		printf("node #%d = %d\n", i, ptr->n);
+		// comme pour le swap ! c'est deux pointeurs
+		ptr = ptr->next;
+	}
 }

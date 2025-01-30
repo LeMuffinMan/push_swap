@@ -6,7 +6,7 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 15:08:40 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/01/30 16:04:17 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/01/30 17:37:28 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ static char	**fill_splited(char **splited, const char *s, char c)
 
 char	**ft_split(char const *s, char c)
 {
-	//passer d'un double tableau a une liste 
 	char	**splited;
 
 	if (!s)

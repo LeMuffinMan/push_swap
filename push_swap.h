@@ -23,7 +23,7 @@ typedef struct s_list
 
 
 //utils.c
-void free_list(t_list *l);
+void free_list(t_list **l);
 void print_lst(t_list *l);
 t_list *lst_last(t_list *lst);
 void add_back(t_list **lst, int n);

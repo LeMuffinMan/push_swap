@@ -6,7 +6,7 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:28:36 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/01/30 16:04:35 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/01/30 18:45:27 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ int init_stack(t_list **l, char **av)
   splitted = ft_split(av[1], ' '); // penser a gerer plus de sep : tout ce qui n'est pas un - + ou un digit *l ?
   *l = fill_list(splitted);
   i = 0;
+	while (splitted[i])
+	{
+		free(splitted[i]);
+		i++;
+	}
+	free(splitted);
+
   return (0);
 }
 
