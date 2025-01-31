@@ -6,7 +6,7 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 13:32:38 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/01/30 18:13:44 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/01/31 14:34:07 by oelleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,29 @@ void	free_list(t_list **l)
 	t_list	*tmp;
 	t_list	*next_node;
 
+// printf("MY SHIT IS %d\n", (*l)->prev->prev->n); le prev pointe toujours sur lui meme
+	/* printf("MY SHIT IS %p\n", (*l)->prev); */
+	/* printf("MY SHIT IS %p\n", (*l)); */
+	/* printf("MY SHIT IS %p\n", (*l)->prev->prev); */
+	/**/
+	
+
 	tmp = *l;
 	if (!*l)
 		return ;
 	//le premier element a la meme adresse que son prev ??? : le VRAIS dernier element n'est plus dans a liste au free ?
-	printf("*l = %d\n", (*l)->n);
-	printf("l prev = %x | l prev next = %x | l prev n = %d\n\n", (*l)->prev, (*l)->prev->next, (*l)->prev->n);
+	//printf("*l = %d\n", (*l)->n);
+	//printf("l prev = %x | l prev next = %x | l prev n = %d\n\n", (*l)->prev, (*l)->prev->next, (*l)->prev->n);
 	(*l)->prev->next = NULL;
 	while (tmp)
 	{
+		/* printf("SALAAAAAAAAM\n"); */
 		next_node = tmp->next;
-	  printf("n = %d | start = %d | next = %x | %x\n", tmp->n, tmp->start, tmp, tmp->next);
+		// printf("n = %d | start = %d | next = %x | %x\n", tmp->n, tmp->start, tmp, tmp->next);
 		free(tmp);
 		tmp = next_node;
 	}
-	/* free(tmp); */
+	// free(tmp);
 	*l = NULL;
 }
 
@@ -98,14 +106,12 @@ void	add_back(t_list **lst, int n)
 	// si ma liste est vide
 	if (*lst == NULL)
 	{
-		/* printf("la\n"); */
 		*lst = new;
-		new->prev = NULL;
 		new->prev = new;
-		printf("new->prev = %p\n", new->prev);
-		new->next = new;
+		/* printf("new->prev = %p\n", new->prev); */
 		new->n = n;
 		new->start = true;
+		new->next = new;
 		//*lst = new; 
 	}
 	// liste pas vide : on veut set :
@@ -118,12 +124,14 @@ void	add_back(t_list **lst, int n)
 		ptr->next = new; //next etait sur la tete : on le passe sur le nouveau node 
 		/* ptr = ptr->prev; */
 		/* printf("ptr->n = %d\n", ptr->n); */
+		//sinon la tete de liste a son prev sur lui meme tout le temps
+		(*lst)->prev = new;
 		new->prev = ptr; //le precedent du new, est l'ancien dernier 
 		new->next = *lst;
 		new->n = n;
 		new->start = false;
 	}  
-	printf("n = %d | %x | *new->next = %p | *new-prev = %p\n", n, *new, new->next, new->prev); 
+	/* printf("n = %d | %x | *new->next = %p | *new-prev = %p\n", n, *new, new->next, new->prev);  */
 }
 
 void	print_lst(t_list *l)
@@ -133,16 +141,17 @@ void	print_lst(t_list *l)
 
 	i = 1;
 	if (l == NULL)
+	{
+		printf("list is empty\n");
 		return ;
+	}
 	ptr = l;
 	printf("node #%d = %d | start = %d\n", i, ptr->n, ptr->start);
 	ptr = ptr->next;
-	// une fois sur le maillon inexistant : la boucle stop
-	while (ptr->start == false)
+	while (ptr->start == false  && i < 10)
 	{
 		i++;
 		printf("node #%d = %d\n", i, ptr->n);
-		// comme pour le swap ! c'est deux pointeurs
 		ptr = ptr->next;
 	}
 }

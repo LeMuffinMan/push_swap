@@ -6,12 +6,13 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 14:28:36 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/01/30 18:45:27 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/01/31 14:16:03 by oelleaum         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h> // a virer 
+#include <stdio.h> // a virer
+#include <stdlib.h> // Add par moi
 //
 int init_stack(t_list **l, char **av)
 {
@@ -22,9 +23,9 @@ int init_stack(t_list **l, char **av)
   j = 0;
   i = 0;
   if (!av[1][0])
-    return (-1);
+	return (-1);
   splitted = ft_split(av[1], ' '); // penser a gerer plus de sep : tout ce qui n'est pas un - + ou un digit *l ?
-  *l = fill_list(splitted);
+   *l = fill_list(splitted);
   i = 0;
 	while (splitted[i])
 	{
@@ -32,8 +33,7 @@ int init_stack(t_list **l, char **av)
 		i++;
 	}
 	free(splitted);
-
-  return (0);
+  	return (0);
 }
 
 //a virer 
