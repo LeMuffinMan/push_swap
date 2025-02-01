@@ -16,8 +16,7 @@
 
 // ARG="4 56 -3 56" 54 -5
 // a gerer !
-
-
+// integrer la libft et laisser que la fonction fill_list ici
 
 static int	count_strs(const char *s, char c)
 {
@@ -77,8 +76,6 @@ static char	*ft_strdup_custom(char *s, int start, char c)
 	return (dup);
 }
 
-
-
 static char	**fill_splited(char **splited, const char *s, char c)
 {
 	int	i;
@@ -118,8 +115,6 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (fill_splited(splited, s, c));
 }
-
-
 
 t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dans le main 
 {

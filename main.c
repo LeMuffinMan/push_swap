@@ -80,7 +80,7 @@ int main (int ac, char **av)
   print_lst(la);
   printf("lb :\n");
   print_lst(lb);
-  
+
   printf("=============================\nrotate la :\n");
   rotate(&la);
   print_lst(la);
@@ -109,9 +109,9 @@ int main (int ac, char **av)
   print_lst(la);
   printf("\nlb :\n");
   print_lst(lb);
-  /**/
+
   free_list(&la);
-  free_list(&lb);
+  /* free_list(&lb); */
   return (0);
 }
   //dans fractol je declare une struct : ici je declare un pointeur sur la struct :
