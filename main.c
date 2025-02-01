@@ -14,37 +14,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-//PAS d'OPERATION SI LA PILE EST DEJA TRIEE 
-////tester les ints min et les ints max 
+//PAS d'OPERATION SI LA PILE EST DEJA TRIEE   a tester 
+////tester les ints min et les ints max TODO 
 
-
-/* pa (push a): Take the first element at the top of b and put it at the top of a. */
-/* Do nothing if b is empty. */
-
-//addfront 
-//rm  vieux node 
-//rebrancher 
-
-/* void pa(t_list **la, t_list **lb) */
-/* { */
-/**/
-  /* if (*lb == NULL) */
-  /*   return ; */
-  /* (*lb)->next->prev = NULL; */
-  /* if (*lb->next != NULL) */
-  /*   (*lb)->next = *la; */
-  /* else  */
-  /*   return ; */
-  /* (*la)->prev = *lb; */
-/* } */
-
-/* pb (push b): Take the first element at the top of a and put it at the top of b. */
-/* Do nothing if a is empty. */
-
-
-
-
-//je cherche a la print, pas la modifier : donc un simple pointeur *l 
+/* The goal is to sort in ascending order numbers into stack a. */
 
 // /!\ un seul arg part en vrille : un cas d'erreur 
 // cas sur peu d'arguments : mois de 3 ca bug 

@@ -77,6 +77,8 @@ static char	*ft_strdup_custom(char *s, int start, char c)
 	return (dup);
 }
 
+
+
 static char	**fill_splited(char **splited, const char *s, char c)
 {
 	int	i;
@@ -117,6 +119,8 @@ char	**ft_split(char const *s, char c)
 	return (fill_splited(splited, s, c));
 }
 
+
+
 t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dans le main 
 {
 	t_list *l;
@@ -131,81 +135,9 @@ t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dan
 		add_back(&l, n);
 		i++;
 	}
+
 	return (l);
 }
-
-
-
-
-
-
-
-/* int	ft_isdigit(int c) */
-/* { */
-/* 	if (c >= '0' && c <= '9') */
-/* 		return (1); */
-/* 	else */
-/* 		return (0); */
-/* } */
-/**/
-/* char	*ft_substr(char const *s, unsigned int start, size_t len) */
-/* { */
-/* 	unsigned int	i; */
-/* 	char			*res; */
-/**/
-/* 	i = 0; */
-/* 	while (i < start && s[i] != '\0') */
-/* 		i++; */
-/* 	start = i; */
-/* 	while (s[i] != '\0' && len > i - start) */
-/* 		i++; */
-/* 	len = i - start; */
-/* 	res = malloc(sizeof(char) * (len + 1)); */
-/* 	if (res == NULL) */
-/* 		return (NULL); */
-/* 	i = 0; */
-/* 	while (s[start + i] != '\0' && len > 0) */
-/* 	{ */
-/* 		res[i] = s[start + i]; */
-/* 		i++; */
-/* 		len--; */
-/* 	} */
-/* 	res[i] = 0; */
-/* 	printf("res = %s\n", res); */
-/* 	return (res); */
-/* } */
-
-/* t_list	*split_int(char **av) */
-/* { */
-/* 	int		i; */
-/* 	int		j; */
-/* 	int		sign; */
-/* 	int		n_int; */
-/* 	char	*n_char; */
-/* 	t_list	*l; */
-/**/
-/* 	i = 0; */
-/* 	j = 0; */
-/* 	sign = 1; */
-/* 	while (av[1][i]) */
-/* 	{ */
-/* 		while (!(ft_isdigit(av[1][i])) && av[1][i]) */
-/* 			i++; */
-/* 		j = i; */
-/* 		while (ft_isdigit(av[1][j]) && av[1][i]) */
-/* 			j++; */
-/* 		 printf("j = %d | i = %d | j - i = %d\n", i, j, (j - i)); */ 
-/* 		n_char = ft_substr(av[1], i, j - i); */
-/* 		 printf("n_char = %s\n", n_char); */ 
-/* 		n_int = atoi(n_char) * sign; */
-/* 		 printf("n = %d\n", n_int);  */ 
-/* 		free(n_char); */
-/* 		// is doublon ? */
-/* 		 l = lst_new(n) ajouter un node pour chaque int et le relier   */ 
-/* 		i = i + j; */
-/* 	} */
-/* 	return (l); */
-/* } */
 
 int	ft_atoi(const char *nptr)
 {
