@@ -19,11 +19,11 @@
 
 /* The goal is to sort in ascending order numbers into stack a. */
 
-// /!\ un seul arg part en vrille : un cas d'erreur
+// /!\ un seul arg part en vrille : un cas d'erreur e
 // cas sur peu d'arguments : mois de 3 ca bug
 
 // d'abord : verifier les doublons
-// verifier si j'ai plus d'un element
+// verifier si j'ai plus d'un element e
 // hardcoder de 2 a 5 elements
 
 void	homegrown_algo(t_list *la) // pour pile de 2 ou 3
@@ -115,34 +115,44 @@ int	is_desc_sorted(t_list *l)
 
 void	insertion_sort(t_list **la, t_list **lb)
 {
+
 	/* printf("------------ insertion sort ------------\n"); */
 	while (*la != NULL) // tant que ma pile a n'est pas vide
 	{
-		if (*la && *lb)
-			printf("(*la)->n = %d | (*lb)->n = %d | (*lb)->prev->n = %d\n",
-				(*la)->n, (*lb)->n, (*lb)->prev->n);
-		if (lst_size(*lb) > 1)
+		if (lst_size(*lb) > 1 && (*la)->n < (*lb)->n && (*la)->n > (*lb)->prev->n) // si n < 1er et n > dernier : on cherche sa place
 		{
-			while ((*la)->n < (*lb)->n)
-			{
-				printf("rotating to insert %d\n", (*la)->n);
-				rotate(lb);
-				printf("[rotate]\n");
-				printf("\nlb :\n");
-				print_lst(*lb);
-				printf("\n");
-				sleep(1);
-			}
+    	t_list *tmp;
+
+    	tmp = (*lb)->next;
+			while ((*la)->n < tmp->n)
+				tmp = tmp->next;
+
+    	// Effectuer des rotations pour amener la bonne position en haut de lb
+    	while (*lb != tmp)
+        rotate(lb); // On fait tourner jusqu'à la bonne position
+      //
+			push(lb, la);
+			printf("[pb]\n");
+			printf("\nlb :\n");
+			print_lst(*lb);
+			printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
+			printf("\n");
+			
+
+      while ((*lb)->n < (*lb)->prev->n)
+      	reverse_rotate(lb);
 		}
-		push(lb, la); // on push le premier element dans b
-		printf("[pb]\n");
-		printf("\nlb :\n");
-		print_lst(*lb);
-		printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
-		printf("\n");
-		sleep(1);
+		else 
+		{
+			push(lb, la); // on push le premier element dans b
+			printf("[pb]\n");
+			printf("\nlb :\n");
+			print_lst(*lb);
+			printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
+			printf("\n");
+			
+		}		// a partir de deux elements on commence la tambouille
 		if (lst_size(*lb) > 1)
-			// a partir de deux elements on commence la tambouille
 		{
 			// si le new est inferieur au dernier : on le met en dernier
 			if ((*lb)->n < (*lb)->prev->n)
@@ -174,6 +184,24 @@ void	insertion_sort(t_list **la, t_list **lb)
 // 10 <= n <= 100 : quicksort / tri par groupes
 // n > 100 : Radix sort adapte (base 2 ou 10)
 
+void is_sorted_check(t_list *la)
+{
+	t_list *tmp;
+
+	//securiser ?
+	tmp = la;
+	while (tmp->next != la)
+	{
+		if (tmp->n > tmp->next->n)
+		{
+			printf("list unsorted\n");
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	printf("list sorted\n");
+}
+
 int	main(int ac, char **av)
 {
 	t_list	*la;
@@ -198,7 +226,8 @@ int	main(int ac, char **av)
 		insertion_sort(&la, &lb);
 	printf("\n========================\nlist sorted : \n");
 	print_lst(la);
-	print_lst(lb);
+	/* print_lst(lb); */
+	is_sorted_check(la);
 	free_list(&la);
 	free_list(&lb);
 	return (0);

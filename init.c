@@ -14,6 +14,7 @@
 #include <stdio.h> // a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande 
 #include <stdlib.h> 
 
+//a reecrir
 int is_sorted(t_list *l)
 {
 	t_list 	*tmp;
