@@ -95,7 +95,7 @@ void	print_lst(t_list *l)
 	ptr = l;
 	printf("node #%d = %d | start = %d\n", i, ptr->n, ptr->start);
 	ptr = ptr->next;
-	while (ptr->start == false  && i < 10)
+	while (ptr->start == false)
 	{
 		i++;
 		printf("node #%d = %d\n", i, ptr->n);

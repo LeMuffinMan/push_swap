@@ -14,7 +14,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// PAS d'OPERATION SI LA PILE EST DEJA TRIEE   a tester
+// installer le vizuallizer pour tester
+// adapter code au vizu
+// implementer quick sort
+// radix ?
+//
 ////tester les ints min et les ints max TODO
 
 /* The goal is to sort in ascending order numbers into stack a. */
@@ -129,15 +133,18 @@ void	insertion_sort(t_list **la, t_list **lb)
 
     	// Effectuer des rotations pour amener la bonne position en haut de lb
     	while (*lb != tmp)
+    	{
+    		printf("rb\n");
         rotate(lb); // On fait tourner jusqu'à la bonne position
-      //
+      }
+      	//
 			push(lb, la);
-			printf("[pb]\n");
-			printf("\nlb :\n");
-			print_lst(*lb);
-			printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
-			printf("\n");
-			
+			printf("pb\n");
+			/* printf("\nlb :\n"); */
+			/* print_lst(*lb); */
+			/* printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb)); */
+			/* printf("\n"); */
+			/*  */
 
       while ((*lb)->n < (*lb)->prev->n)
       	reverse_rotate(lb);
@@ -145,11 +152,11 @@ void	insertion_sort(t_list **la, t_list **lb)
 		else 
 		{
 			push(lb, la); // on push le premier element dans b
-			printf("[pb]\n");
-			printf("\nlb :\n");
-			print_lst(*lb);
-			printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
-			printf("\n");
+			printf("pb\n");
+			/* printf("\nlb :\n"); */
+			/* print_lst(*lb); */
+			/* printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb)); */
+			/* printf("\n"); */
 			
 		}		// a partir de deux elements on commence la tambouille
 		if (lst_size(*lb) > 1)
@@ -158,20 +165,19 @@ void	insertion_sort(t_list **la, t_list **lb)
 			if ((*lb)->n < (*lb)->prev->n)
 			{
 				rotate(lb);
-				printf("[rotate]\n");
-				printf("\nlb :\n");
-				print_lst(*lb);
-				printf("\n");
-				printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
+				printf("rb\n");
+				/* printf("\nlb :\n"); */
+				/* print_lst(*lb); */
+				/* printf("\n"); */
+				/* printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb)); */
 			}
 			if ((*lb)->n < (*lb)->next->n)
 			{
 				swap(lb);
-				printf("[swap]\n");
-				printf("\nlb :\n");
-				print_lst(*lb);
-				printf("\n");
-				printf("[is_desc_sorted(*lb) == %d]\n", is_desc_sorted(*lb));
+				printf("sb\n");
+				/* printf("\nlb :\n"); */
+				/* print_lst(*lb); */
+				/* printf("\n"); */
 			}
 		}
 	}
@@ -217,17 +223,17 @@ int	main(int ac, char **av)
 	}
 	init_stack(&la, av);
 	/* printf("list_size(*lb) = %d\n", lst_size(lb)); */
-	printf("==========================\nstack initialized :\n");
-	print_lst(la);
-	printf("==========================\n\n");
+	/* printf("==========================\nstack initialized :\n"); */
+	/* print_lst(la); */
+	/* printf("==========================\n\n"); */
 	if (lst_size(la) <= 3)
 		homegrown_algo(la);
 	else
 		insertion_sort(&la, &lb);
-	printf("\n========================\nlist sorted : \n");
-	print_lst(la);
+	/* printf("\n========================\n"); */
+	/* print_lst(la); */
 	/* print_lst(lb); */
-	is_sorted_check(la);
+	/* is_sorted_check(la); */
 	free_list(&la);
 	free_list(&lb);
 	return (0);
