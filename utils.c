@@ -102,3 +102,21 @@ void	print_lst(t_list *l)
 		ptr = ptr->next;
 	}
 }
+
+int lst_size(t_list *l)
+{
+	t_list *ptr;
+	int i;
+
+	ptr = l;
+	if (ptr->next == ptr)
+		return (1);
+	i = 1;
+	ptr = ptr->next;
+	while (ptr->start != true)
+	{
+		i++;
+		ptr = ptr->next;
+	}
+	return (i);
+}

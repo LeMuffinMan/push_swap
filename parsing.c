@@ -17,6 +17,8 @@
 // ARG="4 56 -3 56" 54 -5
 // a gerer !
 // integrer la libft et laisser que la fonction fill_list ici
+//cas d'erreur non gere correctement ? 
+//./a.out "15- 75 34 0"
 
 static int	count_strs(const char *s, char c)
 {

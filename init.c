@@ -35,36 +35,55 @@ int is_sorted(t_list *l)
 	return (0);
 }
 
-int duplicate_checker(t_list *l) // a raccourcir 
+//a reverifier
+int 	duplicate_checker(t_list *l)
 {
-	t_list *tmp;
-	int n;
-	bool dup;
+	t_list *n1;
+	t_list *n2;
 
-	dup = 0;
-	tmp = l;
-	n = tmp->n;
-	tmp = tmp->next;
-	if (n == tmp->n)
-		return (1);
-	while (tmp != l && !dup) //tour de toute la chaine pour reset n_compared
+	n1 = l;
+	n2 = l->next;
+	while (n1->next != l) // on fait le tour de la liste avec n1
 	{
-		while(tmp != l && !dup) //tour de toute la chaine pour comparer n_compared avec tous les n qui suivent 
+		while (n2 != l) // on teste chaque noeud jusqu'a revenir a debut de liste
 		{
-			if(n == tmp->n)
-			{
-				printf("duplicated found\n");
-				dup = 1;
-			}
-			tmp = tmp->next;
+			/* printf("n1->n = %d | n2->n = %d\n", n1->n, n2->n); */
+			if(n1->n == n2->n)	
+				return (1);
+			n2 = n2->next;
 		}
-		tmp = tmp->next;
-		n = tmp->n;
+		n1 = n1->next;
+		n2 = n1->next;
 	}
-	if (dup)
-		return (1);
 	return (0);
 }
+
+/* int duplicate_checker(t_list *l) // a raccourcir  */
+/* { */
+/* 	t_list *tmp; */
+/* 	int n; */
+/**/
+/* 	tmp = l; */
+/* 	n = tmp->n; */
+	/* tmp = tmp->next; */
+	/* if (n == tmp->n) //pas necessaire ? */
+		/* return (1); */
+/* 	while (tmp != l) //tour de toute la chaine pour reset n_compared */
+/* 	{ */
+/* 		while(tmp != l) //tour de toute la chaine pour comparer n_compared avec tous les n qui suivent  */
+/* 		{ */
+/* 			if(n == tmp->n) */
+/* 			{ */
+/* 				printf("duplicated found : n = %d | tmp->n = %d\n", n, tmp->n); */
+/* 				return (1); */
+/* 			} */
+/* 			tmp = tmp->next; */
+/* 		} */
+/* 		tmp = tmp->next; */
+/* 		n = tmp->n; */
+/* 	} */
+/* 	return (0); */
+/* } */
 
 void free_splited(char **splited)
 {
@@ -82,12 +101,8 @@ void free_splited(char **splited)
 
 int init_stack(t_list **l, char **av)
 {
-  int i;
-  int j;
   char **splitted;
 
-  j = 0;
-  i = 0;
   if (!av[1][0])
   {
   	printf("list empty at initialisation\n");
@@ -102,7 +117,7 @@ int init_stack(t_list **l, char **av)
   }
   *l = fill_list(splitted);
   free_splited(splitted);
-  if (is_sorted(*l) ||  duplicate_checker(*l)) 
+  if (is_sorted(*l) || duplicate_checker(*l)) 
   {
   	printf("sorted list or duplicated ints\n");
   	free_list(l);
@@ -111,13 +126,3 @@ int init_stack(t_list **l, char **av)
   return (0);
 }
 
-//a virer 
-/* void init_stackb(t_list **l) */
-/* { */
-/*   int i; */
-/**/
-/*   i = -6; */
-/*   while (++i < 0) */
-/*     add_back(l, i); */
-/* } */
-/**/

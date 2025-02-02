@@ -38,25 +38,80 @@ int main (int ac, char **av)
     exit (1);
   }
   init_stack(&la, av);
+  printf("============================\ninit la:\n");
   print_lst(la);
-  printf("=========================\nSorting :\n");
-  if (lst_size(la) == 2) // si on a deux chiffres a trier 
-  {
-    printf("sa\n");
-    swap(&la);
-  }
-  else if (lst_size(la) == 3)
-  {
-    if (la->n > la->next->n && la->next->n < la->next->next->n)
-    {
-      printf("sa\n");
-      swap(&la);
-    }
-  }
-  printf("========================\nlist sorted : \n");
+  printf("lb : \n");
+  print_lst(lb);
+
+  printf("\n===========================\npush 3 to b :\n");
+  push(&lb, &la);
+  push(&lb, &la);
+  push(&lb, &la);
+  printf("la :\n");
   print_lst(la);
+  printf("lb :\n");
+  print_lst(lb);
+
+  printf("============================\nswap la :\n");
+  swap(&la);
+  print_lst(la);
+
+  printf("---------------------------\nswap lb :\n");
+  swap(&lb);
+  print_lst(lb);
+
+  printf("============================\nss :\n");
+  swap_both(&la, &lb);
+  printf("la : \n");
+  print_lst(la);
+  printf("lb : \n");
+  print_lst(lb);
+
+  printf("============================\npush a :\n");
+  push(&la, &lb);
+  printf("la : \n");
+  print_lst(la);
+  printf("lb : \n");
+  print_lst(lb);
+
+  printf("\n===========================\npush b :\n");
+  push(&lb, &la);
+  printf("la :\n");
+  print_lst(la);
+  printf("lb :\n");
+  print_lst(lb);
+
+  printf("=============================\nrotate la :\n");
+  rotate(&la);
+  print_lst(la);
+
+  printf("---------------------------\nrotate lb :\n");
+  rotate(&lb);
+  print_lst(lb);
+
+  printf("=============================\nrotate both :\n");
+  rotate_both(&la, &lb);
+  printf("\nla :\n");
+  print_lst(la);
+  printf("\nlb :\n");
+  print_lst(lb);
+
+  printf("=============================\nreverse rotate la :\n");
+  reverse_rotate(&la);
+  print_lst(la);
+  printf("---------------------------\nreverse rotate lb :\n");
+  reverse_rotate(&lb);
+  print_lst(lb);
+
+  printf("=============================\nreverse rotate both :\n");
+  reverse_rotate_both(&la, &lb);
+  printf("\nla :\n");
+  print_lst(la);
+  printf("\nlb :\n");
+  print_lst(lb);
+
   free_list(&la);
-  free_list(&lb);
+  /* free_list(&lb); */
   return (0);
 }
   //dans fractol je declare une struct : ici je declare un pointeur sur la struct :
