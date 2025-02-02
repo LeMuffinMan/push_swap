@@ -95,6 +95,8 @@ void swap_both(t_list **la, t_list **lb)
 /* Do nothing if b is empty. */
 /* pb (push b): Take the first element at the top of a and put it at the top of b. */
 /* Do nothing if a is empty */
+/* push a (&la, &lb) */
+/* push b (&lb, &la) */
 void push(t_list **la, t_list **lb) //encore des pb ici
 {
   t_list *last;
@@ -144,4 +146,38 @@ void push(t_list **la, t_list **lb) //encore des pb ici
   }
 }
 
+
+
+/* void push(t_list **la, t_list **lb) { */
+/*     t_list *tmp; */
+/*      */
+/*     if (*lb == NULL) { */
+/*         return; */
+/*     } */
+/*     tmp = *lb; */
+/*     // Si lb a un seul élément */
+/*     if (tmp == tmp->next) { */
+/*         *lb = NULL; */
+/*     } else { */
+/*         // Réajuster les liens de lb */
+/*         *lb = tmp->next; */
+/*         tmp->prev->next = *lb; */
+/*         (*lb)->prev = tmp->prev; */
+/*     } */
+/*      */
+/*     // Ajouter tmp au début de la pile la */
+/*     if (*la == NULL) { */
+/*         tmp->prev = tmp; */
+/*         tmp->next = tmp; */
+/*         *la = tmp; */
+/*     } else { */
+/*         tmp->prev = (*la)->prev; */
+/*         tmp->next = *la; */
+/*         (*la)->prev->next = tmp; */
+/*         (*la)->prev = tmp; */
+/*         *la = tmp; */
+/*     } */
+/**/
+/*     tmp->start = true; */
+/* } */
 

@@ -58,32 +58,6 @@ int 	duplicate_checker(t_list *l)
 	return (0);
 }
 
-/* int duplicate_checker(t_list *l) // a raccourcir  */
-/* { */
-/* 	t_list *tmp; */
-/* 	int n; */
-/**/
-/* 	tmp = l; */
-/* 	n = tmp->n; */
-	/* tmp = tmp->next; */
-	/* if (n == tmp->n) //pas necessaire ? */
-		/* return (1); */
-/* 	while (tmp != l) //tour de toute la chaine pour reset n_compared */
-/* 	{ */
-/* 		while(tmp != l) //tour de toute la chaine pour comparer n_compared avec tous les n qui suivent  */
-/* 		{ */
-/* 			if(n == tmp->n) */
-/* 			{ */
-/* 				printf("duplicated found : n = %d | tmp->n = %d\n", n, tmp->n); */
-/* 				return (1); */
-/* 			} */
-/* 			tmp = tmp->next; */
-/* 		} */
-/* 		tmp = tmp->next; */
-/* 		n = tmp->n; */
-/* 	} */
-/* 	return (0); */
-/* } */
 
 void free_splited(char **splited)
 {

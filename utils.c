@@ -108,6 +108,8 @@ int lst_size(t_list *l)
 	t_list *ptr;
 	int i;
 
+	if (l == NULL)
+		return (0);
 	ptr = l;
 	if (ptr->next == ptr)
 		return (1);

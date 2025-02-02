@@ -46,4 +46,3 @@ t_list *fill_list(char **splitted);
 
 //init.c
 int init_stack(t_list **l, char **av);
-void init_stackb(t_list **l);
