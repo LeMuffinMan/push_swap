@@ -27,7 +27,7 @@ void free_list(t_list **l);
 void print_lst(t_list *l);
 t_list *lst_last(t_list *lst);
 void add_back(t_list **lst, int n);
-int lst_size(t_list *l;
+int lst_size(t_list *l);
 
 
 //ops.c
