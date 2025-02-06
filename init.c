@@ -77,6 +77,7 @@ int	init_stack(t_list **l, int ac, char **av)
 		}
 		*l = fill_list(splitted);
 		free_splited(splitted);
+		//iversion de la condition is_sorted ?
 		if (is_sorted_check(*l) || duplicate_checker(*l))
 		{
 			printf("sorted list or duplicated ints\n");

@@ -104,6 +104,9 @@ void sa(t_list **l)
   tmp = (*l)->n;
   (*l)->n = (*l)->next->n;
   (*l)->next->n = tmp;
+  tmp = (*l)->i;
+  (*l)->i = (*l)->next->i;
+  (*l)->next->i = tmp;
   printf("sa\n");
 }
 
@@ -116,6 +119,9 @@ void sb(t_list **l)
   tmp = (*l)->n;
   (*l)->n = (*l)->next->n;
   (*l)->next->n = tmp;
+  tmp = (*l)->i;
+  (*l)->i = (*l)->next->i;
+  (*l)->next->i = tmp;
   printf("sb\n");
 }
 

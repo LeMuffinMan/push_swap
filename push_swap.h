@@ -23,6 +23,9 @@ typedef struct s_list
 } t_list;
 
 
+//a ranger
+void	get_index(t_list **l, int *array);
+
 //utils.c // a trier et statiquer 
 void free_list(t_list **l);
 void print_lst(t_list *l);

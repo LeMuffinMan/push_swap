@@ -181,31 +181,37 @@ int	*lst_to_array(t_list **la, int size)
 		tmp = tmp->next;
 	}
 	sort_int_tab(array, i);
-	i = 0;
-	while (i < size)
-	{
-		printf("array[%d] = %d\n", i, array[i]);
-		i++;
-	}
+	/* i = 0; */
+	/* while (i < size) */
+	/* { */
+	/* 	printf("array[%d] = %d\n", i, array[i]); */
+	/* 	i++; */
+	/* } */
 	return (array);
 }
 
+//renvoyer un booleen
 int is_sorted_check(t_list *la)
 {
 	t_list *tmp;
 
 	//securiser ?
 	tmp = la;
-	while (tmp->next != la)
-	{
-		if (tmp->n > tmp->next->n)
-		{
-			/* printf("list unsorted\n"); */
-			return (1);
-		}
+	while (tmp->n < tmp->next->n)
 		tmp = tmp->next;
-	}
+	/* printf("tmp->next = %x\nla = %x\n", tmp->next, la); */
+	if (tmp->next != la)
+		return (0);
+	/* while (tmp->next != la) */
+	/* { */
+	/* 	if (tmp->n > tmp->next->n) */
+	/* 	{ */
+	/* 		printf("tmp->n = %d | tmp->next->n = %d\n", tmp->n, tmp->next->n); */
+	/* 		return (1); */
+	/* 	} */
+	/* 	tmp = tmp->next; */
+	/* } */
 	/* printf("list sorted\n"); */
-	return (0);
+	return (1);
 }
 

@@ -138,7 +138,7 @@ t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dan
 	}
 	size = lst_size(l);
 	array = lst_to_array(&l, size);
-	/* set_index(l, array); */
+	get_index(&l, array);
 	return (l);
 }
 
