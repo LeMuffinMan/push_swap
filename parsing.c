@@ -55,6 +55,7 @@ static void	ft_free(char **s)
 	free(s);
 }
 
+//a revoir
 static char	*ft_strdup_custom(char *s, int start, char c)
 {
 	int		i;
@@ -118,11 +119,14 @@ char	**ft_split(char const *s, char c)
 	return (fill_splited(splited, s, c));
 }
 
+
 t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dans le main 
 {
 	t_list *l;
 	int i;
 	int n;
+	int size;
+	int *array;
 
 	l = NULL;
 	i = 0;
@@ -132,7 +136,9 @@ t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dan
 		add_back(&l, n);
 		i++;
 	}
-
+	size = lst_size(l);
+	array = lst_to_array(&l, size);
+	/* set_index(l, array); */
 	return (l);
 }
 

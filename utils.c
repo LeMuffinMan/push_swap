@@ -32,20 +32,26 @@ void	free_list(t_list **l)
 	*l = NULL;
 }
 
-//a virer ?
-t_list	*lst_last(t_list *lst)
+void	print_lst(t_list *l)
 {
 	t_list	*ptr;
+	int		i;
 
-	ptr = lst;
-	if (ptr == NULL)
-		return (NULL);
+	i = 1;
+	if (l == NULL)
+	{
+		printf("list is empty\n");
+		return ;
+	}
+	ptr = l;
+	printf("node #%d = %d | index = %d | start = %d\n", i, ptr->n, ptr->i, ptr->start);
 	ptr = ptr->next;
-	// le pb etait que ptr->start me permet pas de checker l'element suivant :
-	// on s'arrete quand "le prochain est le premier"
-	while (ptr->next->start != true)
+	while (ptr->start == false)
+	{
+		i++;
+		printf("node #%d = %d | index = %d\n", i, ptr->n, ptr->i);
 		ptr = ptr->next;
-	return (ptr);
+	}
 }
 
 void add_first_node(t_list **lst, t_list *new, int n)
@@ -57,7 +63,6 @@ void add_first_node(t_list **lst, t_list *new, int n)
 		new->next = new;
 }
 
-// pour init : il manque le "circulaire"
 void	add_back(t_list **lst, int n)
 {
 	t_list	*ptr;
@@ -81,28 +86,6 @@ void	add_back(t_list **lst, int n)
 	}  
 }
 
-void	print_lst(t_list *l)
-{
-	t_list	*ptr;
-	int		i;
-
-	i = 1;
-	if (l == NULL)
-	{
-		printf("list is empty\n");
-		return ;
-	}
-	ptr = l;
-	printf("node #%d = %d | start = %d\n", i, ptr->n, ptr->start);
-	ptr = ptr->next;
-	while (ptr->start == false)
-	{
-		i++;
-		printf("node #%d = %d\n", i, ptr->n);
-		ptr = ptr->next;
-	}
-}
-
 int lst_size(t_list *l)
 {
 	t_list *ptr;
@@ -122,3 +105,107 @@ int lst_size(t_list *l)
 	}
 	return (i);
 }
+
+//a virer ?
+/* t_list	*lst_last(t_list *lst) */
+/* { */
+/* 	t_list	*ptr; */
+/**/
+/* 	ptr = lst; */
+/* 	if (ptr == NULL) */
+/* 		return (NULL); */
+/* 	ptr = ptr->next; */
+/* 	// le pb etait que ptr->start me permet pas de checker l'element suivant : */
+/* 	// on s'arrete quand "le prochain est le premier" */
+/* 	while (ptr->next->start != true) */
+/* 		ptr = ptr->next; */
+/* 	return (ptr); */
+/* } */
+
+
+
+void	swap_elements(int *tab, unsigned int p1, unsigned int p2)
+{
+	int tmp = tab[p1];
+	tab[p1] = tab[p2];
+	tab[p2] = tmp;
+}
+
+void	bubble_sort(int *tab, unsigned int size)
+{
+	unsigned int i = 0;
+	unsigned int j = 0;
+
+	while (i < size)
+	{
+		j = 0;
+		while (j < size - 1)
+		{
+			if (tab[j] > tab[j + 1])
+				swap_elements(tab, j, j + 1);
+			j++;
+		}
+		i++;
+	}
+}
+
+
+
+void	sort_int_tab(int *tab, unsigned int size)
+{
+	if (size <= 1)
+		return ;
+	bubble_sort(tab, size);
+}
+
+
+
+
+
+int	*lst_to_array(t_list **la, int size)
+{
+	int	*array;
+	int	i;
+	t_list *tmp;
+
+	array = (int *)malloc(sizeof(int) * size); //revoir ca 
+	if (!array)
+		return (NULL);
+	array[0] = (*la)->n;
+	i = 1;
+	tmp = (*la)->next;
+	while (tmp->start == false)
+	{
+		array[i] = tmp->n;
+		i++;
+		tmp = tmp->next;
+	}
+	sort_int_tab(array, i);
+	i = 0;
+	while (i < size)
+	{
+		printf("array[%d] = %d\n", i, array[i]);
+		i++;
+	}
+	return (array);
+}
+
+int is_sorted_check(t_list *la)
+{
+	t_list *tmp;
+
+	//securiser ?
+	tmp = la;
+	while (tmp->next != la)
+	{
+		if (tmp->n > tmp->next->n)
+		{
+			/* printf("list unsorted\n"); */
+			return (1);
+		}
+		tmp = tmp->next;
+	}
+	/* printf("list sorted\n"); */
+	return (0);
+}
+

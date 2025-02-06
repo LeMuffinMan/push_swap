@@ -11,45 +11,25 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h> // a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande 
-#include <stdlib.h> 
+#include <stdio.h>
+// a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande
+#include <stdlib.h>
 
-//a reecrir
-int is_sorted(t_list *l)
+// a reverifier
+int	duplicate_checker(t_list *l)
 {
-	t_list 	*tmp;
-	int 	n;
-
-	tmp = l;
-	n = tmp->n;
-	tmp = tmp->next;
-	while(tmp->n > n)
-	{
-		n = tmp->n;
-		tmp = tmp->next;
-	}
-	if (tmp == l)
-	{
-		printf("list is sorted at init\n");
-		exit (1);
-	}
-	return (0);
-}
-
-//a reverifier
-int 	duplicate_checker(t_list *l)
-{
-	t_list *n1;
-	t_list *n2;
+	t_list	*n1;
+	t_list	*n2;
 
 	n1 = l;
 	n2 = l->next;
 	while (n1->next != l) // on fait le tour de la liste avec n1
 	{
-		while (n2 != l) // on teste chaque noeud jusqu'a revenir a debut de liste
+		while (n2 != l)
+		// on teste chaque noeud jusqu'a revenir a debut de liste
 		{
 			/* printf("n1->n = %d | n2->n = %d\n", n1->n, n2->n); */
-			if(n1->n == n2->n)	
+			if (n1->n == n2->n)
 				return (1);
 			n2 = n2->next;
 		}
@@ -59,45 +39,55 @@ int 	duplicate_checker(t_list *l)
 	return (0);
 }
 
-
-void free_splited(char **splited)
+void	free_splited(char **splited)
 {
-	int i;
+	int	i;
 
-  i = 0;
+	i = 0;
 	while (splited[i])
 	{
 		free(splited[i]);
 		i++;
 	}
 	free(splited);
-
 }
 
-int init_stack(t_list **l, char **av)
+//revoir !!
+int	init_stack(t_list **l, int ac, char **av)
 {
-  char **splitted;
+	char	**splitted;
+	int		i;
+	int		n;
 
-  if (!av[1][0])
-  {
-  	printf("list empty at initialisation\n");
-	  exit(EXIT_FAILURE);
+	if (ac == 1 || !av[1][0]) // pas sur la seconde condition
+	{
+		printf("list empty at initialisation\n");
+		exit(EXIT_FAILURE);
 	}
-  splitted = ft_split(av[1], ' '); // penser a gerer plus de sep : tout ce qui n'est pas un - + ou un digit *l ?
-  if (splitted[1] == NULL) // si il n'y a qu'un seul element
-  {
-  	free_splited(splitted);
-  	printf("list has only 1 element\n");
-  	exit(EXIT_FAILURE);
-  }
-  *l = fill_list(splitted);
-  free_splited(splitted);
-  if (is_sorted(*l) || duplicate_checker(*l)) 
-  {
-  	printf("sorted list or duplicated ints\n");
-  	free_list(l);
-  	exit(1);
-  }
-  return (0);
+	// si ac == 2 : gerer 1 int unique et une string d'ints
+	else if (ac == 2)
+	{
+		splitted = ft_split(av[1], ' ');
+		// gerer plus de sep : n'est pas un - + ou un digit *l ?
+		if (splitted[1] == NULL) // si il n'y a qu'un seul element
+		{
+			free_splited(splitted);
+			printf("list has only 1 element\n");
+			exit(EXIT_FAILURE);
+		}
+		*l = fill_list(splitted);
+		free_splited(splitted);
+		if (is_sorted_check(*l) || duplicate_checker(*l))
+		{
+			printf("sorted list or duplicated ints\n");
+			free_list(l);
+			exit(1);
+		}
+	}
+	else if (ac > 2)
+	{
+		av++;
+		*l = fill_list(av);
+	}
+	return (0);
 }
-

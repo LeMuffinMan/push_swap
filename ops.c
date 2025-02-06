@@ -18,57 +18,84 @@
 /* The first element becomes the last one. */
 /* rb (rotate b): Shift up all elements of stack b by 1. */
 /* The first element becomes the last one. */
-void rotate(t_list **l)
+void ra(t_list **l)
 {
   if (*l == NULL || *l == (*l)->next)
     return ;
   (*l)->start = false;
   (*l)->next->start = true;
   *l = (*l)->next;
+  
+  printf("ra\n");
+
 }
 
+void rb(t_list **l)
+{
+  if (*l == NULL || *l == (*l)->next)
+    return ;
+  (*l)->start = false;
+  (*l)->next->start = true;
+  *l = (*l)->next;
+  printf("rb\n");
+}
+
+
 /* rr : ra and rb at the same time. */
-void rotate_both(t_list **la, t_list **lb)
+void rr(t_list **la, t_list **lb)
 {
   if (*la == NULL || *lb == NULL)
   {
     printf("rr but one stack is empty !");
     exit(1);
   }
-  rotate(la);
-  rotate(lb);
+  ra(la);
+  rb(lb);
+  printf("rr\n");
 }
 
 /* rra (reverse rotate a): Shift down all elements of stack a by 1. */
 /* The last element becomes the first one. */
 /* rrb (reverse rotate b): Shift down all elements of stack b by 1. */
 /* The last element becomes the first one. */
-void reverse_rotate(t_list **l)
+void rra(t_list **l)
 {
   if (*l == NULL || *l == (*l)->next)
     return ;
   (*l)->prev->start = true;
   (*l)->start = false;
   *l = (*l)->prev;
+  printf("rra\n");
+}
+
+void rrb(t_list **l)
+{
+  if (*l == NULL || *l == (*l)->next)
+    return ;
+  (*l)->prev->start = true;
+  (*l)->start = false;
+  *l = (*l)->prev;
+  printf("rrb\n");
 }
 
 /* rrr : rra and rrb at the same time. */
-void reverse_rotate_both(t_list **la, t_list **lb)
+void rrr(t_list **la, t_list **lb)
 {
   if (*la == NULL || *lb == NULL)
   {
     printf("rrr but one stack is empty !");
     exit(1);
   }
-  reverse_rotate(la);
-  reverse_rotate(lb);
+  rra(la);
+  rrb(lb);
+  printf("rrr\n");
 }
 
 /* sa (swap a): Swap the first 2 elements at the top of stack a. */
 /* Do nothing if there is only one or no elements. */
 /* sb (swap b): Swap the first 2 elements at the top of stack b. */
 /* Do nothing if there is only one or no elements. */
-void swap(t_list **l)
+void sa(t_list **l)
 {
   int tmp;
 
@@ -77,18 +104,32 @@ void swap(t_list **l)
   tmp = (*l)->n;
   (*l)->n = (*l)->next->n;
   (*l)->next->n = tmp;
+  printf("sa\n");
+}
+
+void sb(t_list **l)
+{
+  int tmp;
+
+  if (*l == NULL || *l == (*l)->next)
+    return ;
+  tmp = (*l)->n;
+  (*l)->n = (*l)->next->n;
+  (*l)->next->n = tmp;
+  printf("sb\n");
 }
 
 /* ss : sa and sb at the same time. */
-void swap_both(t_list **la, t_list **lb)
+void ss(t_list **la, t_list **lb)
 {
   if (*la == NULL || *lb == NULL)
   {
     printf("ss but one stack is empty !");
     exit(1);
   }
-  swap(la);  
-  swap(lb);  
+  sa(la);  
+  sb(lb);  
+  printf("ss\n");
 }
 
 /* pa (push a): Take the first element at the top of b and put it at the top of a. */
@@ -97,7 +138,7 @@ void swap_both(t_list **la, t_list **lb)
 /* Do nothing if a is empty */
 /* push a (&la, &lb) */
 /* push b (&lb, &la) */
-void push(t_list **la, t_list **lb) //encore des pb ici
+void pa(t_list **la, t_list **lb) //encore des pb ici
 {
   t_list *last;
   t_list *tmp;
@@ -144,40 +185,56 @@ void push(t_list **la, t_list **lb) //encore des pb ici
     *la = tmp;
     tmp->start = true;
   }
+  printf("pa\n");
 }
 
+void pb(t_list **lb, t_list **la) //encore des pb ici
+{
+  t_list *last;
+  t_list *tmp;
 
-
-/* void push(t_list **la, t_list **lb) { */
-/*     t_list *tmp; */
-/*      */
-/*     if (*lb == NULL) { */
-/*         return; */
-/*     } */
-/*     tmp = *lb; */
-/*     // Si lb a un seul élément */
-/*     if (tmp == tmp->next) { */
-/*         *lb = NULL; */
-/*     } else { */
-/*         // Réajuster les liens de lb */
-/*         *lb = tmp->next; */
-/*         tmp->prev->next = *lb; */
-/*         (*lb)->prev = tmp->prev; */
-/*     } */
-/*      */
-/*     // Ajouter tmp au début de la pile la */
-/*     if (*la == NULL) { */
-/*         tmp->prev = tmp; */
-/*         tmp->next = tmp; */
-/*         *la = tmp; */
-/*     } else { */
-/*         tmp->prev = (*la)->prev; */
-/*         tmp->next = *la; */
-/*         (*la)->prev->next = tmp; */
-/*         (*la)->prev = tmp; */
-/*         *la = tmp; */
-/*     } */
-/**/
-/*     tmp->start = true; */
-/* } */
+  if (*lb == NULL)
+    return ;
+  tmp = *lb;
+  if (tmp == (*tmp).next) // si j'ai plus qu'un seul element dans la pile a reduire 
+    *lb = NULL;
+  else 
+  {
+    (*lb)->start = false;
+    last = (*lb)->prev;
+    *lb = (*lb)->next;
+    (*lb)->start = true;
+    (*lb)->prev = last;
+    last->next = *lb;  //lb a toujours son premier element
+    tmp->next = *la;
+  }
+  if (*la == NULL)
+  {
+    tmp->prev = tmp;
+    tmp->start = true;
+    tmp->next = tmp;
+    *la = tmp;
+  }
+  else if (*la == (*la)->next && *la == (*la)->prev) // si la liste ne contient qu'un seul element 
+  {
+    (*la)->next = tmp;
+    (*la)->prev = tmp;
+    (*la)->next->next = *(la);
+    (*la)->prev->prev = *(la);
+    (*la)->start = false;
+    (*la)->next->start = true;
+    *la = tmp;
+  }
+  else 
+  {
+    (*la)->prev->next = tmp; // le next du dernier est branche sur le nouveau
+    tmp->prev = (*la)->prev;
+    (*la)->prev = tmp;
+    tmp->next = *la;
+    (*la)->start = false;
+    *la = tmp;
+    tmp->start = true;
+  }
+  printf("pb\n");
+}
 
