@@ -13,6 +13,7 @@
 #include "push_swap.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h> //a virer apres debug
 
 // Boucle infinie dans des cas particuliers + 10 elem sur ra ?
 	// get_cheaper renvoie une structure
@@ -203,9 +204,8 @@ int	get_cheaper_i(t_list **la, t_list **lb)
 	int		i;
 	int		cheaper;
 
-	tmp = *lb;
-	cheaper = get_moves_count(*la, *lb, tmp->i);
-	tmp = tmp->next;
+	tmp = (*lb)->next;
+	cheaper = (*lb)->i;
 	while (tmp->start == false)
 	{
 		if (get_moves_count(*la, *lb, tmp->i) < cheaper)
@@ -286,6 +286,12 @@ void	sort(t_list **la, t_list **lb)
 	/* get_index(la, array); */
 	free(array);
 	/* printf("min = %d | max = %d | median = %d\n", min, max, median); */
+		/**/
+		/* sleep(1); */
+		/* printf("la :\n"); */
+		/* print_lst(*la); */
+		/* printf("lb :\n"); */
+		/* print_lst(*lb); */
 	while (lst_size(*la) > 3)
 	{
 		/* printf("(*la)->i = %d | size_A = %d\n", (*la)->i, size_A); */
@@ -307,6 +313,11 @@ void	sort(t_list **la, t_list **lb)
 		}
 		size_3_sort(la);
 		// la on a le plus petit en haut, la mediane, puis le max
+		/* sleep(1); */
+		/* printf("la :\n"); */
+		/* print_lst(*la); */
+		/* printf("lb :\n"); */
+		/* print_lst(*lb); */
 	}
 	//on push le moins cher possible dans A a chaque fois
 	while (lst_size(*lb) > 3)
@@ -317,11 +328,13 @@ void	sort(t_list **la, t_list **lb)
 		//apres quel i dans la 
 			//ma boucle devient : while ((*la)->i != i + 1 et (*la)->prev-> != i - 1)
 		i = get_cheaper_i(la, lb);
+		/* sleep(1); */
+		/* printf("cheaper = %d\n", i); */
 		/* printf("la :\n"); */
 		/* print_lst(*la); */
 		/* printf("lb :\n"); */
 		/* print_lst(*lb); */
-
+		/**/
 		//optimiser ici : get_cheaper me ramene le meilleur indice pour 
 			//rotate B
 			//rotate A
@@ -330,19 +343,28 @@ void	sort(t_list **la, t_list **lb)
 		if (get_rot_dir(*la, i + 1, size_A) > 0)
 		{
 			//boucle infinie ici pour quelques nb de valeurs
-			while ((*la)->i != (i + 1) && (*la)->prev->i != (i - 1))
+			/* while ((*la)->i != (i + 1) && (*la)->prev->i != (i - 1)) */
+			while ((*la)->i < i && (*la)->prev->i > i)
 				ra(la);
 		}
 		else if (get_rot_dir(*la, i + 1, size_A) < 0)
 		{
-			while ((*la)->i != i + 1)
+			while ((*la)->i < i)
 				rra(la);
 		}
 		size_B = lst_size(*lb);
 		if (get_rot_dir(*lb, i, size_B) > 0)
 		{
 			while ((*lb)->i != i)
+			{
+				/* sleep (1); */
+				/* printf("cheaper = %d\n", i); */
+				/* printf("la :\n"); */
+				/* print_lst(*la); */
+				/* printf("lb :\n"); */
+				/* print_lst(*lb); */
 				rb(lb);
+			}
 		}
 		else if (get_rot_dir(*lb, i + 1, size_B) < 0)
 		{
@@ -350,21 +372,30 @@ void	sort(t_list **la, t_list **lb)
 				rrb(lb);
 		}
 		pa(la, lb);
+		/* sleep(1); */
+		/* printf("la :\n"); */
+		/* print_lst(*la); */
+		/* printf("lb :\n"); */
+		/* print_lst(*lb); */
 	}
 	inverted_size_3_sort(lb); //ici : optimiser pour tourner en meme temps
 	//tourner a pour avoir le bon emplacement pour push
 	if (get_rot_dir(*la, (*lb)->i + 1, size_A) > 0)
 	{
-		while ((*la)->i != (*lb)->i + 1)
+		while ((*la)->i < i)
 			ra(la);
 	}
 	else if (get_rot_dir(*la, (*lb)->i + 1, size_A) < 0)
 	{
-		while ((*la)->i != (*lb)->i + 1)
+		while ((*la)->i < i)
 			rra(la);
 	}
 	while (*lb)
+	{
+		while ((*la)->prev->i > (*lb)->i)
+			rra(la);
 		pa(la, lb);
+	}
 	if (get_rot_dir(*la, 0, lst_size(*la)) > 0)
 	{
 		while ((*la)->i != 0)
