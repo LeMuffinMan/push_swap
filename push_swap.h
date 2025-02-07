@@ -13,7 +13,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef struct s_list
+typedef struct s_list // s_list / t_list ?
 {
   struct s_list *prev;
   bool          start;
@@ -22,6 +22,12 @@ typedef struct s_list
   struct s_list *next;
 } t_list;
 
+typedef struct s_move
+{
+  int cheaper;
+  int prev;
+  int next;
+} t_move;
 
 //a ranger
 void	get_index(t_list **l, int *array);

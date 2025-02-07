@@ -194,8 +194,44 @@ int	get_moves_count(t_list *la, t_list *lb, int i)
 	if (count > size / 2)
 		count = size - count;
 	count += j;
-	/* printf("i = %d | count = %d | j = %d\n", i, count, j); */
+	/* printf("i = %d | count = %d\n", i, count); */
 	return (count + 1);
+}
+
+
+t_move get_cheaper(t_list **la, t_list **lb)
+{
+	t_move move;
+	t_list *tmp;
+
+	tmp = (*lb)->next;
+	move.cheaper = (*lb)->i;
+	while (tmp->start == false)
+	{
+		if (get_moves_count(*la, *lb, tmp->i) < get_moves_count(*la, *lb, move.cheaper))
+			move.cheaper = tmp->i;
+		tmp = tmp->next;
+	}
+	tmp = *la;
+	if (tmp->i > move.cheaper && tmp->prev->i < move.cheaper)
+	{
+		move.prev = tmp->prev->i;
+		move.next = tmp->i;
+	}
+	tmp = tmp->next;
+	while (tmp->start == false)
+	{
+		if (tmp->i > move.cheaper && tmp->prev->i < move.cheaper)
+		{
+			move.prev = tmp->prev->i;
+			move.next = tmp->i;
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	/* printf("cheaper = %d\n", cheaper); */
+	return (move);
+
 }
 
 int	get_cheaper_i(t_list **la, t_list **lb)
@@ -208,7 +244,7 @@ int	get_cheaper_i(t_list **la, t_list **lb)
 	cheaper = (*lb)->i;
 	while (tmp->start == false)
 	{
-		if (get_moves_count(*la, *lb, tmp->i) < cheaper)
+		if (get_moves_count(*la, *lb, tmp->i) < get_moves_count(*la, *lb, cheaper))
 			cheaper = tmp->i;
 		tmp = tmp->next;
 	}
@@ -279,6 +315,7 @@ void	sort(t_list **la, t_list **lb)
 	int	size_B;
 	int	*array;
 	int	i;
+	t_move move;
 
 	size_A = lst_size(*la);
 	array = lst_to_array(la, size_A);
@@ -287,11 +324,11 @@ void	sort(t_list **la, t_list **lb)
 	free(array);
 	/* printf("min = %d | max = %d | median = %d\n", min, max, median); */
 		/**/
-		/* sleep(1); */
-		/* printf("la :\n"); */
-		/* print_lst(*la); */
-		/* printf("lb :\n"); */
-		/* print_lst(*lb); */
+		sleep(1);
+		printf("la :\n");
+		print_lst(*la);
+		printf("lb :\n");
+		print_lst(*lb);
 	while (lst_size(*la) > 3)
 	{
 		/* printf("(*la)->i = %d | size_A = %d\n", (*la)->i, size_A); */
@@ -327,44 +364,35 @@ void	sort(t_list **la, t_list **lb)
 		//avant quel i dans la
 		//apres quel i dans la 
 			//ma boucle devient : while ((*la)->i != i + 1 et (*la)->prev-> != i - 1)
-		i = get_cheaper_i(la, lb);
-		/* sleep(1); */
-		/* printf("cheaper = %d\n", i); */
-		/* printf("la :\n"); */
-		/* print_lst(*la); */
-		/* printf("lb :\n"); */
-		/* print_lst(*lb); */
+		move = get_cheaper(la, lb);
+		i = move.cheaper;
+		sleep(1);
+		printf("\ncheaper = %d\n", i);
+		printf("la :\n");
+		print_lst(*la);
+		printf("lb :\n");
+		print_lst(*lb);
 		/**/
 		//optimiser ici : get_cheaper me ramene le meilleur indice pour 
 			//rotate B
 			//rotate A
 			//push A
 		//SI je rotate A et B dans le meme sens je veux en profiter
-		if (get_rot_dir(*la, i + 1, size_A) > 0)
+		if (get_rot_dir(*la, move.next, size_A) > 0) // REVOIR GET_ROT_DIR
 		{
-			//boucle infinie ici pour quelques nb de valeurs
-			/* while ((*la)->i != (i + 1) && (*la)->prev->i != (i - 1)) */
-			while ((*la)->i < i && (*la)->prev->i > i)
+			while ((*la)->i != move.next && (*la)->prev->i != move.prev)
 				ra(la);
 		}
 		else if (get_rot_dir(*la, i + 1, size_A) < 0)
 		{
-			while ((*la)->i < i)
+			while ((*la)->i != move.next && (*la)->prev->i != move.prev)
 				rra(la);
 		}
 		size_B = lst_size(*lb);
 		if (get_rot_dir(*lb, i, size_B) > 0)
 		{
 			while ((*lb)->i != i)
-			{
-				/* sleep (1); */
-				/* printf("cheaper = %d\n", i); */
-				/* printf("la :\n"); */
-				/* print_lst(*la); */
-				/* printf("lb :\n"); */
-				/* print_lst(*lb); */
 				rb(lb);
-			}
 		}
 		else if (get_rot_dir(*lb, i + 1, size_B) < 0)
 		{
@@ -372,11 +400,11 @@ void	sort(t_list **la, t_list **lb)
 				rrb(lb);
 		}
 		pa(la, lb);
-		/* sleep(1); */
-		/* printf("la :\n"); */
-		/* print_lst(*la); */
-		/* printf("lb :\n"); */
-		/* print_lst(*lb); */
+		sleep(1);
+		printf("la :\n");
+		print_lst(*la);
+		printf("lb :\n");
+		print_lst(*lb);
 	}
 	inverted_size_3_sort(lb); //ici : optimiser pour tourner en meme temps
 	//tourner a pour avoir le bon emplacement pour push
@@ -436,17 +464,17 @@ int	main(int ac, char **av)
 	else
 		sort(&la, &lb);
 	/* 	insertion_sort(&la, &lb); */
-	/* printf("\n========================\n"); */
-	/* printf("la :\n"); */
-	/* print_lst(la); */
+	printf("\n========================\n");
+	printf("la :\n");
+	print_lst(la);
 	/* printf("la->n = %d start = %d | la->next->n = %d  start =
 		%d  | la->prev->n = %d  start = %d\n", la->n, la->start, la->next->n,
 		la->next->start, la->prev->n, la->prev->start); */
 	/* printf("lb :\n"); */
 	/* print_lst(lb); */
 	//revoir is sorted .....
-	/* if (is_sorted_check(la)) */
-	/* 	printf("\nLIST SORTED\n"); */
+	if (is_sorted_check(la))
+		printf("\nLIST SORTED\n");
 	free_list(&la);
 	free_list(&lb);
 	return (0);
