@@ -27,6 +27,13 @@ typedef struct s_move
   int cheaper;
   int prev;
   int next;
+  int rr;
+  int rrr;
+  int ra;
+  int rb;
+  int rra;
+  int rrb;
+  int cost;
 } t_move;
 
 //a ranger
