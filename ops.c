@@ -49,8 +49,16 @@ void rr(t_list **la, t_list **lb)
     printf("rr but one stack is empty !");
     exit(1);
   }
-  ra(la);
-  rb(lb);
+  if (*la == NULL || *la == (*la)->next)
+    return ;
+  (*la)->start = false;
+  (*la)->next->start = true;
+  *la = (*la)->next;
+  if (*lb == NULL || *lb == (*lb)->next)
+    return ;
+  (*lb)->start = false;
+  (*lb)->next->start = true;
+  *lb = (*lb)->next;
   printf("rr\n");
 }
 
@@ -86,8 +94,16 @@ void rrr(t_list **la, t_list **lb)
     printf("rrr but one stack is empty !");
     exit(1);
   }
-  rra(la);
-  rrb(lb);
+  if (*la == NULL || *la == (*la)->next)
+    return ;
+  (*la)->prev->start = true;
+  (*la)->start = false;
+  *la = (*la)->prev;
+  if (*lb == NULL || *lb == (*lb)->next)
+    return ;
+  (*lb)->prev->start = true;
+  (*lb)->start = false;
+  *lb = (*lb)->prev;
   printf("rrr\n");
 }
 
@@ -128,13 +144,29 @@ void sb(t_list **l)
 /* ss : sa and sb at the same time. */
 void ss(t_list **la, t_list **lb)
 {
+  int tmp;
+
   if (*la == NULL || *lb == NULL)
   {
     printf("ss but one stack is empty !");
     exit(1);
   }
-  sa(la);  
-  sb(lb);  
+  if (*la == NULL || *la == (*la)->next)
+    return ;
+  tmp = (*la)->n;
+  (*la)->n = (*la)->next->n;
+  (*la)->next->n = tmp;
+  tmp = (*la)->i;
+  (*la)->i = (*la)->next->i;
+  (*la)->next->i = tmp;
+  if (*lb == NULL || *lb == (*lb)->next)
+    return ;
+  tmp = (*lb)->n;
+  (*lb)->n = (*lb)->next->n;
+  (*lb)->next->n = tmp;
+  tmp = (*lb)->i;
+  (*lb)->i = (*lb)->next->i;
+  (*lb)->next->i = tmp;
   printf("ss\n");
 }
 
