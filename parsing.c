@@ -127,6 +127,8 @@ int get_position(t_list **l)
 	t_list *tmp;
 	int i;
 
+	if (!*l)
+		return (1);
 	(*l)->pos = 0;
 	i = 1;
 	tmp = (*l)->next;
@@ -167,9 +169,10 @@ int init_step_2(t_list **l)
 {
 	t_list *tmp;
 
-	(*l)->rot = -1;
+	(*l)->rot = 0;
 	(*l)->cost = INT_MAX;
-	(*l)->dest = NULL;	
+	(*l)->dest = -1;
+	(*l)->dest_rot = 0;
 	tmp = (*l)->next;
 	if (tmp->start == true)
 		return (0);

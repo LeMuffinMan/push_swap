@@ -277,30 +277,31 @@ int do_rotates(t_list **la, t_list **lb, t_move *best_move)
 
 int optimise_rotations(t_list *node)
 {
-	int tmp_1;
-	int tmp_2;
+	int rot;
+	int dest_rot;
 
+		rot = node->rot;
+		dest_rot = node->dest_rot;
+		/* printf("node #%d | i = %d | rot = %d | rot_dest = %d\n", node->pos, node->i, rot, dest_rot); */
+	/* printf("node->dest_rot = %d\n", node->dest_rot); */
 		// pb ici, les negatifs donnent des coup = 0
-	if (node->rot > 0 && node->dest->rot < 0)
-		return (node->rot + node->dest->rot * -1);
-	if (node->rot < 0 && node->dest->rot > 0)
-		return (node->rot * -1 + node->dest->rot);
-	if (node->rot > 0 && node->dest->rot > 0)
+	if (rot >= 0 && dest_rot < 0)
+		return (rot + dest_rot * -1);
+	if (rot < 0 && dest_rot >= 0)
+		return (rot * -1 + dest_rot);
+	if (rot >= 0 && dest_rot >= 0)
 	{
-		if (node->rot > node->dest->rot)
-			return (node->rot);
+		if (rot >= dest_rot)
+			return (rot);
 		else 
-			return (node->dest->rot);
+			return (dest_rot);
 	}
-	if (node->rot < 0 && node->dest->rot < 0)
+	if (rot < 0 && dest_rot < 0)
 	{
-		tmp_1 = node->rot * -1;
-		tmp_2 = node->dest->rot * -1;
-		printf("tmp_1 = %d | tmp_2 = %d\n", tmp_1, tmp_2);
-		if (node->rot > node->dest->rot)
-			return (node->rot);
+		if (rot * -1 >= dest_rot * -1)
+			return (rot * -1);
 		else 
-			return (node->dest->rot);
+			return (dest_rot * -1);
 	}
 }
 
@@ -310,47 +311,134 @@ int get_costs(t_list **lb)
 	t_list *tmp;
 	
 	//revoir les couts : + et - a repenser ?
-	(*lb)->cost = (*lb)->rot + (*lb)->dest->rot;
+	(*lb)->cost = optimise_rotations(*lb);
+	/* printf("i = %d | cost = %d\n", (*lb)->i, (*lb)->cost); */
 	tmp = (*lb)->next;
 	while (tmp->start == false)
 	{
 		tmp->cost = optimise_rotations(tmp);
+	/* printf("i = %d | cost = %d\n", tmp->i, tmp->cost); */
 		tmp = tmp->next;
 	}
 }
 
 
+int get_min_index(t_list **l)
+{
+	int min;
+	t_list *tmp;
+
+	min = (*l)->i;
+	tmp = (*l)->next;
+	while (!tmp->start)
+	{
+		if (tmp->i < min)
+			min = tmp->i;
+		tmp = tmp->next;
+	}
+	return (min);
+}
+
+int get_max_index(t_list **l)
+{
+	int max;
+	t_list *tmp;
+
+	max = (*l)->i;
+	tmp = (*l)->next;
+	while (!tmp->start)
+	{
+		if (tmp->i > max)
+			max = tmp->i;
+		tmp = tmp->next;
+	}
+	return (max);
+}
+
 int get_dests(t_list **la, t_list **lb)
 {
 	t_list *tmp_A;
 	t_list *tmp_B;
+	int max_index;
+	int min_index;
 
-	(*lb)->dest = (*la)->prev;
-	if ((*la)->i > (*lb)->i && (*la)->i < (*lb)->dest->i)
-		(*lb)->dest = *la;
+	max_index = get_max_index(la);
+	min_index = get_min_index(la);
+	/* printf("max = %d | min = %d\n", max_index, min_index); */
+	(*lb)->dest = max_index;
+	if ((*lb)->i > max_index)
+		(*lb)->dest = min_index;
+	else if ((*la)->i > (*lb)->i && (*la)->i < (*lb)->dest)
+		(*lb)->dest = (*la)->i;
 	tmp_A = (*la)->next;
-	while (tmp_A->start == false)
+	while (tmp_A->start == false && (*lb)->dest != min_index)
 	{
-		if (tmp_A->i > (*lb)->i && tmp_A->i < (*lb)->dest->i)
-			(*lb)->dest = tmp_A;
+		if (tmp_A->i > (*lb)->i && tmp_A->i < (*lb)->dest)
+			(*lb)->dest = tmp_A->i;
 		tmp_A = tmp_A->next;
+	}
+	/* printf("i = %d | dest = %d\n", (*lb)->i, (*lb)->dest); */
+	tmp_B = (*lb)->next;
+	while (tmp_B->start == false)
+	{
+		tmp_B->dest = max_index;
+		if (tmp_B->i > max_index)
+			tmp_B->dest = min_index;
+		else if ((*la)->i > tmp_B->i && (*la)->i < tmp_B->dest)
+			tmp_B->dest = (*la)->i;
+		tmp_A = (*la)->next;
+		while (tmp_A->start == false && tmp_B->dest != min_index)
+		{
+			if (tmp_A->i > tmp_B->i && tmp_A->i < tmp_B->dest)
+				tmp_B->dest = tmp_A->i;
+			tmp_A = tmp_A->next;
+		}
+		/* printf("i = %d | dest = %d\n", tmp_B->i, tmp_B->dest); */
+		tmp_B = tmp_B->next;
+	}
+}
+
+int get_dest_rots(t_list **la, t_list **lb)
+{
+	t_list *tmp_A;
+	t_list *tmp_B;
+	int rot;
+	int dest;
+
+	dest = (*lb)->dest;
+	if ((*la)->i == dest)
+		(*lb)->dest_rot = (*la)->rot;
+	else
+	{
+		tmp_A = (*la)->next;
+		while (tmp_A->start == false)
+		{
+			if (tmp_A->i == dest)
+				(*lb)->dest_rot = tmp_A->rot;
+			tmp_A = tmp_A->next;
+		}
 	}
 	tmp_B = (*lb)->next;
 	while (tmp_B->start == false)
 	{
-		tmp_B->dest = (*la)->prev;
-		if ((*la)->i > tmp_B->i && (*la)->i < tmp_B->dest->i)
-			tmp_B->dest = *la;
-		tmp_A = (*la)->next;
-		while (tmp_A->start == false)
+		dest = tmp_B->dest;
+		if ((*la)->i == dest)
+			tmp_B->dest_rot = (*la)->rot;
+		else
 		{
-			if (tmp_A->i > tmp_B->i && tmp_A->i < tmp_B->dest->i)
-				tmp_B->dest = tmp_A;
-			tmp_A = tmp_A->next;
+			tmp_A = (*la)->next;
+			while (tmp_A->start == false)
+			{
+				if (tmp_A->i == dest)
+					tmp_B->dest_rot = tmp_A->rot;
+				tmp_A = tmp_A->next;
+			}
 		}
 		tmp_B = tmp_B->next;
 	}
+	
 }
+
 
 int get_rots(t_list **l)
 {
@@ -370,26 +458,301 @@ int get_rots(t_list **l)
 	}
 }
 
-t_move get_cheaper_insertion(t_list **la, t_list **lb)
+//changer de strat : on execute les rotates indiquee par le node choisi
+//reecrire do rotate 
+//virer rr et rrr de la struct move 
+//virer la struct move ?
+//
+t_move optimise_best_move(t_move move, t_list *la, t_list *lb)
 {
-	/* t_move cheaper; */
-	/* cheaper = get_cheaper_node(); //on peut identifier le moins cher */
-	/* return (cheaper);	 */
+	t_list *tmp_A;
+	t_list *tmp_B;
+
+	if (move.candidate == lb->i)
+	{
+		move.dest = lb->dest;
+		if (move.dest == la->i)
+		{
+			if (la->rot >= 0)
+				move.ra = la->rot;
+			else
+				move.rra = la->rot * -1;
+		}
+		else 
+		{
+			tmp_A = la->next;
+			while (!tmp_A->start)
+			{
+				if (move.dest == tmp_A->i)
+				{
+					//si on a deux rotations +
+					if (tmp_A->rot >= 0 && lb->rot >= 0)
+					{
+						if (tmp_A->rot > lb->rot)
+						{
+							move.rr = lb->rot;
+							move.ra = tmp_A->rot - move.rr;
+						}
+						else
+						{
+							move.rr = tmp_A->rot;
+							move.rb = lb->rot - move.rr;
+						}
+					}
+					else if (tmp_A->rot < 0 && lb->rot < 0)
+					{
+						if (tmp_A->rot < lb->rot)
+						{
+							move.rrr = lb->rot * -1;
+							move.rra = tmp_A->rot * -1 - move.rrr;
+						}
+						else
+						{
+							move.rrr = tmp_A->rot * -1;
+							move.rrb = lb->rot * -1 - move.rrr;
+						}
+					}
+				}
+				tmp_A = tmp_A->next;
+			}
+		}
+	}
+	else 
+	{
+		tmp_B = lb->next;
+		while (!tmp_B->start)
+		{
+			if (move.candidate == lb->i)
+			{
+				move.dest = lb->dest;
+				if (move.dest == la->i)
+				{
+					if (la->rot >= 0)
+						move.ra = la->rot;
+					else
+						move.rra = la->rot * -1;
+				}
+				else 
+				{
+					tmp_A = la->next;
+					while (!tmp_A->start)
+					{
+						if (move.dest == tmp_A->i)
+						{
+							//si on a deux rotations +
+							if (tmp_A->rot >= 0 && tmp_B->rot >= 0)
+							{
+								if (tmp_A->rot > tmp_B->rot)
+								{
+									move.rr = tmp_B->rot;
+									move.ra = tmp_A->rot - move.rr;
+								}
+								else
+								{
+									move.rr = tmp_A->rot;
+									move.rb = tmp_B->rot - move.rr;
+								}
+							}
+							else if (tmp_A->rot < 0 && tmp_B->rot < 0)
+							{
+								if (tmp_A->rot < tmp_B->rot)
+								{
+									move.rrr = tmp_B->rot * -1;
+									move.rra = tmp_A->rot * -1 - move.rrr;
+								}
+								else
+								{
+									move.rrr = tmp_A->rot * -1;
+									move.rrb = tmp_B->rot * -1 - move.rrr;
+								}
+							}
+						}
+					}
+				}
+			}
+			tmp_B = tmp_B->next;
+		}
+	}
+	return (move);
+}
+
+/* int init_cheaper(int dest, t_list *l) */
+/* { */
+/* 	t_list *cheaper; */
+/**/
+/* 	if ((*l)->i == dest) */
+/* 		cheaper = *l; */
+/* 	else */
+/* 	{ */
+/* 		cheaper = (*l)->next; */
+/* 		while (!cheaper->start) */
+/* 		{ */
+/* 			if ((*l)->i == dest) */
+/* 				break ; */
+/* 		cheaper = cheaper->next; */
+/* 		} */
+/* 	} */
+/* 	cheaper->candidate = 0; */
+/* 	cheaper->dest = 0; */
+/* 	cheaper->ra = 0; */
+/* 	cheaper->rra = 0; */
+/* 	cheaper->rb = 0; */
+/* 	cheaper->rrb = 0; */
+/* } */
+
+void print_candidate(t_list node)
+{
+    printf("\nCANDIDATE :\n");
+    printf("i = %d\n", node.i);
+    printf("dest = %d\n", node.dest);
+    printf("rot = %d\n", node.rot);
+    printf("dest_rot = %d\n\n", node.dest_rot);
+}
+
+int get_cheaper_insertion(t_list **la, t_list **lb)
+{
+	int cheaper;
+	t_list *tmp;
+	int min_cost;
+	
+	/* init_cheaper(&cheaper); */
+
+	min_cost = (*lb)->cost;
+	cheaper = (*lb)->i;
+	tmp = (*lb)->next;
+	while (!tmp->start)
+	{
+		if (tmp->cost < min_cost)
+		{
+			min_cost = tmp->cost;
+			cheaper = tmp->i;
+		}
+		tmp = tmp->next;
+	}
+	/* cheaper = optimise_best_move(cheaper, *la, *lb); */
+	/* print_move(cheaper); */
+	return (cheaper);	
+}
+
+int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper)
+{
+	t_list *candidate;
+	t_list *dest;
+
+	if ((*lb)->i == cheaper)
+		candidate = *lb;
+	else
+	{
+		candidate = (*lb)->next;
+		while (!candidate->start)
+		{
+			if (candidate->i == cheaper)
+				break ;
+			candidate = candidate->next;
+		}
+	}
+	if ((*la)->i == candidate->dest)
+		dest = *la;
+	else
+	{
+		dest = (*la)->next;
+		while (!dest->start)
+		{
+			if (candidate->dest == dest->i)
+				break ;
+			dest = dest->next;
+		}
+	}
+	//on a nos deux nodes a faire remonter
+	printf("getting %d and %d up\n", candidate->i, dest->i);
+	while (candidate->rot > 0 && dest->rot > 0)
+	{
+		rr(la, lb);
+		candidate->rot--;
+		dest->rot--;
+	}
+	while (candidate->rot < 0 && dest->rot < 0)
+	{
+		rrr(la, lb);
+		candidate->rot++;
+		dest->rot++;
+	}
+	while (candidate->rot > 0)
+	{
+		rb(lb);
+		candidate->rot--;
+	}
+	while (candidate->rot < 0)
+	{
+		rrb(lb);
+		candidate->rot++;
+	}
+	while (dest->rot > 0)
+	{
+		ra(la);
+		dest->rot--;
+	}
+	while (dest->rot < 0)
+	{
+		rra(la);
+		dest->rot++;
+	}
+
 }
 
 int insert_cheaper(t_list **la, t_list **lb)
 {
-	/* t_move move; */
+	int cheaper;
 
 	get_dests (la, lb); // on cherche a quel endroit on doit situer le node B dans A
 	get_rots (la); // on setup les rots pour chaque nodes
 	get_rots (lb); // on setup les rots pour chaque nodes
+	get_dest_rots(la, lb);
 	get_costs(lb); // on peut donc calculer le coups pour chaque node B
-	/* move = get_cheaper_insertion(); */
-	/* do_rotates(); */
-	/* pa(la, lb); */
+	printf("=========================================\n");
+	printf("la :\n");
+	print_lst2(*la);
+	printf("lb :\n");
+	print_lst2(*lb);
+
+	if (lst_size(*lb) > 1)	
+		cheaper = get_cheaper_insertion(la, lb);
+	else
+		cheaper = (*lb)->i;
+	get_cheaper_and_dest_to_top(la, lb, cheaper);
+	/* do_rotates(la, lb, &move); */
+	pa(la, lb);
+	printf("la :\n");
+	print_lst2(*la);
+	printf("lb :\n");
+	print_lst2(*lb);
+	/* sleep(1); */
 	return (0);
 }
+
+int final_rotate(t_list **la)
+{
+	t_list *tmp;
+
+	tmp = (*la)->next;
+	while(!tmp->start)
+	{
+		if (tmp->i == 0)
+			break;
+		tmp = tmp->next;
+	}
+	if (tmp->pos > lst_size(*la) / 2)
+	{
+		while ((*la)->i != 0)
+			rra(la);
+	}
+	else 
+	{
+		while ((*la)->i != 0)
+			ra(la);
+	}	
+}
+
 
 int	main(int ac, char **av)
 {
@@ -418,13 +781,15 @@ int	main(int ac, char **av)
 	{
 		partition_stacks(&la, &lb);
 		size_3_sort(&la);
-		insert_cheaper(&la, &lb);
+		while (lb)
+			insert_cheaper(&la, &lb);
+		final_rotate(&la);
 	}
 	printf("\n========================\n");
 	printf("la :\n");
-	print_lst(la);
+	print_lst2(la);
 	printf("lb :\n");
-	print_lst(lb);
+	print_lst2(lb);
 	if (is_sorted_check(la))
 		printf("\nLIST SORTED\n");
 	free_list(&la);

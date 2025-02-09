@@ -26,14 +26,15 @@ typedef struct s_list // s_list / t_list ?
            // ra et rb parfois plus rentable que rr rrr ?
   int cost;
   int pivot;
-  struct s_list *dest;
+  int dest;
+  int dest_rot;
   struct s_list *next;
 } t_list;
 
 typedef struct s_move
 {
   int candidate;
-  t_list dest;
+  int dest;
   int rr;
   int rrr;
   int ra;
@@ -48,6 +49,7 @@ void	get_index(t_list **l, int *array);
 //utils.c // a trier et statiquer 
 void free_list(t_list **l);
 void print_lst(t_list *l);
+void print_lst2(t_list *l);
 void add_back(t_list **lst, int n);
 int lst_size(t_list *l);
 int	*lst_to_array(t_list **la, int size);

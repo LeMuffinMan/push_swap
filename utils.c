@@ -54,6 +54,28 @@ void	print_lst(t_list *l)
 	}
 }
 
+void	print_lst2(t_list *l)
+{
+	t_list	*ptr;
+	int		i;
+
+	i = 1;
+	if (l == NULL)
+	{
+		printf("list is empty\n");
+		return ;
+	}
+	ptr = l;
+	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d | start = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest, ptr->start);
+	ptr = ptr->next;
+	while (ptr->start == false)
+	{
+		i++;
+	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest);
+		ptr = ptr->next;
+	}
+}
+
 void add_first_node(t_list **lst, t_list *new, int n)
 {
 		*lst = new;
