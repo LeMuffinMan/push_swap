@@ -14,6 +14,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// 9 fonctions a repartir
+// dosier utils
+// list utils 5
+// array utils 4 ! libft !!
+
 void	free_list(t_list **l)
 {
 	t_list	*tmp;
@@ -32,49 +37,7 @@ void	free_list(t_list **l)
 	*l = NULL;
 }
 
-void	print_lst(t_list *l)
-{
-	t_list	*ptr;
-	int		i;
 
-	i = 1;
-	if (l == NULL)
-	{
-		printf("list is empty\n");
-		return ;
-	}
-	ptr = l;
-	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d | start = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest, ptr->start);
-	ptr = ptr->next;
-	while (ptr->start == false)
-	{
-		i++;
-	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest);
-		ptr = ptr->next;
-	}
-}
-
-void	print_lst2(t_list *l)
-{
-	t_list	*ptr;
-	int		i;
-
-	i = 1;
-	if (l == NULL)
-	{
-		printf("list is empty\n");
-		return ;
-	}
-	ptr = l;
-	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d | start = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest, ptr->start);
-	ptr = ptr->next;
-	while (ptr->start == false)
-	{
-		i++;
-	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest);
-		ptr = ptr->next;
-	}
-}
 
 void add_first_node(t_list **lst, t_list *new, int n)
 {
@@ -127,24 +90,6 @@ int lst_size(t_list *l)
 	}
 	return (i);
 }
-
-//a virer ?
-/* t_list	*lst_last(t_list *lst) */
-/* { */
-/* 	t_list	*ptr; */
-/**/
-/* 	ptr = lst; */
-/* 	if (ptr == NULL) */
-/* 		return (NULL); */
-/* 	ptr = ptr->next; */
-/* 	// le pb etait que ptr->start me permet pas de checker l'element suivant : */
-/* 	// on s'arrete quand "le prochain est le premier" */
-/* 	while (ptr->next->start != true) */
-/* 		ptr = ptr->next; */
-/* 	return (ptr); */
-/* } */
-
-
 
 void	swap_elements(int *tab, unsigned int p1, unsigned int p2)
 {
@@ -203,12 +148,6 @@ int	*lst_to_array(t_list **la, int size)
 		tmp = tmp->next;
 	}
 	sort_int_tab(array, i);
-	/* i = 0; */
-	/* while (i < size) */
-	/* { */
-	/* 	printf("array[%d] = %d\n", i, array[i]); */
-	/* 	i++; */
-	/* } */
 	return (array);
 }
 

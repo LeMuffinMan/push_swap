@@ -15,6 +15,8 @@
 // a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande
 #include <stdlib.h>
 
+//reunir les fonctions init et deplacer free_splitted 
+
 // a reverifier
 int	duplicate_checker(t_list *l)
 {

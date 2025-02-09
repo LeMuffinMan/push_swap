@@ -10,8 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PUSH_SWAP
+# define PUSH_SWAP
+
 #include <stdbool.h>
 #include <stddef.h>
+
+
+#define PIVOT 1
 
 typedef struct s_list // s_list / t_list ?
 {
@@ -45,6 +51,35 @@ typedef struct s_move
 
 //a ranger
 void	get_index(t_list **l, int *array);
+
+//pa.c && pb.c
+void pa(t_list **la, t_list **lb);
+void pb(t_list **la, t_list **lb);
+
+//debug A virer
+void print_candidate(t_list node);
+
+//gets.c
+int get_cheaper_insertion(t_list **la, t_list **lb);
+int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
+void	get_index(t_list **l, int *array);
+int get_costs(t_list **lb);
+int get_min_index(t_list **l);
+int get_max_index(t_list **l);
+int get_dests(t_list **la, t_list **lb);
+int get_dest_rots(t_list **la, t_list **lb);
+int get_rots(t_list **l);
+
+
+//my_algo
+int	partition_stacks(t_list **la, t_list **lb);
+int optimise_rotations(t_list *node);
+int insert_cheaper(t_list **la, t_list **lb);
+int final_rotate(t_list **la);
+
+//size_3_sort.c
+void	inverted_size_3_sort(t_list **l);
+void	size_3_sort(t_list **la); // pour pile de 2 ou 3
 
 //utils.c // a trier et statiquer 
 void free_list(t_list **l);
@@ -80,3 +115,5 @@ int get_position(t_list **l);
 int init_stack(t_list **l, int ac, char **av);
 int	duplicate_checker(t_list *l);
 void	free_splited(char **splited);
+
+#endif

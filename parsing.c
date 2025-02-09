@@ -23,6 +23,10 @@
 //45 12 32 62 -45 45-78 : invalid mais PASSE !
 //duplicated passe aussi
 
+//deux fonctions a mettre dans init
+//libft !!
+
+
 static int	count_strs(const char *s, char c)
 {
 	int	strs;
@@ -141,30 +145,7 @@ int get_position(t_list **l)
 	return (0);
 }
 
-/* int get_pivot(t_list **l) */
-/* { */
-/* 	t_list *tmp; */
-/* 	int p; */
-/* 	int i; */
-/**/
-/* 	//p = sqrt(lst_size) ? */
-/* 	p = 3; */
-/* 	i = 1; */
-/* 	if ((*l)->i <= lst_size(*l) / p) */
-/* 		(*l)->pivot = i; */
-/* 	tmp = (*l)->next; */
-/* 	while (tmp->start == false) */
-/* 	{ */
-/* 		if (tmp->i > lst_size(*l) / p * i) */
-/* 			i++; */
-/* 		else */
-/* 			tmp->pivot = i; */
-/* 		printf("tmp->i = %d | pivot = %d\n", tmp->i, tmp->pivot); */
-/* 		tmp = tmp->next; */
-/* 	} */
-/* 	return (0); */
-/* } */
-/**/
+
 int init_step_2(t_list **l)
 {
 	t_list *tmp;
