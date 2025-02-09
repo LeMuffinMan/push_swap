@@ -113,6 +113,8 @@ int insert_cheaper(t_list **la, t_list **lb)
 	else
 		cheaper = (*lb)->i;
 	//faire une fonction execute_insertion
+	////diviser en bring_cheaper to top
+	///bring dest top top
 	get_cheaper_and_dest_to_top(la, lb, cheaper);
 	/* do_rotates(la, lb, &move); */
 	pa(la, lb);

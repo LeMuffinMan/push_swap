@@ -25,29 +25,14 @@ typedef struct s_list // s_list / t_list ?
   bool          start; // IL FAUT DEFINE LE BOOL ?
   int           n;
   int           i;
-  int pos; // Todo
+  int pos; 
   int rot; // positive ou negative : 
-           // pour opti : on check comment avoir au top dest et candidate 
-           // en combinant ou non les rot 
-           // ra et rb parfois plus rentable que rr rrr ?
   int cost;
   int pivot;
   int dest;
   int dest_rot;
   struct s_list *next;
 } t_list;
-
-typedef struct s_move
-{
-  int candidate;
-  int dest;
-  int rr;
-  int rrr;
-  int ra;
-  int rb;
-  int rra;
-  int rrb;
-} t_move;
 
 //a ranger
 void	get_index(t_list **l, int *array);
