@@ -44,12 +44,12 @@ void	print_lst(t_list *l)
 		return ;
 	}
 	ptr = l;
-	printf("node #%d = %d | index = %d | start = %d\n", i, ptr->n, ptr->i, ptr->start);
+	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d | start = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest, ptr->start);
 	ptr = ptr->next;
 	while (ptr->start == false)
 	{
 		i++;
-		printf("node #%d = %d | index = %d\n", i, ptr->n, ptr->i);
+	printf("node #%d = %d | index = %d | rot = %d | pivot = %d | cost = %d | dest = %d\n", ptr->pos, ptr->n, ptr->i, ptr->rot, ptr->pivot, ptr->cost, ptr->dest);
 		ptr = ptr->next;
 	}
 }

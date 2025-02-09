@@ -27,6 +27,7 @@ void ra(t_list **l)
   *l = (*l)->next;
   
   printf("ra\n");
+  get_position(l);
 
 }
 
@@ -38,6 +39,7 @@ void rb(t_list **l)
   (*l)->next->start = true;
   *l = (*l)->next;
   printf("rb\n");
+  get_position(l);
 }
 
 
@@ -60,6 +62,9 @@ void rr(t_list **la, t_list **lb)
   (*lb)->next->start = true;
   *lb = (*lb)->next;
   printf("rr\n");
+
+  get_position(la);
+  get_position(lb);
 }
 
 /* rra (reverse rotate a): Shift down all elements of stack a by 1. */
@@ -74,6 +79,8 @@ void rra(t_list **l)
   (*l)->start = false;
   *l = (*l)->prev;
   printf("rra\n");
+
+  get_position(l);
 }
 
 void rrb(t_list **l)
@@ -84,6 +91,8 @@ void rrb(t_list **l)
   (*l)->start = false;
   *l = (*l)->prev;
   printf("rrb\n");
+
+  get_position(l);
 }
 
 /* rrr : rra and rrb at the same time. */
@@ -105,6 +114,9 @@ void rrr(t_list **la, t_list **lb)
   (*lb)->start = false;
   *lb = (*lb)->prev;
   printf("rrr\n");
+
+  get_position(la);
+  get_position(lb);
 }
 
 /* sa (swap a): Swap the first 2 elements at the top of stack a. */
@@ -124,6 +136,8 @@ void sa(t_list **l)
   (*l)->i = (*l)->next->i;
   (*l)->next->i = tmp;
   printf("sa\n");
+
+  get_position(l);
 }
 
 void sb(t_list **l)
@@ -139,6 +153,8 @@ void sb(t_list **l)
   (*l)->i = (*l)->next->i;
   (*l)->next->i = tmp;
   printf("sb\n");
+
+  get_position(l);
 }
 
 /* ss : sa and sb at the same time. */
@@ -167,6 +183,9 @@ void ss(t_list **la, t_list **lb)
   tmp = (*lb)->i;
   (*lb)->i = (*lb)->next->i;
   (*lb)->next->i = tmp;
+  
+  get_position(la);
+  get_position(lb);
   printf("ss\n");
 }
 
@@ -223,6 +242,8 @@ void pa(t_list **la, t_list **lb) //encore des pb ici
     *la = tmp;
     tmp->start = true;
   }
+  get_position(la);
+  get_position(lb);
   printf("pa\n");
 }
 
@@ -273,6 +294,9 @@ void pb(t_list **lb, t_list **la) //encore des pb ici
     *la = tmp;
     tmp->start = true;
   }
+
+  get_position(la);
+  get_position(lb);
   printf("pb\n");
 }
 

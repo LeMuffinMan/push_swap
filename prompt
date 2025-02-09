@@ -1,0 +1,1 @@
+cc *.c -g3 -o push_swap && valgrind --leak-check=full ./push_swap 1 9 2 8 3 7 6 4 5 10 20 19 11 18 12 17 13 16 14 15 30 35 36 34 37 32 38 33 31 39 

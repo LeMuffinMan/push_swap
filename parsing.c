@@ -13,12 +13,15 @@
 #include "push_swap.h"
 #include <stdio.h> // a virer
 #include <stdlib.h>
+#include <limits.h> // a virer ?
 
 // ARG="4 56 -3 56" 54 -5
 // a gerer !
 // integrer la libft et laisser que la fonction fill_list ici
 //cas d'erreur non gere correctement ? 
 //./a.out "15- 75 34 0"
+//45 12 32 62 -45 45-78 : invalid mais PASSE !
+//duplicated passe aussi
 
 static int	count_strs(const char *s, char c)
 {
@@ -119,6 +122,61 @@ char	**ft_split(char const *s, char c)
 	return (fill_splited(splited, s, c));
 }
 
+int get_position(t_list **l)
+{
+	t_list *tmp;
+	int i;
+
+	(*l)->pos = 0;
+	i = 1;
+	tmp = (*l)->next;
+	while (tmp->start == false)
+	{
+		tmp->pos = i;
+		i++;
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+/* int get_pivot(t_list **l) */
+/* { */
+/* 	t_list *tmp; */
+/* 	int p; */
+/* 	int i; */
+/**/
+/* 	//p = sqrt(lst_size) ? */
+/* 	p = 3; */
+/* 	i = 1; */
+/* 	if ((*l)->i <= lst_size(*l) / p) */
+/* 		(*l)->pivot = i; */
+/* 	tmp = (*l)->next; */
+/* 	while (tmp->start == false) */
+/* 	{ */
+/* 		if (tmp->i > lst_size(*l) / p * i) */
+/* 			i++; */
+/* 		else */
+/* 			tmp->pivot = i; */
+/* 		printf("tmp->i = %d | pivot = %d\n", tmp->i, tmp->pivot); */
+/* 		tmp = tmp->next; */
+/* 	} */
+/* 	return (0); */
+/* } */
+/**/
+int init_step_2(t_list **l)
+{
+	t_list *tmp;
+
+	(*l)->rot = -1;
+	(*l)->cost = INT_MAX;
+	(*l)->dest = NULL;	
+	tmp = (*l)->next;
+	if (tmp->start == true)
+		return (0);
+	if (init_step_2(&tmp))
+		return (1);
+	return(0);
+}
 
 t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dans le main 
 {
@@ -139,6 +197,10 @@ t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dan
 	size = lst_size(l);
 	array = lst_to_array(&l, size);
 	get_index(&l, array);
+	get_position(&l);
+	/* get_pivot(&l); */
+	init_step_2(&l);
+	free(array);
 	return (l);
 }
 
