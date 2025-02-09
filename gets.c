@@ -25,7 +25,7 @@ int get_cheaper_insertion(t_list **la, t_list **lb)
 	return (cheaper);	
 }
 
-//renommer rotate stacks
+//renommer rotate stacks ranger avec execute_insertion
 //deux sous fonctions : get cheaper to top B + get dest to top A
 //subdiviser pour les rot / rev rot
 int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper)

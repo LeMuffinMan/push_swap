@@ -95,6 +95,7 @@ int insert_cheaper(t_list **la, t_list **lb)
 {
 	int cheaper;
 
+	//une fonction update_lists
 	get_dests (la, lb); // on cherche a quel endroit on doit situer le node B dans A
 	get_rots (la); // on setup les rots pour chaque nodes
 	get_rots (lb); // on setup les rots pour chaque nodes
@@ -106,10 +107,12 @@ int insert_cheaper(t_list **la, t_list **lb)
 	/* printf("lb :\n"); */
 	/* print_lst2(*lb); */
 
+	//deplacer cette condition plus bas
 	if (lst_size(*lb) > 1)	
 		cheaper = get_cheaper_insertion(la, lb);
 	else
 		cheaper = (*lb)->i;
+	//faire une fonction execute_insertion
 	get_cheaper_and_dest_to_top(la, lb, cheaper);
 	/* do_rotates(la, lb, &move); */
 	pa(la, lb);
@@ -122,6 +125,7 @@ int insert_cheaper(t_list **la, t_list **lb)
 	return (0);
 }
 
+//recusrive ou while avec if de fin
 int final_rotate(t_list **la)
 {
 	t_list *tmp;
