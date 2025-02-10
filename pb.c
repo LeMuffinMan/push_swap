@@ -4,6 +4,7 @@
 //diviser et mettre en static
 
 
+//voir pa // utiliser des ft libft ?
 void pb(t_list **lb, t_list **la) //encore des pb ici
 {
   t_list *last;

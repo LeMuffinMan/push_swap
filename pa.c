@@ -1,16 +1,48 @@
 #include "push_swap.h"
 #include <stdio.h> // a virer
 
-/* pa (push a): Take the first element at the top of b and put it at the top of a. */
-/* Do nothing if b is empty. */
-/* pb (push b): Take the first element at the top of a and put it at the top of b. */
-/* Do nothing if a is empty */
-/* push a (&la, &lb) */
-/* push b (&lb, &la) */
+static void take_out_B_top(t_list **la, t_list **lb, t_list **node, t_list **last)
+{
+    (*lb)->start = false;
+    (*last) = (*lb)->prev;
+    *lb = (*lb)->next;
+    (*lb)->start = true;
+    (*lb)->prev = (*last);
+    (*last)->next = *lb;  
+    (*node)->next = *la;
+}
 
-// a diviser et mettre en static
+static void A_empty_case(t_list **la, t_list **lb, t_list **tmp)
+{
+    (*tmp)->prev = *tmp;
+    (*tmp)->start = true;
+    (*tmp)->next = *tmp;
+    *la = *tmp;
+}
 
-void pa(t_list **la, t_list **lb) //encore des pb ici
+static void A_one_node_case(t_list **la, t_list **lb, t_list **tmp)
+{
+    (*la)->next = *tmp;
+    (*la)->prev = *tmp;
+    (*la)->next->next = *(la);
+    (*la)->prev->prev = *(la);
+    (*la)->start = false;
+    (*la)->next->start = true;
+    *la = *tmp;
+}
+
+static void plug_on_A(t_list **la, t_list **lb, t_list **tmp)
+{
+    (*la)->prev->next = *tmp; 
+    (*tmp)->prev = (*la)->prev;
+    (*la)->prev = (*tmp);
+    (*tmp)->next = *la;
+    (*la)->start = false;
+    *la = *tmp;
+    (*tmp)->start = true;
+}
+
+void pa(t_list **la, t_list **lb) 
 {
   t_list *last;
   t_list *tmp;
@@ -18,45 +50,16 @@ void pa(t_list **la, t_list **lb) //encore des pb ici
   if (*lb == NULL)
     return ;
   tmp = *lb;
-  if (tmp == (*tmp).next) // si j'ai plus qu'un seul element dans la pile a reduire 
+  if (tmp == (*tmp).next) 
     *lb = NULL;
   else 
-  {
-    (*lb)->start = false;
-    last = (*lb)->prev;
-    *lb = (*lb)->next;
-    (*lb)->start = true;
-    (*lb)->prev = last;
-    last->next = *lb;  //lb a toujours son premier element
-    tmp->next = *la;
-  }
+    take_out_B_top(la, lb, &tmp, &last);
   if (*la == NULL)
-  {
-    tmp->prev = tmp;
-    tmp->start = true;
-    tmp->next = tmp;
-    *la = tmp;
-  }
-  else if (*la == (*la)->next && *la == (*la)->prev) // si la liste ne contient qu'un seul element 
-  {
-    (*la)->next = tmp;
-    (*la)->prev = tmp;
-    (*la)->next->next = *(la);
-    (*la)->prev->prev = *(la);
-    (*la)->start = false;
-    (*la)->next->start = true;
-    *la = tmp;
-  }
+    A_empty_case(la, lb, &tmp);
+  else if (*la == (*la)->next && *la == (*la)->prev)  
+    A_one_node_case(la, lb, &tmp);
   else 
-  {
-    (*la)->prev->next = tmp; // le next du dernier est branche sur le nouveau
-    tmp->prev = (*la)->prev;
-    (*la)->prev = tmp;
-    tmp->next = *la;
-    (*la)->start = false;
-    *la = tmp;
-    tmp->start = true;
-  }
+    plug_on_A(la, lb, &tmp);
   get_position(la);
   get_position(lb);
   printf("pa\n");

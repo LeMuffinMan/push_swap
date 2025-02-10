@@ -36,6 +36,10 @@ typedef struct s_list // s_list / t_list ?
 
 //a ranger
 void	get_index(t_list **l, int *array);
+int *get_pivots(t_list *la, int num_chunks); 
+
+//get_nodes_to_top.c
+int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
 
 //pa.c && pb.c
 void pa(t_list **la, t_list **lb);
@@ -75,6 +79,8 @@ int lst_size(t_list *l);
 int	*lst_to_array(t_list **la, int size);
 int is_sorted_check(t_list *la);
 void print_init_lst(t_list *l); // a virer 
+void	sort_int_tab(int *tab, unsigned int size);
+int	*lst_to_array(t_list **la, int size);
 // t_list *lst_last(t_list *lst);
 
 //ops.c

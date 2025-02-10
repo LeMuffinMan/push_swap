@@ -5,6 +5,34 @@
 //diviser partition stacks 
 //recursive ?
 
+//revoir le partitionnement et supprimer j si necessaire
+
+//voir sur le vizualizer
+int is_A_setup(t_list *la)
+{
+	int min;
+	t_list *tmp;
+	t_list *min_node;
+
+	min = get_min_index(&la);
+	tmp = la;
+	while (tmp->i != min)
+	{
+		tmp = tmp->next;
+		if (tmp->start)
+			break ;
+	}
+	min_node = tmp;
+	while (1)
+	{
+		if (tmp->next->i < tmp->i)
+			break ;
+		tmp = tmp->next;
+	}
+	if (tmp->next == min_node)
+		return (1);
+	return (0);
+}
 
 int	partition_stacks(t_list **la, t_list **lb)
 {
@@ -20,7 +48,7 @@ int	partition_stacks(t_list **la, t_list **lb)
 	count = 0;
 	tmp = *la;
 	j = 0;
-	while (lst_size(*la) > 3) // opti a faire ici
+	while (lst_size(*la) > 3 && !is_A_setup(*la)) // opti a faire ici
 	{
 	/* printf("la :\n"); */
 	/* print_lst2(*la); */
@@ -52,32 +80,7 @@ int	partition_stacks(t_list **la, t_list **lb)
 	}
 }
 
-int optimise_rotations(t_list *node)
-{
-	int rot;
-	int dest_rot;
 
-		rot = node->rot;
-		dest_rot = node->dest_rot;
-	if (rot >= 0 && dest_rot < 0)
-		return (rot + dest_rot * -1);
-	if (rot < 0 && dest_rot >= 0)
-		return (rot * -1 + dest_rot);
-	if (rot >= 0 && dest_rot >= 0)
-	{
-		if (rot >= dest_rot)
-			return (rot);
-		else 
-			return (dest_rot);
-	}
-	if (rot < 0 && dest_rot < 0)
-	{
-		if (rot * -1 >= dest_rot * -1)
-			return (rot * -1);
-		else 
-			return (dest_rot * -1);
-	}
-}
 
 int insert_cheaper(t_list **la, t_list **lb)
 {
