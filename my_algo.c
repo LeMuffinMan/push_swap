@@ -18,35 +18,7 @@ int	partition_stacks(t_list **la, t_list **lb)
 	j = 0;
 	size = lst_size(*la);
 	count = 0;
-	/* printf("la :\n"); */
-	/* print_lst2(*la); */
-	/* printf("lb :\n"); */
-	/* print_lst2(*lb); */
-	/* sleep(1); */
-	//proteger si stack a < 3
-	if ((*la)->i == size - 1)
-		ra(la);
-	if ((*la)->pivot <= j)
-	{
-		count++;
-		pb(la, lb);
-		if ((*lb)->i <= size / 2)
-		/* { */
-			/* if ((*la)->next->i == size - 1 || (*la)->next->pivot > j) */
-				/* rr(la, lb); */
-			/* else */
-				rb(lb);
-		/* } */
-		if (count >= size / p)
-		{
-			j++;
-			count = 0;
-		}
-	}
-	else
-		ra(la);
-
-	tmp = (*la)->next;
+	tmp = *la;
 	j = 0;
 	while (lst_size(*la) > 3) // opti a faire ici
 	{
@@ -55,34 +27,27 @@ int	partition_stacks(t_list **la, t_list **lb)
 	/* printf("lb :\n"); */
 	/* print_lst2(*lb); */
 	/* sleep(1); */
-		if (tmp->i == size - 1)
-		{
+		if (tmp->i == size - 1 || tmp->pivot > j)
 			ra(la);
-			tmp = tmp->next;
-			continue ;
-		}
-		if (tmp->pivot <= j)
+		else if (tmp->pivot <= j)
 		{	
-
-			if (j == p)
-				break ;
+			/* if (j == p) // a deplacer ? */
+			/* 	break ; */
 			count++;
-			pb(la, lb);
-		if ((*lb)->i <= size / 2)
-		/* { */
-			/* if (tmp->next->i == size - 1 || tmp->next->pivot > j) */
-				/* rr(la, lb); */
-			/* else */
-				rb(lb);
-		/* } */
 			if (count >= size / p)
 			{
 				j++;
 				count = 0;
 			}
+			pb(la, lb);
+			if ((*lb)->i <= size / 2)
+			{
+				if (tmp->next->i == size - 1 || tmp->next->pivot > j)
+					rr(la, lb);
+				else
+					rb(lb);
+			}
 		}
-		else
-			ra(la);
 		tmp = tmp->next;
 	}
 }
