@@ -31,7 +31,12 @@ int	partition_stacks(t_list **la, t_list **lb)
 		count++;
 		pb(la, lb);
 		if ((*lb)->i <= size / 2)
-			rb(lb);
+		/* { */
+			/* if ((*la)->next->i == size - 1 || (*la)->next->pivot > j) */
+				/* rr(la, lb); */
+			/* else */
+				rb(lb);
+		/* } */
 		if (count >= size / p)
 		{
 			j++;
@@ -64,7 +69,12 @@ int	partition_stacks(t_list **la, t_list **lb)
 			count++;
 			pb(la, lb);
 		if ((*lb)->i <= size / 2)
+		/* { */
+			/* if (tmp->next->i == size - 1 || tmp->next->pivot > j) */
+				/* rr(la, lb); */
+			/* else */
 				rb(lb);
+		/* } */
 			if (count >= size / p)
 			{
 				j++;
