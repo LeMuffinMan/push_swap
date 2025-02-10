@@ -1,4 +1,6 @@
 #include "push_swap.h"
+#include <stdio.h>
+#include <unistd.h>
 
 //diviser partition stacks 
 //recursive ?
@@ -16,6 +18,11 @@ int	partition_stacks(t_list **la, t_list **lb)
 	j = 0;
 	size = lst_size(*la);
 	count = 0;
+	/* printf("la :\n"); */
+	/* print_lst2(*la); */
+	/* printf("lb :\n"); */
+	/* print_lst2(*lb); */
+	/* sleep(1); */
 	//proteger si stack a < 3
 	if ((*la)->i == size - 1)
 		ra(la);
@@ -23,7 +30,7 @@ int	partition_stacks(t_list **la, t_list **lb)
 	{
 		count++;
 		pb(la, lb);
-		if ((*lb)->pivot >= j + 1)
+		if ((*lb)->i <= size / 2)
 			rb(lb);
 		if (count >= size / p)
 		{
@@ -33,10 +40,16 @@ int	partition_stacks(t_list **la, t_list **lb)
 	}
 	else
 		ra(la);
+
 	tmp = (*la)->next;
 	j = 0;
 	while (lst_size(*la) > 3) // opti a faire ici
 	{
+	/* printf("la :\n"); */
+	/* print_lst2(*la); */
+	/* printf("lb :\n"); */
+	/* print_lst2(*lb); */
+	/* sleep(1); */
 		if (tmp->i == size - 1)
 		{
 			ra(la);
@@ -50,7 +63,7 @@ int	partition_stacks(t_list **la, t_list **lb)
 				break ;
 			count++;
 			pb(la, lb);
-			if ((*lb)->pivot >= j + 1)
+		if ((*lb)->i <= size / 2)
 				rb(lb);
 			if (count >= size / p)
 			{
@@ -122,7 +135,6 @@ int insert_cheaper(t_list **la, t_list **lb)
 	/* print_lst2(*la); */
 	/* printf("lb :\n"); */
 	/* print_lst2(*lb); */
-
 	/* sleep(1); */
 	return (0);
 }

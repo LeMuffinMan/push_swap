@@ -54,13 +54,14 @@ int	main(int ac, char **av)
 	/* printf("==========================\nstack initialized :\n"); */
 	/* print_lst(la); */
 	/* printf("==========================\n\n"); */
-	sleep(1);
+	/* sleep(1); */
 
 	if (lst_size(la) <= 3)
 		size_3_sort(&la);
 	else
 	{
 		partition_stacks(&la, &lb);
+		/* partition_in_B(&la, &lb); */
 		size_3_sort(&la);
 		while (lb)
 			insert_cheaper(&la, &lb);
