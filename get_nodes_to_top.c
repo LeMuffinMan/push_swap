@@ -17,7 +17,7 @@ static void get_node_by_index(t_list **l, int index, t_list **node)
 }
 
 
-static int do_combine_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
+static void do_combine_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
 {
 while ((*candidate)->rot > 0 && (*dest)->rot > 0)
 	{
@@ -34,7 +34,7 @@ while ((*candidate)->rot > 0 && (*dest)->rot > 0)
 }
 
 
-static int do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
+static void do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
 {
 	while ((*candidate)->rot > 0)
 	{
@@ -58,7 +58,7 @@ static int do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_lis
 	}
 }
 
-int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper)
+void get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper)
 {
 	t_list *candidate;
 	t_list *dest;

@@ -38,8 +38,11 @@ typedef struct s_list // s_list / t_list ?
 void	get_index(t_list **l, int *array);
 int *get_pivots(t_list *la, int num_chunks); 
 
+//get_cheaper_insertion
+int get_cheaper_insertion(t_list **la, t_list **lb);
+
 //get_nodes_to_top.c
-int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
+void get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
 
 //pa.c && pb.c
 void pa(t_list **la, t_list **lb);
@@ -49,22 +52,21 @@ void pb(t_list **la, t_list **lb);
 void print_candidate(t_list node);
 
 //gets.c
-int get_cheaper_insertion(t_list **la, t_list **lb);
-int get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
+void get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
 void	get_index(t_list **l, int *array);
-int get_costs(t_list **lb);
+void get_costs(t_list **lb);
 int get_min_index(t_list **l);
 int get_max_index(t_list **l);
-int get_dests(t_list **la, t_list **lb);
-int get_dest_rots(t_list **la, t_list **lb);
-int get_rots(t_list **l);
+void get_dests(t_list **la, t_list **lb);
+void get_dest_rots(t_list **la, t_list **lb);
+void get_rots(t_list **l);
 
 
 //my_algo
-int	partition_stacks(t_list **la, t_list **lb);
+void	partition_stacks(t_list **la, t_list **lb);
 int optimise_rotations(t_list *node);
 int insert_cheaper(t_list **la, t_list **lb);
-int final_rotate(t_list **la);
+void final_rotate(t_list **la);
 
 //size_3_sort.c
 void	inverted_size_3_sort(t_list **l);

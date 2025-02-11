@@ -46,9 +46,10 @@ int optimise_rotations(t_list *node)
 		else 
 			return (dest_rot * -1);
 	}
+	return (0); // revoir ce return en cas d'aucune condition
 }
 
-int get_costs(t_list **lb)
+void get_costs(t_list **lb)
 {
 	t_list *tmp;
 	

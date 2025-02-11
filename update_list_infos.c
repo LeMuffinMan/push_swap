@@ -32,7 +32,7 @@ void	get_index(t_list **l, int *array)
 }
 
 
-int get_dests(t_list **la, t_list **lb)
+void get_dests(t_list **la, t_list **lb)
 {
 	t_list *tmp_A;
 	t_list *tmp_B;
@@ -58,7 +58,7 @@ int get_dests(t_list **la, t_list **lb)
 	}
 }
 
-int get_dest_rots(t_list **la, t_list **lb)
+void get_dest_rots(t_list **la, t_list **lb)
 {
 	t_list *tmp_A;
 	t_list *tmp_B;
@@ -85,7 +85,7 @@ int get_dest_rots(t_list **la, t_list **lb)
 }
 
 
-int get_rots(t_list **l)
+void get_rots(t_list **l)
 {
 	t_list *tmp;
 	int rot;

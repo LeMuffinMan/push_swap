@@ -34,7 +34,7 @@ int is_A_setup(t_list *la)
 	return (0);
 }
 
-int	partition_stacks(t_list **la, t_list **lb)
+void	partition_stacks(t_list **la, t_list **lb)
 {
 	t_list *tmp;
 	int count;
@@ -118,7 +118,7 @@ int insert_cheaper(t_list **la, t_list **lb)
 }
 
 //recusrive ou while avec if de fin
-int final_rotate(t_list **la)
+void final_rotate(t_list **la)
 {
 	t_list *tmp;
 
