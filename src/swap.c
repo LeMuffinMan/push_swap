@@ -16,7 +16,6 @@ void sa(t_list **l)
   (*l)->i = (*l)->next->i;
   (*l)->next->i = tmp;
   printf("sa\n");
-  /* get_position(l); */
 }
 
 void sb(t_list **l)
@@ -32,7 +31,6 @@ void sb(t_list **l)
   (*l)->i = (*l)->next->i;
   (*l)->next->i = tmp;
   printf("sb\n");
-  /* get_position(l); */
 }
 
 void ss(t_list **la, t_list **lb)
@@ -55,7 +53,5 @@ void ss(t_list **la, t_list **lb)
   tmp = (*lb)->i;
   (*lb)->i = (*lb)->next->i;
   (*lb)->next->i = tmp;
-  /* get_position(la); */
-  /* get_position(lb); */
   printf("ss\n");
 }

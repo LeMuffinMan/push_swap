@@ -69,7 +69,7 @@ int invalid_input(t_list *l, int *array, char **s)
 	exit(1);
 }
 
-t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dans le main 
+t_list *fill_list(char **splitted) 
 {
 	t_list *l;
 	int i;

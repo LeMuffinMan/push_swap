@@ -33,12 +33,11 @@ SRC_FILES = pb.c \
             reverse_rotations.c \
             main.c \
             rotations.c \
-						size_3_sort.c \
+						easy_cases.c \
 						my_algo.c \
 						swap.c \
             pa.c \
             update_list_infos.c \
-            parsing.c \
             utils.c \
             libft.c
 
