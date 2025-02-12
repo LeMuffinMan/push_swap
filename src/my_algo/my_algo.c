@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 //a revoir !!
-int is_A_setup(t_list *la)
+static int is_A_setup(t_list *la)
 {
 	int min;
 	t_list *tmp;

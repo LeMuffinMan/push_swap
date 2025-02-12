@@ -28,6 +28,8 @@ OBJ_DIR = obj
 SRC_FILES = main.c \
             my_algo/get_cheaper_insertion.c \
             utils/get_min_max_index.c \
+            utils/array_utils.c \
+            utils/list_utils.c \
             my_algo/get_nodes_to_top.c \
             init.c \
             ops/reverse_rotations.c \
@@ -58,7 +60,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
-	@echo "compilation successful: $(NAME)"
+	@echo -e "$(GREEN)compilation successful: $(NAME)$(RESET)"
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
 	@mkdir -p $(dir $@)
@@ -72,10 +74,10 @@ fclean: clean
 
 re: fclean all
 
-tests: $(NAME)
+tests: all
 	@./tests.sh $(SIZE) $(RUNS) \
 
-test: $(NAME)
+test: all
 	$(shell ./random_ints.sh $(SIZE))
 	@echo "=== list used ==="
 	@echo $(LIST)
