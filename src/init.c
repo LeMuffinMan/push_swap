@@ -23,16 +23,18 @@ int init_step_2(t_list **l)
 {
 	t_list *tmp;
 
-	(*l)->rot = 0;
-	(*l)->cost = INT_MAX;
-	(*l)->dest = -1;
-	(*l)->dest_rot = 0;
-	tmp = (*l)->next;
-	if (tmp->start == true)
-		return (0);
-	if (init_step_2(&tmp))
-		return (1);
-	return(0);
+	tmp = *l;
+	tmp->cost = INT_MAX;
+	tmp->dest = -1;
+	tmp->dest_rot = 0;
+	while (1)
+	{
+		tmp->rot = 0;
+		tmp = tmp->next;
+		if (tmp->start)
+			break;
+	}
+	return (0);
 }
 
 static int duplicate_checker(t_list *l)
