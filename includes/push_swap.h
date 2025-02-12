@@ -32,7 +32,7 @@ typedef struct s_list // s_list / t_list ?
 
 //my_algo
   //easy_cases.c
-void	easy_cases(t_list **la); // pour pile de 2 ou 3
+void	easy_cases(t_list **la);
   //get_cheaper_insertion
 void get_costs(t_list **lb);
 int get_cheaper_insertion(t_list **l);

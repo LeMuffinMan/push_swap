@@ -1,57 +1,55 @@
-
 #!/bin/bash
 
-if [ -z "$1" ]; then
-    set -- 100  
-fi
+SIZE=${1:-100}  
+TESTS=${2:-10}
 
-if [ -z "$2" ]; then
-    set -- "$1" 10 
-fi
-
-operations=()
-
+# decla dun tableau
+OPERATIONS=()
 KO=0
-for i in $(seq 1 "$2"); do
-    ./random_ints.sh "$1"  
-    echo -e "============= Test #$i =============\nTotal ops : $(./push_swap $(cat random_ints.txt) | wc -l) | checker_linux : $(./push_swap $(cat random_ints.txt) | ./checker_linux $(cat random_ints.txt))"
-    if [ $(./push_swap $(cat random_ints.txt) | ./checker_linux $(cat random_ints.txt)) = "KO" ]; then
+
+for I in $(seq 1 "$TESTS"); do
+    ./random_ints.sh "$SIZE"  
+    NUMBERS=$(cat random_ints.txt)
+    OPS=$(./push_swap $NUMBERS | wc -l)
+    RESULT=$(./push_swap $NUMBERS | ./checker_linux $NUMBERS)
+    echo -e "============= Test #$I =============\nTotal ops : $OPS | checker_linux : $RESULT"
+    if [ "$RESULT" = "KO" ]; then
         ((KO++))
     fi
-    ops=$(./push_swap $(cat random_ints.txt) | wc -l)
-    operations+=($ops)
+    OPERATIONS+=($OPS)
 done
 
-sum=0
-for ops in "${operations[@]}"; do
-    sum=$((sum + ops))
+SUM=0
+for OPS in "${OPERATIONS[@]}"; do
+    SUM=$((SUM + OPS))
 done
-average=$((sum / ${#operations[@]}))
+AVERAGE=$((SUM / TESTS))
 
-squared_diff_sum=0
-for ops in "${operations[@]}"; do
-    diff=$((ops - average))
-    squared_diff=$((diff * diff))
-    squared_diff_sum=$((squared_diff_sum + squared_diff))
+SQUARED_DIFF_SUM=0
+for OPS in "${OPERATIONS[@]}"; do
+    DIFF=$((OPS - AVERAGE))
+    SQUARED_DIFF=$((DIFF * DIFF))
+    SQUARED_DIFF_SUM=$((SQUARED_DIFF_SUM + SQUARED_DIFF))
 done
-variance=$((squared_diff_sum / ${#operations[@]}))
-stddev=$(echo "scale=2; sqrt($variance)" | bc)
+VARIANCE=$((SQUARED_DIFF_SUM / TESTS))
+STDDEV=$(echo "scale=2; sqrt($VARIANCE)" | bc -l)
 
-max=${operations[0]}
-min=${operations[0]}
-for ops in "${operations[@]}"; do
-    if [ "$ops" -gt "$max" ]; then
-        max=$ops
+MAX=${OPERATIONS[0]:-0}
+MIN=${OPERATIONS[0]:-0}
+for OPS in "${OPERATIONS[@]}"; do
+    if [ "$OPS" -gt "$MAX" ]; then
+        MAX=$OPS
     fi
-    if [ "$ops" -lt "$min" ]; then
-        min=$ops
+    if [ "$OPS" -lt "$MIN" ]; then
+        MIN=$OPS
     fi
 done
 
 echo -e "\n==== Résultats ===="
-echo "List size : $1"
-echo "Average : $average ops"
-echo "Standard deviation : $stddev"
-echo "Worst run : $max ops"
-echo "Best run : $min ops"
-echo "Success : $((100 - $KO * 100 / $1))%"
+echo "List size : $SIZE"
+echo "Average : $AVERAGE ops"
+echo "Standard deviation : $STDDEV"
+echo "Worst run : $MAX ops"
+echo "Best run : $MIN ops"
+echo "Success : $((100 - KO * 100 / TESTS))%"
+

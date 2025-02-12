@@ -37,6 +37,11 @@
 //init.c : done
 //
 // split : gerer plus de sep que juste ' ' ?
+//./push_swap "1565 -56 15 0" 436 76
+/* Error%  */
+//
+//faire le checker
+//revoir scripts
 //
 //
 
