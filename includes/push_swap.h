@@ -63,7 +63,7 @@ void get_rots(t_list **l);
 
 
 //my_algo
-void	partition_stacks(t_list **la, t_list **lb);
+void	partition_stacks(t_list **la, t_list **lb, int median, int size);
 int optimise_rotations(t_list *node);
 int insert_cheaper(t_list **la, t_list **lb);
 void final_rotate(t_list **la);

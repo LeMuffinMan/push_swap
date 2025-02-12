@@ -6,6 +6,11 @@ int get_cheaper_insertion(t_list **l)
 	t_list *tmp;
 	int min_cost;
 	
+	if (lst_size(*l) == 1)	
+	{
+		cheaper = (*l)->i;
+		return (cheaper);
+	}
 	min_cost = (*l)->cost;
 	cheaper = (*l)->i;
 	tmp = (*l)->next;

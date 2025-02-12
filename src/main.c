@@ -37,6 +37,8 @@ int	main(int ac, char **av)
 {
 	t_list	*la;
 	t_list *lb;
+	int size;
+	int median;
 
 	la = NULL;
  	lb = NULL; 
@@ -47,7 +49,9 @@ int	main(int ac, char **av)
 		easy_cases(&la);
 	else
 	{
-		partition_stacks(&la, &lb);
+		size = lst_size(la);
+		median = size / 2;
+		partition_stacks(&la, &lb, median, size);
 		easy_cases(&la);
 		while (lb)
 			insert_cheaper(&la, &lb);

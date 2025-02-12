@@ -28,14 +28,10 @@ int is_A_setup(t_list *la)
 	return (0);
 }
 
-void	partition_stacks(t_list **la, t_list **lb)
+void	partition_stacks(t_list **la, t_list **lb, int median, int size)
 {
 	t_list *tmp;
-	int size;
-	int median;
 
-	size = lst_size(*la);
-	median = size / 2;
 	tmp = *la;
 	while (lst_size(*la) > 3 && !is_A_setup(*la))
 	{
@@ -61,22 +57,15 @@ int insert_cheaper(t_list **la, t_list **lb)
 	int cheaper;
 
 	//une fonction update_lists
-	get_dests (la, lb); // on cherche a quel endroit on doit situer le node B dans A
-	get_rots (la); // on setup les rots pour chaque nodes
-	get_rots (lb); // on setup les rots pour chaque nodes
+	get_dests (la, lb);
+	get_rots (la);
+	get_rots (lb);
 	get_dest_rots(la, lb);
-	get_costs(lb); // on peut donc calculer le coups pour chaque node B
+	get_costs(lb); 
 	get_position(la);
 	get_position(lb);
-
-	//deplacer cette condition plus bas
-	if (lst_size(*lb) > 1)	
-		cheaper = get_cheaper_insertion(lb);
-	else
-		cheaper = (*lb)->i;
-	//faire une fonction execute_insertion
-	////diviser en bring_cheaper to top
-	///bring dest top top
+  cheaper = get_cheaper_insertion(lb);
+  //renommer get_nodes_top
 	get_cheaper_and_dest_to_top(la, lb, cheaper);
 	pa(la, lb);
 	return (0);
