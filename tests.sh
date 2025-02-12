@@ -45,7 +45,7 @@ for OPS in "${OPERATIONS[@]}"; do
     fi
 done
 
-echo -e "\n==== Résultats ===="
+echo -e "\n==== Results ===="
 echo "List size : $SIZE"
 echo "Average : $AVERAGE ops"
 echo "Standard deviation : $STDDEV"
