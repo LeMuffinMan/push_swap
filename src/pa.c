@@ -1,5 +1,6 @@
 #include "push_swap.h"
 #include <stdio.h> // a virer
+#include <unistd.h>
 
 static void take_out_B_top(t_list **la, t_list **lb, t_list **node, t_list **last)
 {

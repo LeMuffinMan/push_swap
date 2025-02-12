@@ -99,14 +99,14 @@ void pa(t_list **la, t_list **lb);
 void pb(t_list **lb, t_list **la); 
 
 //parsing.c //voir avec la libft ?
-int	ft_atoi(const char *nptr);
+int	ft_atoi(const char *nptr, t_list *l);
 char **ft_split(const char *s, char c);
 t_list *fill_list(char **splitted);
 int get_position(t_list **l);
+void	free_splited(char **splited);
 
 //init.c : revoir ce qu'il faut mettre en static 
 int init_stack(t_list **l, int ac, char **av);
-int	duplicate_checker(t_list *l);
-void	free_splited(char **splited);
+int invalid_input(t_list *l, int *array, char **s);
 
 #endif

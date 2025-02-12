@@ -14,44 +14,44 @@
 #include <stdio.h>
 // a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande
 #include <stdlib.h>
+#include <unistd.h>
 
 //reunir les fonctions init et deplacer free_splitted 
 
-// a reverifier
-int	duplicate_checker(t_list *l)
+static int duplicate_checker(t_list *l)
 {
-	t_list	*n1;
-	t_list	*n2;
+	t_list *n1;
+	t_list *n2;
 
 	n1 = l;
 	n2 = l->next;
-	while (n1->next != l) // on fait le tour de la liste avec n1
+	while (1)
 	{
-		while (n2 != l)
-		// on teste chaque noeud jusqu'a revenir a debut de liste
+		while(1)
 		{
-			/* printf("n1->n = %d | n2->n = %d\n", n1->n, n2->n); */
-			if (n1->n == n2->n)
-				return (1);
+			if (n2->n == n1->n && n1 != n2)
+				return(1);
 			n2 = n2->next;
+			if (n2->start)
+				break ;
 		}
 		n1 = n1->next;
-		n2 = n1->next;
+		if (n1->start)
+			break ;
 	}
 	return (0);
 }
 
-void	free_splited(char **splited)
+int invalid_input(t_list *l, int *array, char **s)
 {
-	int	i;
-
-	i = 0;
-	while (splited[i])
-	{
-		free(splited[i]);
-		i++;
-	}
-	free(splited);
+	if (s)
+		free_splited(s);
+	if (array)
+		free(array);
+	if (l)
+		free(l);
+	write(2, "Error", 5);
+	exit(1);
 }
 
 //revoir !!
@@ -61,31 +61,22 @@ int	init_stack(t_list **l, int ac, char **av)
 
 	if (ac == 1 || !av[1][0]) // pas sur la seconde condition
 		exit(1);
-	// si ac == 2 : gerer 1 int unique et une string d'ints
 	else if (ac == 2)
 	{
 		splitted = ft_split(av[1], ' ');
-		// gerer plus de sep : n'est pas un - + ou un digit *l ?
-		if (splitted[1] == NULL) // si il n'y a qu'un seul element
-		{
-			free_splited(splitted);
-			printf("Error\n");
-			exit(EXIT_FAILURE);
-		}
+		if (splitted[1] == NULL) 
+			invalid_input(NULL, NULL, splitted);
 		*l = fill_list(splitted);
 		free_splited(splitted);
-		//iversion de la condition is_sorted ?
-		if (is_sorted_check(*l) || duplicate_checker(*l))
-		{
-			printf("sorted list or duplicated ints\n");
-			free_list(l);
-			exit(1);
-		}
+		if (duplicate_checker(*l))
+			invalid_input(*l, NULL, NULL);
 	}
 	else if (ac > 2)
 	{
 		av++;
 		*l = fill_list(av);
+		if (duplicate_checker(*l))
+			invalid_input(*l, NULL, NULL);
 	}
 	return (0);
 }
