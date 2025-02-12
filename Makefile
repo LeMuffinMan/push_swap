@@ -26,19 +26,19 @@ OBJ_DIR = obj
 #virer debug.c a la fin 
 # faire des sous dossiers
 SRC_FILES = main.c \
-						get_cheaper_insertion.c \
-            get_min_max_index.c \
-            get_nodes_to_top.c \
-						init.c \
-            reverse_rotations.c \
-            pb.c \
-            rotations.c \
-						easy_cases.c \
-						my_algo.c \
-						swap.c \
-            pa.c \
-            update_list_infos.c \
-            utils.c \
+            my_algo/get_cheaper_insertion.c \
+            utils/get_min_max_index.c \
+            my_algo/get_nodes_to_top.c \
+            init.c \
+            ops/reverse_rotations.c \
+            ops/pb.c \
+            ops/rotations.c \
+            my_algo/easy_cases.c \
+            my_algo/my_algo.c \
+            ops/swap.c \
+            ops/pa.c \
+            my_algo/update_list_infos.c \
+            utils/utils.c \
             libft.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
@@ -60,8 +60,8 @@ $(NAME): $(OBJ) Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "compilation successful: $(NAME)"
 	
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c  ./includes/push_swap.h
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 clean:
