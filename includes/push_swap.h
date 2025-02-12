@@ -52,7 +52,7 @@ void pb(t_list **la, t_list **lb);
 void print_candidate(t_list node);
 
 //gets.c
-void get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper);
+void get_nodes_to_top(t_list **la, t_list **lb, int cheaper);
 void	get_index(t_list **l, int *array);
 void get_costs(t_list **lb);
 int get_min_index(t_list **l);

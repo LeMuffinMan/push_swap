@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-// a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>

@@ -58,7 +58,7 @@ static void do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_li
 	}
 }
 
-void get_cheaper_and_dest_to_top(t_list **la, t_list **lb, int cheaper)
+void get_nodes_to_top(t_list **la, t_list **lb, int cheaper)
 {
 	t_list *candidate;
 	t_list *dest;

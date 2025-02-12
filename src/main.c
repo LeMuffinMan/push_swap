@@ -19,19 +19,21 @@
 // get_cheaper_instertion.c : header 42
 // get_min_max_index.c : header 42
 // get_nodes_to_top.c : header 42
-// init.c ranger diviser et clean
-// my_algo.c : clean et partition / pivot opti
+// my_algo.c : is_setup a revoir ajouter header
 // pa.c : header 42
 // parsing.c : libft + edgecases / input cases a revoir + ranger
 // pb.c : ranger comme pa 
 // reverse_rotations.c : header42
 // rotations.c : header42
-// size_3_sort.c : ranger cleaner + header42
+// size_3_sort.c : renommer fichier et makefile + header42
 // swap.c : header 42 : faire dossier ops
-// update_list_infos.c : header 42 + clean et pivot a virer 
+// update_list_infos.c : header 42 +  
 // utils : ranger + libft plus clean 
 //
 // split : gerer plus de sep que juste ' ' ?
+//
+// init.c done
+//
 
 int	main(int ac, char **av)
 {

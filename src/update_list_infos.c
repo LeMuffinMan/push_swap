@@ -1,14 +1,11 @@
 #include "push_swap.h"
 
-//pivot separe 
 void	get_index(t_list **l, int *array)
 {
 	int		i;
-	int 	p;
 	t_list	*tmp;
 	int		size;
 
-	p = PIVOT; // a opti
 	size = lst_size(*l);
 	i = 0;
 	tmp = *l;
@@ -20,7 +17,6 @@ void	get_index(t_list **l, int *array)
 			if (tmp->n == array[i])
 			{
 				tmp->i = i;
-				tmp->pivot = i / (size / p); // Calcul du pivot
 				break ;
 			}
 			i++;

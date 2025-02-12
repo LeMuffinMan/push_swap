@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
+//a revoir !!
 int is_A_setup(t_list *la)
 {
 	int min;
@@ -56,7 +57,6 @@ int insert_cheaper(t_list **la, t_list **lb)
 {
 	int cheaper;
 
-	//une fonction update_lists
 	get_dests (la, lb);
 	get_rots (la);
 	get_rots (lb);
@@ -65,8 +65,7 @@ int insert_cheaper(t_list **la, t_list **lb)
 	get_position(la);
 	get_position(lb);
   cheaper = get_cheaper_insertion(lb);
-  //renommer get_nodes_top
-	get_cheaper_and_dest_to_top(la, lb, cheaper);
+	get_nodes_to_top(la, lb, cheaper);
 	pa(la, lb);
 	return (0);
 }
@@ -75,6 +74,7 @@ void final_rotate(t_list **la)
 {
 	t_list *tmp;
 
+	get_position(la);
 	tmp = (*la)->next;
 	while(!tmp->start)
 	{
