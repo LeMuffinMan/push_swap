@@ -25,13 +25,13 @@ OBJ_DIR = obj
 
 #virer debug.c a la fin 
 # faire des sous dossiers
-SRC_FILES = pb.c \
+SRC_FILES = main.c \
 						get_cheaper_insertion.c \
             get_min_max_index.c \
             get_nodes_to_top.c \
 						init.c \
             reverse_rotations.c \
-            main.c \
+            pb.c \
             rotations.c \
 						easy_cases.c \
 						my_algo.c \
