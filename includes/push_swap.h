@@ -70,7 +70,7 @@ void final_rotate(t_list **la);
 
 //size_3_sort.c
 void	inverted_size_3_sort(t_list **l);
-void	size_3_sort(t_list **la); // pour pile de 2 ou 3
+void	easy_cases(t_list **la); // pour pile de 2 ou 3
 
 //utils.c // a trier et statiquer 
 void free_list(t_list **l);

@@ -17,8 +17,6 @@
 #include <unistd.h>
 #include <limits.h>
 
-//reunir les fonctions init et deplacer free_splitted 
-
 int init_step_2(t_list **l)
 {
 	t_list *tmp;

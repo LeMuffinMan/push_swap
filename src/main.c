@@ -44,11 +44,11 @@ int	main(int ac, char **av)
 		exit (1);
 	init_stack(&la, ac, av);
 	if (lst_size(la) <= 3)
-		size_3_sort(&la);
+		easy_cases(&la);
 	else
 	{
 		partition_stacks(&la, &lb);
-		size_3_sort(&la);
+		easy_cases(&la);
 		while (lb)
 			insert_cheaper(&la, &lb);
 		final_rotate(&la);

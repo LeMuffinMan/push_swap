@@ -32,8 +32,10 @@ void	partition_stacks(t_list **la, t_list **lb)
 {
 	t_list *tmp;
 	int size;
+	int median;
 
 	size = lst_size(*la);
+	median = size / 2;
 	tmp = *la;
 	while (lst_size(*la) > 3 && !is_A_setup(*la))
 	{
@@ -42,7 +44,7 @@ void	partition_stacks(t_list **la, t_list **lb)
 		else
 		{	
 			pb(la, lb);
-			if ((*lb)->i <= size / 2)
+			if ((*lb)->i <= median)
 			{
 				if (tmp->next->i == size - 1)
 					rr(la, lb);

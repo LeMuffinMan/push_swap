@@ -1,6 +1,6 @@
 #include "push_swap.h"
-#include <stdio.h> // a virer
 #include <unistd.h>
+#include <stdio.h>
 
 static void take_out_B_top(t_list **la, t_list **lb, t_list **node, t_list **last)
 {
@@ -61,8 +61,7 @@ void pa(t_list **la, t_list **lb)
     A_one_node_case(la, &tmp);
   else 
     plug_on_A(la, &tmp);
-  /* get_position(la); */
-  /* get_position(lb); */
   printf("pa\n");
+    /* write(1, "pa\n", 3); */
 }
 

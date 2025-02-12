@@ -16,7 +16,7 @@ static void one_operation_cases(t_list **la)
 }
 
 //renomer : upt to 3 size sort
-void	size_3_sort(t_list **la) // pour pile de 2 ou 3
+void	easy_cases(t_list **la) // pour pile de 2 ou 3
 {
 	if (lst_size(*la) == 2) // si on a deux chiffres a trier
 		sa(la);
