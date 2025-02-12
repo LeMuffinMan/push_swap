@@ -28,8 +28,6 @@ static void	bubble_sort(int *tab, unsigned int size)
 	}
 }
 
-
-
 static void	sort_int_tab(int *tab, unsigned int size)
 {
 	if (size <= 1)

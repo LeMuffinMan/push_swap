@@ -16,7 +16,6 @@ static void get_node_by_index(t_list **l, int index, t_list **node)
 	}
 }
 
-
 static void do_combine_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
 {
 while ((*candidate)->rot > 0 && (*dest)->rot > 0)
@@ -32,7 +31,6 @@ while ((*candidate)->rot > 0 && (*dest)->rot > 0)
 		(*dest)->rot++;
 	}
 }
-
 
 static void do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
 {

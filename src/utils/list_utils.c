@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 //libft ???
+//booleen
 
 void	free_list(t_list **l)
 {

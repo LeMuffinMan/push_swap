@@ -11,29 +11,33 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h> //a virer apres debug
 
-// debug.c a virer a la fin
-// get_cheaper_instertion.c : header 42
-// get_min_max_index.c : header 42
-// get_nodes_to_top.c : header 42
-// my_algo.c : is_setup a revoir ajouter header
-// ops : pk write marche pas ?
-	// pa.c : header 42
-	// pb.c : ranger comme pa 
-	// reverse_rotations.c : header42
-	// rotations.c : header42
-	// swap.c : header 42 : faire dossier ops
-// size_3_sort.c : renommer fichier et makefile + header42
-// update_list_infos.c : header 42 +  
-// utils : ranger  
-// integrer libft
+//my_algo
+	//easy_cases : header 42
+	//get_cheaper_instertion : header 42
+	//get_nodes_to_top : header 42 
+	//my_algo.c : revoir is_a_setup + header 42 
+	//update_list_infos : header 42 
+
+//ops : write ??
+ 	//pa : combiner avec addfirstnode ? header 42
+	//pb : sur le modelee de pa + header 42
+  //tous : ft_printf ou write !
+
+//utils
+  //array_utils static ou libft ? header
+	//lst_utils : clean + booleen ? + libft + header
+  //debug a virer
+  //get_min_max : header 42
+  //libft modifiee ?
+
+//main.c : renommer ?
+//libft : integrer 
+//init.c : done
 //
 // split : gerer plus de sep que juste ' ' ?
 //
-// init.c done
 //
 
 int	main(int ac, char **av)

@@ -69,7 +69,7 @@ int invalid_input(t_list *l, int *array, char **s)
 	exit(1);
 }
 
-t_list *fill_list(char **splitted) 
+static t_list *fill_list(char **splitted) 
 {
 	t_list *l;
 	int i;
@@ -82,11 +82,7 @@ t_list *fill_list(char **splitted)
 	while (splitted[i])
 	{
 		if(is_digits_or_sign(splitted[i]))
-		{
-			free(l);
-			write(2, "Error", 5);
-			exit(1);
-		}
+			invalid_input(l, NULL, NULL);
 		n = ft_atoi(splitted[i], l); 
 		add_back(&l, n);
 		i++;
@@ -99,8 +95,6 @@ t_list *fill_list(char **splitted)
 	free(array);
 	return (l);
 }
-
-
 
 int	init_stack(t_list **l, int ac, char **av)
 {

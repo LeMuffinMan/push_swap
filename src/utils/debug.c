@@ -3,7 +3,6 @@
 
 //a virer en fin
 
-
 void print_candidate(t_list node)
 {
     printf("\nCANDIDATE :\n");
@@ -12,7 +11,6 @@ void print_candidate(t_list node)
     printf("rot = %d\n", node.rot);
     printf("dest_rot = %d\n\n", node.dest_rot);
 }
-
 
 void	print_lst(t_list *l)
 {

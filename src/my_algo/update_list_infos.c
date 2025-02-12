@@ -27,7 +27,6 @@ void	get_index(t_list **l, int *array)
 	}
 }
 
-
 void get_dests(t_list **la, t_list **lb)
 {
 	t_list *tmp_A;
@@ -79,7 +78,6 @@ void get_dest_rots(t_list **la, t_list **lb)
 	}
 }
 
-
 void get_rots(t_list **l)
 {
 	t_list *tmp;
@@ -97,7 +95,6 @@ void get_rots(t_list **l)
 		tmp = tmp->next;
 	}
 }
-
 
 int get_position(t_list **l)
 {

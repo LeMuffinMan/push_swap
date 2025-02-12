@@ -1,6 +1,4 @@
 #include "push_swap.h"
-#include <stdio.h>
-#include <unistd.h>
 
 //a revoir !!
 static int is_A_setup(t_list *la)

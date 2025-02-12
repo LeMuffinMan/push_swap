@@ -1,8 +1,6 @@
 #include "push_swap.h"
 #include <stdio.h>
 
-//faire dossier ops
-
 void sa(t_list **l)
 {
   int tmp;

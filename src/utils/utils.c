@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-#include <stdlib.h>
+
+/* libft modifiee ?  */
 
 int is_digits_or_sign(char *s)
 {
