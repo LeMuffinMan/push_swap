@@ -15,8 +15,25 @@
 // a virer : bien gerer les debugs d'erreurs : peut faire KO si pas demande
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 
 //reunir les fonctions init et deplacer free_splitted 
+
+int init_step_2(t_list **l)
+{
+	t_list *tmp;
+
+	(*l)->rot = 0;
+	(*l)->cost = INT_MAX;
+	(*l)->dest = -1;
+	(*l)->dest_rot = 0;
+	tmp = (*l)->next;
+	if (tmp->start == true)
+		return (0);
+	if (init_step_2(&tmp))
+		return (1);
+	return(0);
+}
 
 static int duplicate_checker(t_list *l)
 {
@@ -54,12 +71,11 @@ int invalid_input(t_list *l, int *array, char **s)
 	exit(1);
 }
 
-//revoir !!
 int	init_stack(t_list **l, int ac, char **av)
 {
 	char	**splitted;
 
-	if (ac == 1 || !av[1][0]) // pas sur la seconde condition
+	if (ac == 1 || !av[1][0]) 
 		exit(1);
 	else if (ac == 2)
 	{

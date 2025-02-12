@@ -108,5 +108,6 @@ void	free_splited(char **splited);
 //init.c : revoir ce qu'il faut mettre en static 
 int init_stack(t_list **l, int ac, char **av);
 int invalid_input(t_list *l, int *array, char **s);
+int init_step_2(t_list **l);
 
 #endif

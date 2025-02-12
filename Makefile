@@ -47,7 +47,7 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
 
-SIZE ?= 10
+SIZE ?= 100
 RUNS ?= 10
 LIST = $(shell cat random_ints.txt)
 

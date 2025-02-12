@@ -49,8 +49,9 @@ for ops in "${operations[@]}"; do
 done
 
 echo -e "\n==== Résultats ===="
-echo "Average : $average"
+echo "List size : $1"
+echo "Average : $average ops"
 echo "Standard deviation : $stddev"
-echo "worst : $max"
-echo "best : $min"
-echo "KO : $KO"
+echo "Worst run : $max ops"
+echo "Best run : $min ops"
+echo "Success : $((100 - $KO * 100 / $1))%"

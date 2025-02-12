@@ -101,3 +101,23 @@ void get_rots(t_list **l)
 		tmp = tmp->next;
 	}
 }
+
+
+int get_position(t_list **l)
+{
+	t_list *tmp;
+	int i;
+
+	if (!*l)
+		return (1);
+	(*l)->pos = 0;
+	i = 1;
+	tmp = (*l)->next;
+	while (tmp->start == false)
+	{
+		tmp->pos = i;
+		i++;
+		tmp = tmp->next;
+	}
+	return (0);
+}

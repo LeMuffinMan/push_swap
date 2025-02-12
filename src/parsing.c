@@ -28,46 +28,6 @@
 //libft !!
 
 
-
-
-int get_position(t_list **l)
-{
-	t_list *tmp;
-	int i;
-
-	if (!*l)
-		return (1);
-	(*l)->pos = 0;
-	i = 1;
-	tmp = (*l)->next;
-	while (tmp->start == false)
-	{
-		tmp->pos = i;
-		i++;
-		tmp = tmp->next;
-	}
-	return (0);
-}
-
-
-int init_step_2(t_list **l)
-{
-	t_list *tmp;
-
-	(*l)->rot = 0;
-	(*l)->cost = INT_MAX;
-	(*l)->dest = -1;
-	(*l)->dest_rot = 0;
-	tmp = (*l)->next;
-	if (tmp->start == true)
-		return (0);
-	if (init_step_2(&tmp))
-		return (1);
-	return(0);
-}
-
-
-
 int is_digits_or_sign(char *s)
 {
 	int i;

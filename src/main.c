@@ -48,7 +48,6 @@ int	main(int ac, char **av)
 	else
 	{
 		partition_stacks(&la, &lb);
-		/* partition_in_B(&la, &lb); */
 		size_3_sort(&la);
 		while (lb)
 			insert_cheaper(&la, &lb);
