@@ -16,9 +16,6 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-
-#define PIVOT 1
-
 typedef struct s_list // s_list / t_list ?
 {
   struct s_list *prev;
@@ -83,6 +80,7 @@ int is_sorted_check(t_list *la);
 void print_init_lst(t_list *l); // a virer 
 void	sort_int_tab(int *tab, unsigned int size);
 int	*lst_to_array(t_list **la, int size);
+int is_digits_or_sign(char *s);
 // t_list *lst_last(t_list *lst);
 
 //ops.c

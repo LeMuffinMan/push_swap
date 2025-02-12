@@ -176,3 +176,18 @@ int is_sorted_check(t_list *la)
 	return (1);
 }
 
+int is_digits_or_sign(char *s)
+{
+	int i;
+
+	i = 0;
+	if (!s)
+		return (-1);
+	while (s[i])
+	{
+		if (s[i] != '-' && s[i] != '+' && (s[i] > '9' || s[i] < '0'))
+			return (1);
+		i++;
+	}
+	return (0);
+}

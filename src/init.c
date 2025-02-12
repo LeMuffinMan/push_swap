@@ -69,6 +69,39 @@ int invalid_input(t_list *l, int *array, char **s)
 	exit(1);
 }
 
+t_list *fill_list(char **splitted) // revenir pour declarer ici la liste pas dans le main 
+{
+	t_list *l;
+	int i;
+	int n;
+	int size;
+	int *array;
+
+	l = NULL;
+	i = 0;
+	while (splitted[i])
+	{
+		if(is_digits_or_sign(splitted[i]))
+		{
+			free(l);
+			write(2, "Error", 5);
+			exit(1);
+		}
+		n = ft_atoi(splitted[i], l); 
+		add_back(&l, n);
+		i++;
+	}
+	size = lst_size(l);
+	array = lst_to_array(&l, size);
+	get_index(&l, array);
+	get_position(&l);
+	init_step_2(&l);
+	free(array);
+	return (l);
+}
+
+
+
 int	init_stack(t_list **l, int ac, char **av)
 {
 	char	**splitted;
