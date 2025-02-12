@@ -61,8 +61,8 @@ void pa(t_list **la, t_list **lb)
     A_one_node_case(la, &tmp);
   else 
     plug_on_A(la, &tmp);
-  get_position(la);
-  get_position(lb);
+  /* get_position(la); */
+  /* get_position(lb); */
   printf("pa\n");
 }
 

@@ -53,8 +53,8 @@ void pb(t_list **lb, t_list **la) //encore des pb ici
     tmp->start = true;
   }
 
-  get_position(la);
-  get_position(lb);
+  /* get_position(la); */
+  /* get_position(lb); */
   printf("pb\n");
 }
 

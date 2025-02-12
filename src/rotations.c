@@ -9,7 +9,7 @@ void ra(t_list **l)
   (*l)->next->start = true;
   *l = (*l)->next;
   printf("ra\n");
-  get_position(l);
+  /* get_position(l); */
 }
 
 void rb(t_list **l)
@@ -20,7 +20,7 @@ void rb(t_list **l)
   (*l)->next->start = true;
   *l = (*l)->next;
   printf("rb\n");
-  get_position(l);
+  /* get_position(l); */
 }
 
 void rr(t_list **la, t_list **lb)
@@ -36,8 +36,8 @@ void rr(t_list **la, t_list **lb)
   (*lb)->next->start = true;
   *lb = (*lb)->next;
   printf("rr\n");
-  get_position(la);
-  get_position(lb);
+  /* get_position(la); */
+  /* get_position(lb); */
 }
 
 

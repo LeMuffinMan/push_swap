@@ -64,11 +64,8 @@ int insert_cheaper(t_list **la, t_list **lb)
 	get_rots (lb); // on setup les rots pour chaque nodes
 	get_dest_rots(la, lb);
 	get_costs(lb); // on peut donc calculer le coups pour chaque node B
-	/* printf("=========================================\n"); */
-	/* printf("la :\n"); */
-	/* print_lst2(*la); */
-	/* printf("lb :\n"); */
-	/* print_lst2(*lb); */
+	get_position(la);
+	get_position(lb);
 
 	//deplacer cette condition plus bas
 	if (lst_size(*lb) > 1)	
@@ -79,13 +76,7 @@ int insert_cheaper(t_list **la, t_list **lb)
 	////diviser en bring_cheaper to top
 	///bring dest top top
 	get_cheaper_and_dest_to_top(la, lb, cheaper);
-	/* do_rotates(la, lb, &move); */
 	pa(la, lb);
-	/* printf("la :\n"); */
-	/* print_lst2(*la); */
-	/* printf("lb :\n"); */
-	/* print_lst2(*lb); */
-	/* sleep(1); */
 	return (0);
 }
 
