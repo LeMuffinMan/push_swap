@@ -47,13 +47,11 @@
 
 int	main(int ac, char **av)
 {
-	t_list	*la;
-	t_list *lb;
+	t_list	*la = NULL; //norm ?
+	t_list *lb = NULL;
 	int size;
 	int median;
 
-	la = NULL;
- 	lb = NULL; 
 	if (ac <= 1)  
 		exit (1);
 	init_stack(&la, ac, av);
