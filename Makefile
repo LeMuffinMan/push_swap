@@ -14,6 +14,7 @@
 # ajouter les .d comme dependances : pour l'horodotage des fichiers 
 # flags : mmd mp
 # include ce qu'on appelle des dependances 
+# VIRER TOUS LES COMMENTAIRES
 
 NAME = push_swap
 
@@ -60,7 +61,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ) Makefile
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@echo 
 	@echo -e "$(GREEN)compilation successful: $(NAME)$(RESET)"
+	@echo 
 	
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
 	@mkdir -p $(dir $@)
@@ -75,16 +78,16 @@ fclean: clean
 re: fclean all
 
 tests: all
-	@./tests.sh $(SIZE) $(RUNS) \
+	@./tests.sh $(SIZE) $(RUNS) 
 
 test: all
 	$(shell ./random_ints.sh $(SIZE))
-	@echo "=== list used ==="
-	@echo $(LIST)
-	@echo
 	@echo "=== Valgrind Output ==="
 	@valgrind --leak-check=full ./push_swap $(LIST) 2>&1 | tail -n 9
 	@echo 
+	@echo "=== list used ==="
+	@echo $(LIST)
+	@echo
 	@echo TOTAL_OPS : $(shell ./push_swap $(LIST) | wc -l)
 	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(SIZE))" = "OK" ]; then \
 		echo -e "checker_linux : $(GREEN)OK$(RESET)"; \
