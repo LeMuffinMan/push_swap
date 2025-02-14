@@ -3,12 +3,10 @@
 SIZE=${1:-100}  
 TESTS=${2:-10}
 
-# decla dun tableau
-OPERATIONS=()
 KO=0
 
 for I in $(seq 1 "$TESTS"); do
-    ./random_ints.sh "$SIZE"  
+    ./random_ints.sh "$SIZE" > random_ints.txt 
     NUMBERS=$(cat random_ints.txt)
     OPS=$(./push_swap $NUMBERS | wc -l)
     RESULT=$(./push_swap $NUMBERS | ./checker_linux $NUMBERS)

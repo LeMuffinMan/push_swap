@@ -6,27 +6,31 @@
 #    By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/11 10:37:23 by oelleaum          #+#    #+#              #
-#    Updated: 2025/02/11 10:41:31 by oelleaum         ###   ########lyon.fr    #
+#    Updated: 2025/02/14 12:17:41 by oelleaum         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-#Attention au relink !!
+# Attention au relink !!
+# 	libft ?
 # ajouter les .d comme dependances : pour l'horodotage des fichiers 
-# flags : mmd mp
 # include ce qu'on appelle des dependances 
+# flags : mmd mp
+# voir pour les echo -e
 # VIRER TOUS LES COMMENTAIRES
 
-NAME = push_swap
 
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
-INC = -I includes
+NAME = push_swap
+BONUS_NAME = checker
+
+CC = cc
+CFLAGS = -Wall -Werror -Wextra  
+INC = -I includes -I libft/include
+
 SRC_DIR = src
 OBJ_DIR = obj
+BONUS_DIR = bonus
 
-#virer debug.c a la fin 
-# faire des sous dossiers
-SRC_FILES = main.c \
+SRC_FILES = push_swap.c \
             my_algo/get_cheaper_insertion.c \
             utils/get_min_max_index.c \
             utils/array_utils.c \
@@ -34,20 +38,38 @@ SRC_FILES = main.c \
             my_algo/get_nodes_to_top.c \
             init.c \
             ops/reverse_rotations.c \
-            ops/pb.c \
             ops/rotations.c \
+            ops/ops_utils.c \
             my_algo/easy_cases.c \
             my_algo/my_algo.c \
             ops/swap.c \
-            ops/pa.c \
+						ops/push_on_stack.c \
             my_algo/update_list_infos.c \
-            utils/utils.c \
-            libft.c
+            utils/utils.c 
+
+BONUS_SRC_FILES = bonus/checker.c \
+									bonus/get_next_line.c \
+									bonus/get_next_line_utils.c \
+									bonus/ops/push_on_stack.c \
+									bonus/ops/swap.c \
+									bonus/ops/rotations.c \
+									bonus/ops/ops_utils.c \
+									bonus/ops/reverse_rotations.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
+BONUS_OBJ_FILES = $(BONUS_SRC_FILES:.c=.o)
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
+BONUS = $(addprefix $(BONUS_DIR)/,$(BONUS_OBJ_FILES))
+
+# attention wildcards 
+LIBFT_DIR = libft
+LIBFT_A = $(LIBFT_DIR)/libft.a
+LIBFT_SRC = $(wildcard $(LIBFT_DIR)/*/*.c)
+LIBFT_HEADERS = $(wildcard $(LIBFT_DIR)/include/*.h)
+LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
+LIBFT_FLAGS = -L$(LIBFT_DIR) $(LIBFT_A)
 
 SIZE ?= 100
 RUNS ?= 10
@@ -59,29 +81,47 @@ RESET=\033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) Makefile
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT_A)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) -o $(NAME)
 	@echo 
-	@echo -e "$(GREEN)compilation successful: $(NAME)$(RESET)"
+	@echo -e "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
 	@echo 
-	
+
+$(LIBFT_A): $(LIBFT_SRC) $(LIBFT_HEADERS) libft/Makefile
+	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
-clean:
-	rm -rf $(OBJ_DIR)
+bonus: $(BONUS_NAME)
 
-fclean: clean 
-	rm -f $(NAME)
+$(OBJ_DIR)/bonus/%.o: $(BONUS_DIR)/%.c ./bonus/checker.h
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+
+$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ)
+	$(CC) $(CFLAGS) $(BONUS_OBJ_FILES) $(LIBFT_FLAGS) -o $(BONUS_NAME)
+	@echo 
+	@echo -e "$(GREEN)compilation successful ✅ $(BONUS_NAME)$(RESET)"
+	@echo
+
+clean:
+	rm -rf $(OBJ_DIR)/*
+
+bonus_clean:
+	rm -rf $(OBJ_DIR)/bonus/*
+
+fclean: clean bonus_clean
+	rm -f $(NAME) $(BONUS_NAME)
 
 re: fclean all
 
 tests: all
-	@./tests.sh $(SIZE) $(RUNS) 
+	@./tests.sh $(SIZE) $(RUNS); \
 
 test: all
-	$(shell ./random_ints.sh $(SIZE))
+	@./random_ints.sh $(SIZE) > random_ints.txt
 	@echo "=== Valgrind Output ==="
 	@valgrind --leak-check=full ./push_swap $(LIST) 2>&1 | tail -n 9
 	@echo 
@@ -89,7 +129,7 @@ test: all
 	@echo $(LIST)
 	@echo
 	@echo TOTAL_OPS : $(shell ./push_swap $(LIST) | wc -l)
-	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(SIZE))" = "OK" ]; then \
+	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(LIST))" = "OK" ]; then \
 		echo -e "checker_linux : $(GREEN)OK$(RESET)"; \
 	else \
 		echo -e "checker_linux : $(RED)KO$(RESET)"; \
@@ -169,4 +209,4 @@ test: all
 		echo -e "Letters : $(RED)KO$(RESET)"; \
 	fi
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re test tests bonus

@@ -1,20 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_algo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 14:03:08 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/13 14:03:10 by oelleaum         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-//a revoir !!
-static int is_A_setup(t_list *la)
+static int	is_A_setup(t_stack *la)
 {
-	int min;
-	t_list *tmp;
-	t_list *min_node;
+	int		min;
+	t_stack	*tmp;
+	t_stack	*min_node; 
 
 	min = get_min_index(&la);
 	tmp = la;
-	while (tmp->i != min)
-	{
-		tmp = tmp->next;
-		if (tmp->start)
-			break ;
-	}
 	min_node = tmp;
 	while (1)
 	{
@@ -27,9 +32,9 @@ static int is_A_setup(t_list *la)
 	return (0);
 }
 
-void	partition_stacks(t_list **la, t_list **lb, int median, int size)
+void	partition_stacks(t_stack **la, t_stack **lb, int median, int size)
 {
-	t_list *tmp;
+	t_stack	*tmp;
 
 	tmp = *la;
 	while (lst_size(*la) > 3 && !is_A_setup(*la))
@@ -37,7 +42,7 @@ void	partition_stacks(t_list **la, t_list **lb, int median, int size)
 		if (tmp->i == size - 1)
 			ra(la);
 		else
-		{	
+		{
 			pb(la, lb);
 			if ((*lb)->i <= median)
 			{
@@ -51,33 +56,33 @@ void	partition_stacks(t_list **la, t_list **lb, int median, int size)
 	}
 }
 
-int insert_cheaper(t_list **la, t_list **lb)
+int	insert_cheaper(t_stack **la, t_stack **lb)
 {
-	int cheaper;
+	int	cheaper;
 
-	get_dests (la, lb);
-	get_rots (la);
-	get_rots (lb);
+	get_dests(la, lb);
+	get_rots(la);
+	get_rots(lb);
 	get_dest_rots(la, lb);
-	get_costs(lb); 
+	get_costs(lb);
 	get_position(la);
 	get_position(lb);
-  cheaper = get_cheaper_insertion(lb);
+	cheaper = get_cheaper_insertion(lb);
 	get_nodes_to_top(la, lb, cheaper);
 	pa(la, lb);
 	return (0);
 }
 
-void final_rotate(t_list **la)
+void	final_rotate(t_stack **la)
 {
-	t_list *tmp;
+	t_stack	*tmp;
 
 	get_position(la);
 	tmp = (*la)->next;
-	while(!tmp->start)
+	while (!tmp->start)
 	{
 		if (tmp->i == 0)
-			break;
+			break ;
 		tmp = tmp->next;
 	}
 	if (tmp->pos > lst_size(*la) / 2)
@@ -85,10 +90,9 @@ void final_rotate(t_list **la)
 		while ((*la)->i != 0)
 			rra(la);
 	}
-	else 
+	else
 	{
 		while ((*la)->i != 0)
 			ra(la);
-	}	
+	}
 }
-

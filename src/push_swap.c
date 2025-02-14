@@ -1,60 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 22:49:41 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/07 20:00:37 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/02/14 13:11:32 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdlib.h>
 
-//my_algo
-	//easy_cases : header 42
-	//get_cheaper_instertion : header 42
-	//get_nodes_to_top : header 42 
-	//my_algo.c : revoir is_a_setup + header 42 
-	//update_list_infos : header 42 
+int	is_sorted(t_stack *la)
+{
+	t_stack	*tmp;
 
-//ops : write ??
- 	//pa : combiner avec addfirstnode ? header 42
-	//pb : sur le modelee de pa + header 42
-  //tous : ft_printf ou write !
-
-//utils
-  //array_utils static ou libft ? header
-	//lst_utils : clean + booleen ? + libft + header
-  //debug a virer
-  //get_min_max : header 42
-  //libft modifiee ?
-
-//main.c : renommer ?
-//libft : integrer 
-//init.c : done
-//
-// split : gerer plus de sep que juste ' ' ?
-//./push_swap "1565 -56 15 0" 436 76
-/* Error%  */
-//
-//faire le checker
-//revoir scripts
-//
-//
+	tmp = la;
+	while (1)
+	{
+		if (tmp->i > tmp->next->i && tmp->next->start == FALSE)
+			return (1);
+		tmp = tmp->next;
+		if (tmp->start)
+			break ;
+	}
+	return (0);
+}
 
 int	main(int ac, char **av)
 {
-	t_list	*la = NULL; //norm ?
-	t_list *lb = NULL;
-	int size;
-	int median;
+	t_stack	*lb;
+	t_stack	*la;
+	int		size;
+	int		median;
 
-	if (ac <= 1)  
-		exit (1);
+	la = NULL;
+	lb = NULL;
+	if (ac <= 1)
+		exit(1);
 	init_stack(&la, ac, av);
+	if (!is_sorted(la))
+		return (0);
 	if (lst_size(la) <= 3)
 		easy_cases(&la);
 	else

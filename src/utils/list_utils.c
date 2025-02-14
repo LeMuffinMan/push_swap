@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 14:04:56 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/14 11:29:30 by oelleaum         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
+#include "libft.h"
 #include <stdlib.h>
 
-//libft ???
-//booleen
-
-void	free_list(t_list **l)
+void	free_list(t_stack **l)
 {
-	t_list	*tmp;
-	t_list	*next_node;
+	t_stack	*tmp;
+	t_stack	*next_node;
 
 	tmp = *l;
 	if (!*l)
@@ -22,44 +32,44 @@ void	free_list(t_list **l)
 	*l = NULL;
 }
 
-//a returiliser pour pa pb ?
-static void add_first_node(t_list **lst, t_list *new, int n)
+static void	add_first_node(t_stack **lst, t_stack *new, int n)
 {
-		*lst = new;
-		new->prev = new;
-		new->n = n;
-		new->start = true;
-		new->next = new;
+	*lst = new;
+	new->prev = new;
+	new->n = n;
+	new->start = TRUE;
+	new->next = new;
 }
 
-//libft a integrer !!
-void	add_back(t_list **lst, int n)
+void	add_back(t_stack **lst, int n)
 {
-	t_list	*ptr;
-	t_list	*new;
+	t_stack	*ptr;
+	t_stack	*new;
 
-	new = NULL;
-	new = malloc(sizeof(t_list));
-	/* if (new == NULL) */
-	/*   lst_clear(*lst); */
+	new = malloc(sizeof(t_stack));
+	if (new == NULL)
+	{
+	  free_list(lst);
+	  exit (1);
+	}
 	if (*lst == NULL)
 		add_first_node(lst, new, n);
 	else
 	{
-		ptr = (*lst)->prev; // on est sur le dernier de la liste
-		ptr->next = new; //next etait sur la tete : on le passe sur le nouveau node 
+		ptr = (*lst)->prev; 
+		ptr->next = new;   
 		(*lst)->prev = new;
-		new->prev = ptr; //le precedent du new, est l'ancien dernier 
+		new->prev = ptr; 
 		new->next = *lst;
 		new->n = n;
-		new->start = false;
-	}  
+		new->start = FALSE;
+	}
 }
 
-int lst_size(t_list *l)
+int	lst_size(t_stack *l)
 {
-	t_list *ptr;
-	int i;
+	t_stack	*ptr;
+	int		i;
 
 	if (l == NULL)
 		return (0);
@@ -68,7 +78,7 @@ int lst_size(t_list *l)
 		return (1);
 	i = 1;
 	ptr = ptr->next;
-	while (ptr->start != true)
+	while (ptr->start != TRUE)
 	{
 		i++;
 		ptr = ptr->next;
@@ -76,10 +86,9 @@ int lst_size(t_list *l)
 	return (i);
 }
 
-//renvoyer un booleen
-int is_sorted_check(t_list *la)
+int	is_sorted_check(t_stack *la)
 {
-	t_list *tmp;
+	t_stack	*tmp;
 
 	tmp = la;
 	while (tmp->n < tmp->next->n)
@@ -88,4 +97,3 @@ int is_sorted_check(t_list *la)
 		return (0);
 	return (1);
 }
-

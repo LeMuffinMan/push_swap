@@ -1,33 +1,16 @@
-#include <stdlib.h>
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/13 08:28:17 by oelleaum          #+#    #+#             */
+/*   Updated: 2024/11/20 16:23:24 by oelleaum         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	ft_atoi(const char *nptr, t_list *l)
-{
-	char			sign;
-	long long int	n;
-
-	n = 0;
-	while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-	{
-		sign = *nptr;
-		nptr++;
-	}
-	while (*nptr >= '0' && *nptr <= '9')
-	{
-		n += *nptr - '0';
-		nptr++;
-		if (*nptr >= '0' && *nptr <= '9')
-			n *= 10;
-	}
-	if (sign == '-')
-		n *= -1;
-	if (n > 2147483647 || n < -2147483648)
-		invalid_input(l, NULL, NULL);
-	return (n);
-}
-
+#include "libft.h"
 
 static int	count_strs(const char *s, char c)
 {
@@ -50,7 +33,7 @@ static int	count_strs(const char *s, char c)
 	return (strs);
 }
 
-static void	ft_free(char **s)
+void	ft_free(char **s)
 {
 	int	i;
 
@@ -64,7 +47,6 @@ static void	ft_free(char **s)
 	free(s);
 }
 
-//a revoir
 static char	*ft_strdup_custom(char *s, int start, char c)
 {
 	int		i;
@@ -126,29 +108,4 @@ char	**ft_split(char const *s, char c)
 	if (!splited)
 		return (NULL);
 	return (fill_splited(splited, s, c));
-}
-
-int ft_strlen(char *s)
-{
-	int i;
-
-	i = 0;
-	if (!s)
-		return (-1);
-	while (s[i])
-		i++;
-	return (i);
-}
-
-void	free_splited(char **splited)
-{
-	int	i;
-
-	i = 0;
-	while (splited[i])
-	{
-		free(splited[i]);
-		i++;
-	}
-	free(splited);
 }

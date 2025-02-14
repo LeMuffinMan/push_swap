@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_nodes_to_top.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/13 14:02:53 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/13 14:02:56 by oelleaum         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-static void get_node_by_index(t_list **l, int index, t_list **node)
+static void	get_node_by_index(t_stack **l, int index, t_stack **node)
 {
 	if ((*l)->i == index)
 		(*node) = *l;
@@ -16,9 +28,10 @@ static void get_node_by_index(t_list **l, int index, t_list **node)
 	}
 }
 
-static void do_combine_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
+static void	do_combine_rotates(t_stack **la, t_stack **lb, t_stack **candidate,
+		t_stack **dest)
 {
-while ((*candidate)->rot > 0 && (*dest)->rot > 0)
+	while ((*candidate)->rot > 0 && (*dest)->rot > 0)
 	{
 		rr(la, lb);
 		(*candidate)->rot--;
@@ -32,7 +45,8 @@ while ((*candidate)->rot > 0 && (*dest)->rot > 0)
 	}
 }
 
-static void do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_list **dest)
+static void	do_single_rotates(t_stack **la, t_stack **lb, t_stack **candidate,
+		t_stack **dest)
 {
 	while ((*candidate)->rot > 0)
 	{
@@ -56,10 +70,10 @@ static void do_single_rotates(t_list **la, t_list **lb, t_list **candidate, t_li
 	}
 }
 
-void get_nodes_to_top(t_list **la, t_list **lb, int cheaper)
+void	get_nodes_to_top(t_stack **la, t_stack **lb, int cheaper)
 {
-	t_list *candidate;
-	t_list *dest;
+	t_stack	*candidate;
+	t_stack	*dest;
 
 	get_node_by_index(lb, cheaper, &candidate);
 	get_node_by_index(la, candidate->dest, &dest);
