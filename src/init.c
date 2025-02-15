@@ -99,21 +99,9 @@ static t_stack	*fill_list(char **splitted)
 
 int	init_stack(t_stack **l, int ac, char **av)
 {
-	char	**splitted;
-
 	if (ac == 1 || !av[1][0])
 		exit(1);
-	else if (ac == 2)
-	{
-		splitted = ft_split(av[1], ' ');
-		/* if (splitted[1] == NULL) */
-		/* 	invalid_input(NULL, NULL, splitted); */
-		*l = fill_list(splitted);
-		ft_free(splitted);
-		if (duplicate_checker(*l))
-			invalid_input(*l, NULL, NULL);
-	}
-	else if (ac > 2)
+	else if (ac >= 2)
 	{
 		av++;
 		*l = fill_list(av);

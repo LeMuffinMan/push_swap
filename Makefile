@@ -181,13 +181,6 @@ test: all
 	@echo "=== list used ==="
 	@echo $(LIST)
 	@echo
-	@echo TOTAL_OPS : $(shell ./push_swap $(LIST) | wc -l)
-	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(LIST))" = "OK" ]; then \
-		echo -e "checker_linux : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "checker_linux : $(RED)KO$(RESET)"; \
-	fi
-	@echo
 	@echo -e "=== parsing tests ==="
 	@if [ "$(shell ./push_swap | wc -l)" -eq 0 ]; then \
 		echo -e "Empty prompt : $(GREEN)OK$(RESET)"; \
@@ -205,14 +198,9 @@ test: all
 		echo -e "INT_MIN-1 : $(RED)KO$(RESET)"; \
 	fi
 	@if [ "$(shell ./push_swap -9223372036854775808 1 2>&1)" = "Error" ]; then \
-		echo -e "LONG_MIN : $(GREEN)OK$(RESET)"; \
+		echo -e "LONG_INT : $(GREEN)OK$(RESET)"; \
 	else \
-		echo -e "LONG_MIN : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap " 2  1    3")" = "sa" ]; then \
-		echo -e "Quoted numbers with spaces : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Quoted numbers with spaces : $(RED)KO$(RESET)"; \
+		echo -e "LONG_INT : $(RED)KO$(RESET)"; \
 	fi
 	@if [ "$(shell ./push_swap "53 54" 5 6 2>&1)" = "Error" ]; then \
 		echo -e "Mixed quoted/unquoted : $(GREEN)OK$(RESET)"; \
@@ -248,6 +236,13 @@ test: all
 		echo -e "Letters : $(GREEN)OK$(RESET)"; \
 	else \
 		echo -e "Letters : $(RED)KO$(RESET)"; \
+	fi
+	@echo
+	@echo TOTAL_OPS : $(shell ./push_swap $(LIST) | wc -l)
+	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(LIST))" = "OK" ]; then \
+		echo -e "checker_linux : $(GREEN)OK$(RESET)"; \
+	else \
+		echo -e "checker_linux : $(RED)KO$(RESET)"; \
 	fi
 
 .PHONY: all clean fclean re bonus
