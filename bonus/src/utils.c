@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/30 13:32:38 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/13 14:05:04 by oelleaum         ###   ########lyon.fr   */
+/*   Created: 2025/02/15 13:43:52 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/15 17:15:37 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include <stdlib.h>
+#include "../include/checker.h"
 
 int	is_digits_or_sign(char *s)
 {
@@ -61,4 +60,18 @@ int	ft_atoi_limits_check(const char *nptr, t_stack *l)
 	if (n > 2147483647 || n < -2147483648)
 		invalid_input(l, NULL, NULL);
 	return (n);
+}
+
+int	is_sorted_check(t_stack *la)
+{
+	t_stack	*tmp;
+
+	if (!la)
+		return (0);
+	tmp = la;
+	while (tmp->n < tmp->next->n)
+		tmp = tmp->next;
+	if (tmp->next != la)
+		return (0);
+	return (1);
 }

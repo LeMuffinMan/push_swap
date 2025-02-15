@@ -6,7 +6,7 @@
 #    By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/15 16:52:25 by oelleaum          #+#    #+#              #
-#    Updated: 2024/11/21 15:18:35 by oelleaum         ###   ########.fr        #
+#    Updated: 2025/02/15 15:06:56 by oelleaum         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,9 @@ SRC_FILES=ft_atoi.c\
 	ft_lstiter_bonus.c\
 	ft_lstlast_bonus.c\
 	ft_lstnew_bonus.c\
-	ft_lstsize_bonus.c
+	ft_lstsize_bonus.c\
+	get_next_line.c\
+	get_next_line_utils.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

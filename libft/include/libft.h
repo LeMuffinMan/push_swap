@@ -6,7 +6,7 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:01:01 by oelleaum          #+#    #+#             */
-/*   Updated: 2024/11/21 15:18:56 by oelleaum         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:27:08 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 # endif
 
 # include <bsd/string.h>
-# include <ctype.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
 
 typedef struct s_list
 {
@@ -73,6 +68,6 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *s);
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
-char	*get_next_line(int fd);
+char				*get_next_line(int fd);
 
 #endif

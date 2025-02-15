@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-static int	is_A_setup(t_stack *la)
+static int	is_a_setup(t_stack *la)
 {
 	int		min;
 	t_stack	*tmp;
-	t_stack	*min_node; 
+	t_stack	*min_node;
 
 	min = get_min_index(&la);
 	tmp = la;
@@ -37,7 +37,7 @@ void	partition_stacks(t_stack **la, t_stack **lb, int median, int size)
 	t_stack	*tmp;
 
 	tmp = *la;
-	while (lst_size(*la) > 3 && !is_A_setup(*la))
+	while (lst_size(*la) > 3 && !is_a_setup(*la))
 	{
 		if (tmp->i == size - 1)
 			ra(la);
@@ -59,8 +59,12 @@ void	partition_stacks(t_stack **la, t_stack **lb, int median, int size)
 int	insert_cheaper(t_stack **la, t_stack **lb)
 {
 	int	cheaper;
+	int	min_index;
+	int	max_index;
 
-	get_dests(la, lb);
+	min_index = get_min_index(la);
+	max_index = get_max_index(la);
+	get_dests(la, lb, max_index, min_index);
 	get_rots(la);
 	get_rots(lb);
 	get_dest_rots(la, lb);
@@ -95,4 +99,16 @@ void	final_rotate(t_stack **la)
 		while ((*la)->i != 0)
 			ra(la);
 	}
+}
+
+int	my_algo(t_stack **la, t_stack **lb, int size, int median)
+{
+	if (!la || !lb)
+		return (1);
+	partition_stacks(la, lb, median, size);
+	easy_cases(la);
+	while (*lb)
+		insert_cheaper(la, lb);
+	final_rotate(la);
+	return (0);
 }

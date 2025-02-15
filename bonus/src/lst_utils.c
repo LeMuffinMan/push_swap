@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 14:04:56 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/14 11:29:30 by oelleaum         ###   ########lyon.fr   */
+/*   Created: 2025/02/15 13:42:54 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/15 17:15:22 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "push_swap.h"
+#include "../include/checker.h"
 #include <stdlib.h>
-
-void	free_list(t_stack **l)
-{
-	t_stack	*tmp;
-	t_stack	*next_node;
-
-	tmp = *l;
-	if (!*l)
-		return ;
-	(*l)->prev->next = NULL;
-	while (tmp)
-	{
-		next_node = tmp->next;
-		free(tmp);
-		tmp = next_node;
-	}
-	*l = NULL;
-}
+#include <unistd.h>
 
 static void	add_first_node(t_stack **lst, t_stack *new, int n)
 {
@@ -86,14 +68,45 @@ int	lst_size(t_stack *l)
 	return (i);
 }
 
-int	is_sorted_check(t_stack *la)
+void	free_list(t_stack **l)
 {
 	t_stack	*tmp;
+	t_stack	*next_node;
 
-	tmp = la;
-	while (tmp->n < tmp->next->n)
+	if (!l || !*l)
+		return ;
+	tmp = *l;
+	(*l)->prev->next = NULL;
+	while (tmp)
+	{
+		next_node = tmp->next;
+		free(tmp);
+		tmp = next_node;
+	}
+	*l = NULL;
+}
+
+int	*lst_to_array(t_stack **la, int size)
+{
+	int		*array;
+	int		i;
+	t_stack	*tmp;
+
+	array = malloc(sizeof(int) * size);
+	if (!array)
+	{
+		free_list(la);
+		return (NULL);
+	}
+	array[0] = (*la)->n;
+	i = 1;
+	tmp = (*la)->next;
+	while (!tmp->start)
+	{
+		array[i] = tmp->n;
+		i++;
 		tmp = tmp->next;
-	if (tmp->next != la)
-		return (0);
-	return (1);
+	}
+	sort_int_tab(array, i);
+	return (array);
 }

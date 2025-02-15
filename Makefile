@@ -6,70 +6,112 @@
 #    By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/11 10:37:23 by oelleaum          #+#    #+#              #
-#    Updated: 2025/02/14 12:17:41 by oelleaum         ###   ########lyon.fr    #
+#    Updated: 2025/02/15 17:44:45 by oelleaum         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
-
-# Attention au relink !!
-# 	libft ?
-# ajouter les .d comme dependances : pour l'horodotage des fichiers 
-# include ce qu'on appelle des dependances 
-# flags : mmd mp
-# voir pour les echo -e
-# VIRER TOUS LES COMMENTAIRES
-
 
 NAME = push_swap
 BONUS_NAME = checker
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra  
-INC = -I includes -I libft/include
+INC = -I includes
+INC_LIBFT = -I libft/include
+INC_BONUS = -I bonus/include
 
 SRC_DIR = src
 OBJ_DIR = obj
-BONUS_DIR = bonus
 
-SRC_FILES = push_swap.c \
-            my_algo/get_cheaper_insertion.c \
-            utils/get_min_max_index.c \
-            utils/array_utils.c \
-            utils/list_utils.c \
-            my_algo/get_nodes_to_top.c \
-            init.c \
-            ops/reverse_rotations.c \
-            ops/rotations.c \
-            ops/ops_utils.c \
-            my_algo/easy_cases.c \
-            my_algo/my_algo.c \
-            ops/swap.c \
-						ops/push_on_stack.c \
-            my_algo/update_list_infos.c \
-            utils/utils.c 
+LIBFT_SRC_DIR = libft/src
+LIBFT_OBJ_DIR = libft/obj
+BONUS_SRC_DIR = bonus/src
+BONUS_OBJ_DIR = bonus/obj
 
-BONUS_SRC_FILES = bonus/checker.c \
-									bonus/get_next_line.c \
-									bonus/get_next_line_utils.c \
-									bonus/ops/push_on_stack.c \
-									bonus/ops/swap.c \
-									bonus/ops/rotations.c \
-									bonus/ops/ops_utils.c \
-									bonus/ops/reverse_rotations.c
+LIBFT_SRC_FILES = \
+    libft/src/ft_atoi.c \
+    libft/src/ft_bzero.c \
+    libft/src/ft_calloc.c \
+    libft/src/ft_isalnum.c \
+    libft/src/ft_isalpha.c \
+    libft/src/ft_isascii.c \
+    libft/src/ft_isdigit.c \
+    libft/src/ft_isprint.c \
+    libft/src/ft_itoa.c \
+    libft/src/ft_lstadd_back_bonus.c \
+    libft/src/ft_lstadd_front_bonus.c \
+    libft/src/ft_lstclear_bonus.c \
+    libft/src/ft_lstdelone_bonus.c \
+    libft/src/ft_lstiter_bonus.c \
+    libft/src/ft_lstlast_bonus.c \
+    libft/src/ft_lstnew_bonus.c \
+    libft/src/ft_lstsize_bonus.c \
+    libft/src/ft_memchr.c \
+    libft/src/ft_memcmp.c \
+    libft/src/ft_memcpy.c \
+    libft/src/ft_memmove.c \
+    libft/src/ft_memset.c \
+    libft/src/ft_putchar_fd.c \
+    libft/src/ft_putendl_fd.c \
+    libft/src/ft_putnbr_fd.c \
+    libft/src/ft_putstr_fd.c \
+    libft/src/ft_split.c \
+    libft/src/ft_strdup.c \
+    libft/src/ft_strchr.c \
+    libft/src/ft_striteri.c \
+    libft/src/ft_strjoin.c \
+    libft/src/ft_strlcat.c \
+    libft/src/ft_strlcpy.c \
+    libft/src/ft_strmapi.c \
+    libft/src/ft_strnstr.c \
+    libft/src/ft_strrchr.c \
+    libft/src/ft_strtrim.c \
+    libft/src/ft_substr.c \
+    libft/src/ft_strlen.c \
+    libft/src/ft_strncmp.c \
+    libft/src/ft_tolower.c \
+    libft/src/ft_toupper.c \
+    libft/src/ft_split.c \
+    libft/src/get_next_line.c \
+    libft/src/get_next_line_utils.c
 
-OBJ_FILES = $(SRC_FILES:.c=.o)
+
+LIBFT_OBJ_FILES = $(LIBFT_SRC_FILES:.c=.o)
+
+BONUS_SRC_FILES = \
+    bonus/src/checker.c \
+    bonus/src/init.c \
+    bonus/src/array_utils.c \
+    bonus/src/lst_utils.c \
+    bonus/src/utils.c \
+    bonus/src/ops/ops.c \
+    bonus/src/ops/execute_ops.c \
+    bonus/src/ops/ops_utils.c 
+
 BONUS_OBJ_FILES = $(BONUS_SRC_FILES:.c=.o)
 
-SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILES))
-OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
-BONUS = $(addprefix $(BONUS_DIR)/,$(BONUS_OBJ_FILES))
+SRC_FILES = \
+    push_swap.c \
+    my_algo/get_cheaper_insertion.c \
+    utils/get_min_max_index.c \
+    utils/array_utils.c \
+    utils/list_utils.c \
+    my_algo/get_nodes_to_top.c \
+    init.c \
+    ops/reverse_rotations.c \
+    ops/rotations.c \
+    ops/ops_utils.c \
+    my_algo/easy_cases.c \
+    my_algo/my_algo.c \
+    ops/swap.c \
+    ops/push_on_stack.c \
+    my_algo/update_list_infos.c \
+    utils/utils.c
 
-# attention wildcards 
-LIBFT_DIR = libft
-LIBFT_A = $(LIBFT_DIR)/libft.a
-LIBFT_SRC = $(wildcard $(LIBFT_DIR)/*/*.c)
-LIBFT_HEADERS = $(wildcard $(LIBFT_DIR)/include/*.h)
-LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
-LIBFT_FLAGS = -L$(LIBFT_DIR) $(LIBFT_A)
+OBJ_FILES = $(SRC_FILES:.c=.o)
+OBJ = $(addprefix $(OBJ_DIR)/,$(OBJ_FILES))
+BONUS = $(addprefix $(BONUS_OBJ_DIR)/,$(BONUS_OBJ_FILES))
+
+LIBFT_A = libft/libft.a
 
 SIZE ?= 100
 RUNS ?= 10
@@ -82,26 +124,26 @@ RESET=\033[0m
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_A)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(LIBFT_A) -o $(NAME)
 	@echo 
 	@echo -e "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
 	@echo 
 
-$(LIBFT_A): $(LIBFT_SRC) $(LIBFT_HEADERS) libft/Makefile
-	@$(MAKE) --no-print-directory -C $(LIBFT_DIR)
+$(LIBFT_A): $(LIBFT_SRC_FILES)
+	@$(MAKE) --no-print-directory -C libft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC) $(INC_LIBFT) -c $< -o $@
 
 bonus: $(BONUS_NAME)
 
-$(OBJ_DIR)/bonus/%.o: $(BONUS_DIR)/%.c ./bonus/checker.h
+$(BONUS_OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c ./bonus/include/checker.h
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(INC) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 
-$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ)
-	$(CC) $(CFLAGS) $(BONUS_OBJ_FILES) $(LIBFT_FLAGS) -o $(BONUS_NAME)
+$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ) ./bonus/include/checker.h 
+	$(CC) $(CFLAGS) $(BONUS_OBJ_FILES) $(LIBFT_A) $(LIBFT_FLAGS) -o $(BONUS_NAME)
 	@echo 
 	@echo -e "$(GREEN)compilation successful ✅ $(BONUS_NAME)$(RESET)"
 	@echo
@@ -109,14 +151,13 @@ $(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ)
 clean:
 	rm -rf $(OBJ_DIR)/*
 
-bonus_clean:
-	rm -rf $(OBJ_DIR)/bonus/*
-
-fclean: clean bonus_clean
+fclean: clean
 	rm -f $(NAME) $(BONUS_NAME)
+	rm -f $(LIBFT_A)
 
 re: fclean all
 
+#a virer !!!!
 tests: all
 	@./tests.sh $(SIZE) $(RUNS); \
 
@@ -209,4 +250,4 @@ test: all
 		echo -e "Letters : $(RED)KO$(RESET)"; \
 	fi
 
-.PHONY: all clean fclean re test tests bonus
+.PHONY: all clean fclean re bonus

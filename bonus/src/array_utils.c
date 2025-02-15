@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 14:04:15 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/15 16:59:35 by oelleaum         ###   ########lyon.fr   */
+/*   Created: 2025/02/15 13:45:08 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/15 17:15:49 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include <stdlib.h>
+#include "../include/checker.h"
 
 static void	swap_elements(int *tab, unsigned int n1, unsigned int n2)
 {
@@ -42,34 +41,9 @@ static void	bubble_sort(int *tab, unsigned int size)
 	}
 }
 
-static void	sort_int_tab(int *tab, unsigned int size)
+void	sort_int_tab(int *tab, unsigned int size)
 {
 	if (size <= 1)
 		return ;
 	bubble_sort(tab, size);
-}
-
-int	*lst_to_array(t_stack **la, int size)
-{
-	int		*array;
-	int		i;
-	t_stack	*tmp;
-
-	array = malloc(sizeof(int) * size);
-	if (!array)
-	{
-		free_list(la);
-		exit (1);
-	}
-	array[0] = (*la)->n;
-	i = 1;
-	tmp = (*la)->next;
-	while (!tmp->start)
-	{
-		array[i] = tmp->n;
-		i++;
-		tmp = tmp->next;
-	}
-	sort_int_tab(array, i);
-	return (array);
 }

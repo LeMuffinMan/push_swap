@@ -6,11 +6,11 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:23:18 by oelleaum          #+#    #+#             */
-/*   Updated: 2024/12/14 18:19:46 by oelleaum         ###   ########.fr       */
+/*   Updated: 2025/02/15 14:57:56 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "libft.h"
 
 static void	cleaner(char *buf, char *line, ssize_t nb)
 {

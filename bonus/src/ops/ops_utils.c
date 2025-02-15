@@ -6,11 +6,12 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 10:31:43 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/14 10:58:33 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 17:16:14 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../../includes/push_swap.h"
+#include "../../include/checker.h"
 
 void	stack_empty_case(t_stack **l, t_stack **tmp)
 {

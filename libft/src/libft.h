@@ -6,12 +6,16 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 14:01:01 by oelleaum          #+#    #+#             */
-/*   Updated: 2024/11/21 15:18:56 by oelleaum         ###   ########.fr       */
+/*   Updated: 2025/02/15 14:58:55 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1000
+# endif
+
 # include <bsd/string.h>
 # include <ctype.h>
 # include <stdint.h>
@@ -68,5 +72,12 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *s);
 t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
+void				ft_free(char **s);
+size_t				ft_strlengnl(const char *s);
+char				*ft_strjoin_protected(char *s1, char const *s2);
+char				*ft_strchr_protected(const char *s, int c);
+void				*ft_memmove(void *dest, const void *src, size_t n);
+char				*get_next_line(int fd);
+void				ft_bzero(void *s, size_t n);
 
 #endif

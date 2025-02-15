@@ -1,57 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 22:49:41 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/14 13:11:32 by oelleaum         ###   ########lyon.fr   */
+/*   Created: 2025/02/14 12:11:56 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/15 17:33:58 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../../includes/push_swap.h"
+#include "../include/checker.h"
+#include <limits.h>
 #include <stdlib.h>
-
-int	is_sorted(t_stack *la)
-{
-	t_stack	*tmp;
-
-	tmp = la;
-	while (1)
-	{
-		if (tmp->i > tmp->next->i && tmp->next->start == FALSE)
-			return (1);
-		tmp = tmp->next;
-		if (tmp->start)
-			break ;
-	}
-	return (0);
-}
+#include <unistd.h>
 
 int	main(int ac, char **av)
 {
-	t_stack	*lb;
 	t_stack	*la;
-	int		size;
-	int		median;
+	t_stack	*lb;
 
 	la = NULL;
 	lb = NULL;
 	if (ac <= 1)
 		exit(1);
-	if (init_stack(&la, ac, av))
-		exit(1);
-	if (!is_sorted(la))
-		return (0);
-	if (lst_size(la) <= 3)
-		easy_cases(&la);
-	else
+	init_stack(&la, ac, av);
+	if (get_ops(&la, &lb))
 	{
-		size = lst_size(la);
-		median = size * 0.5;
-		my_algo(&la, &lb, size, median);
+		free_list(&la);
+		free_list(&lb);
+		exit(1);
 	}
+	if (is_sorted_check(la) && lb == NULL)
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
 	free_list(&la);
 	free_list(&lb);
 	return (0);

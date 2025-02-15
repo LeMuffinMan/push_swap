@@ -6,7 +6,7 @@
 #    By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/15 16:52:25 by oelleaum          #+#    #+#              #
-#    Updated: 2024/11/21 15:18:35 by oelleaum         ###   ########.fr        #
+#    Updated: 2025/02/15 14:49:57 by oelleaum         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,9 @@ SRC=ft_atoi.c\
 	ft_strtrim.c\
 	ft_strmapi.c\
 	ft_putendl_fd.c\
-	ft_striteri.c
+	ft_striteri.c\
+	get_next_line.c\
+	get_next_line_utils.c
 
 BONUS=ft_lstadd_back_bonus.c\
 	ft_lstadd_front_bonus.c\

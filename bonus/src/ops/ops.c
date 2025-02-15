@@ -6,14 +6,13 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 14:03:27 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/14 10:54:48 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 16:49:50 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
-#include <unistd.h>
+#include "../../include/checker.h"
 
-void	pa(t_stack **la, t_stack **lb)
+void	push(t_stack **la, t_stack **lb)
 {
 	t_stack	*tmp;
 
@@ -30,25 +29,36 @@ void	pa(t_stack **la, t_stack **lb)
 		stack_one_node_case(la, &tmp);
 	else
 		plug_on_stack(la, &tmp);
-	write(1, "pa\n", 3);
 }
 
-void	pb(t_stack **lb, t_stack **la)
+void	swap(t_stack **l)
 {
-	t_stack	*tmp;
+	int	tmp;
 
-	if (*lb == NULL)
+	if (*l == NULL || *l == (*l)->next)
 		return ;
-	tmp = *lb;
-	if (tmp == (*tmp).next)
-		*lb = NULL;
-	else
-		take_out_stack_top(la, lb, &tmp);
-	if (*la == NULL)
-		stack_empty_case(la, &tmp);
-	else if (*la == (*la)->next && *la == (*la)->prev)
-		stack_one_node_case(la, &tmp);
-	else
-		plug_on_stack(la, &tmp);
-	write(1, "pb\n", 3);
+	tmp = (*l)->n;
+	(*l)->n = (*l)->next->n;
+	(*l)->next->n = tmp;
+	tmp = (*l)->i;
+	(*l)->i = (*l)->next->i;
+	(*l)->next->i = tmp;
+}
+
+void	rotations(t_stack **l)
+{
+	if (*l == NULL || *l == (*l)->next)
+		return ;
+	(*l)->start = FALSE;
+	(*l)->next->start = TRUE;
+	*l = (*l)->next;
+}
+
+void	reverse_rotations(t_stack **l)
+{
+	if (*l == NULL || *l == (*l)->next)
+		return ;
+	(*l)->prev->start = TRUE;
+	(*l)->start = FALSE;
+	*l = (*l)->prev;
 }

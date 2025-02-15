@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/13 14:03:15 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/13 14:03:19 by oelleaum         ###   ########lyon.fr   */
+/*   Created: 2025/02/15 13:36:23 by oelleaum          #+#    #+#             */
+/*   Updated: 2025/02/15 13:36:46 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,58 +39,53 @@ void	get_index(t_stack **l, int *array)
 	}
 }
 
-//racourciri
-void	get_dests(t_stack **la, t_stack **lb)
+void	get_dests(t_stack **la, t_stack **lb, int max_index, int min_index)
 {
-	t_stack	*tmp_A;
-	t_stack	*tmp_B;
-	int max_index;
-	int min_index;
+	t_stack	*tmp_a;
+	t_stack	*tmp_b;
 
-	max_index = get_max_index(la);
-	min_index = get_min_index(la);
-	tmp_B = *lb;
+	tmp_b = *lb;
 	while (1)
 	{
-		tmp_B->dest = max_index;
-		if (tmp_B->i > max_index)
-			tmp_B->dest = min_index;
-		tmp_A = *la;
-		while (tmp_B->dest != min_index)
+		tmp_b->dest = max_index;
+		if (tmp_b->i > max_index)
+			tmp_b->dest = min_index;
+		tmp_a = *la;
+		while (tmp_b->dest != min_index)
 		{
-			if (tmp_A->i > tmp_B->i && tmp_A->i < tmp_B->dest)
-				tmp_B->dest = tmp_A->i;
-			tmp_A = tmp_A->next;
-			if (tmp_A->start)
+			if (tmp_a->i > tmp_b->i && tmp_a->i < tmp_b->dest)
+				tmp_b->dest = tmp_a->i;
+			tmp_a = tmp_a->next;
+			if (tmp_a->start)
 				break ;
 		}
-		tmp_B = tmp_B->next;
-		if (tmp_B->start)
+		tmp_b = tmp_b->next;
+		if (tmp_b->start)
 			break ;
 	}
 }
 
 void	get_dest_rots(t_stack **la, t_stack **lb)
 {
-	t_stack	*tmp_A;
-	t_stack	*tmp_B;
+	t_stack	*tmp_a;
+	t_stack	*tmp_b;
 	int		dest;
 
-	tmp_A = *la;
-	tmp_B = *lb;
+	tmp_a = *la;
+	tmp_b = *lb;
 	while (1)
 	{
-		dest = tmp_B->dest;
+		dest = tmp_b->dest;
 		while (1)
 		{
-			if (tmp_A->i == dest)
-				tmp_B->dest_rot = tmp_A->rot;
-			tmp_A = tmp_A->next;
-			if (tmp_A->start)
+			if (tmp_a->i == dest)
+				tmp_b->dest_rot = tmp_a->rot;
+			tmp_a = tmp_a->next;
+			if (tmp_a->start)
 				break ;
 		}
-		tmp_B = tmp_B->next;
-		if (tmp_B->start)
+		tmp_b = tmp_b->next;
+		if (tmp_b->start)
 			break ;
 	}
 }

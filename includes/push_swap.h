@@ -6,12 +6,12 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/30 13:54:46 by oelleaum          #+#    #+#             */
-/*   Updated: 2025/02/14 13:24:30 by oelleaum         ###   ########lyon.fr   */
+/*   Updated: 2025/02/15 17:35:04 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#ifndef PUSH_SWAP_H
+# define PUSH_SWAP_H
 
 # define TRUE 1
 # define FALSE 0
@@ -35,26 +35,29 @@ typedef struct s_stack
 // my_algo
 // easy_cases.c
 void				easy_cases(t_stack **la);
-// get_cheaper_insertion
+// get_cheaper_insertion.c
 void				get_costs(t_stack **lb);
 int					get_cheaper_insertion(t_stack **l);
 int					optimise_rotations(t_stack *node);
-// get_nodes_to_top
+// get_nodes_to_top.c
 void				get_nodes_to_top(t_stack **la, t_stack **lb, int cheaper);
-// my_algo
+// my_algo.c
 void				partition_stacks(t_stack **la, t_stack **lb, int median,
 						int size);
 int					insert_cheaper(t_stack **la, t_stack **lb);
 void				final_rotate(t_stack **la);
+int					my_algo(t_stack **la, t_stack **lb, int size, int median);
+
 // update_list_infos.c
 void				get_index(t_stack **l, int *array);
-void				get_dests(t_stack **la, t_stack **lb);
+void				get_dests(t_stack **la, t_stack **lb, int max_index,
+						int min_index);
 void				get_dest_rots(t_stack **la, t_stack **lb);
 void				get_rots(t_stack **l);
 int					get_position(t_stack **l);
 
 // ops
-// push on stack
+// push on stack.c
 void				pa(t_stack **la, t_stack **lb);
 void				pb(t_stack **lb, t_stack **la);
 // reverse_rotations.c
@@ -69,11 +72,12 @@ void				rr(t_stack **la, t_stack **lb);
 void				sa(t_stack **l);
 void				sb(t_stack **l);
 void				ss(t_stack **la, t_stack **lb);
-//ops_utils.c
-void	stack_empty_case(t_stack **l, t_stack **tmp);
-void	take_out_stack_top(t_stack **la, t_stack **lb, t_stack **node);
-void	stack_one_node_case(t_stack **l, t_stack **tmp);
-void	plug_on_stack(t_stack **l, t_stack **tmp);
+// ops_utils.c
+void				stack_empty_case(t_stack **l, t_stack **tmp);
+void				take_out_stack_top(t_stack **la, t_stack **lb,
+						t_stack **node);
+void				stack_one_node_case(t_stack **l, t_stack **tmp);
+void				plug_on_stack(t_stack **l, t_stack **tmp);
 
 // utils
 // array_utils.c

@@ -6,11 +6,11 @@
 /*   By: oelleaum <oelleaum@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:08:08 by oelleaum          #+#    #+#             */
-/*   Updated: 2024/12/14 18:17:56 by oelleaum         ###   ########.fr       */
+/*   Updated: 2025/02/15 14:58:03 by oelleaum         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "checker.h"
+#include "libft.h"
 
 char	*ft_strchr_protected(const char *s, int c)
 {
