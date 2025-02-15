@@ -43,7 +43,10 @@ int	main(int ac, char **av)
 	if (init_stack(&la, ac, av))
 		exit(1);
 	if (!is_sorted(la))
-		return (0);
+	{
+		free_list(&la);
+		exit (0);
+	}
 	if (lst_size(la) <= 3)
 		easy_cases(&la);
 	else

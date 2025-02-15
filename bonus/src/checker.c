@@ -26,6 +26,7 @@ int	main(int ac, char **av)
 	if (ac <= 1)
 		exit(1);
 	init_stack(&la, ac, av);
+	//ajouter le is sorted propre ici ? : cas d'une liste triee qui renvoie une erruer 
 	if (get_ops(&la, &lb))
 	{
 		free_list(&la);

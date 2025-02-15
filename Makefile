@@ -10,6 +10,14 @@
 #                                                                              #
 # **************************************************************************** #
 
+
+# bien checker : 
+# valgrind ./push_swap 1 0 1
+# valgrind ./push_swap 1
+# cas d'erreur pour une seule valeur envoyee 
+# supprimer split ?
+# rallonger mon testeur pour tester SYSTEMATIQUEMENT les leaks
+
 NAME = push_swap
 BONUS_NAME = checker
 
@@ -123,7 +131,7 @@ RESET=\033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_A)
+$(NAME): $(OBJ) $(LIBFT_A) Makefile ./includes/push_swap.h
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(LIBFT_A) -o $(NAME)
 	@echo 
 	@echo -e "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
@@ -142,7 +150,7 @@ $(BONUS_OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c ./bonus/include/checker.h
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 
-$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ) ./bonus/include/checker.h 
+$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ) ./bonus/include/checker.h Makefile
 	$(CC) $(CFLAGS) $(BONUS_OBJ_FILES) $(LIBFT_A) $(LIBFT_FLAGS) -o $(BONUS_NAME)
 	@echo 
 	@echo -e "$(GREEN)compilation successful ✅ $(BONUS_NAME)$(RESET)"
