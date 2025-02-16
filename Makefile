@@ -170,7 +170,7 @@ tests: all
 
 test: all
 	@./random_ints.sh $(SIZE) > random_ints.txt
-	@echo "=== list used ==="
+	@echo "=== $(SIZE) random integers ==="
 	@echo $(LIST)
 	@echo
 	@echo "=== Valgrind Output ==="
@@ -214,7 +214,7 @@ test: all
 	else \
 		echo "Quoted numbers with spaces : $(RED)KO$(RESET)"; \
 	fi
-	@# Mixed quoted/unquoted (CORRECTION SYNTAXE)
+	@# Mixed quoted/unquoted (CORRECTION SYNTAXE) A GERER !!!!!!!!!!!!!!!!
 	@if [ "$(shell ./push_swap "53 54" 5 6 2>&1)" = "Error" ]; then \
 		echo "Mixed quoted/unquoted : $(GREEN)OK$(RESET)"; \
 	else \
@@ -261,17 +261,33 @@ test: all
 leaks: all
 	@echo "=== Leaks ==="
 	@./leaks_check.sh
-	@if [ "$$(grep -c 'failed' logs/valgrind_output.txt)" -gt 0 ]; then \
+	@if [ "$(shell grep 'failed' logs/valgrind_output.txt)" > 0 ]; then \
     echo ''; \
-    echo '$(RED)LEAKS KO !$(RESET)'; \
+    echo -e '$(RED)LEAKS KO !$(RESET)'; \
     echo 'logs/valgrind_output.txt'; \
     echo ''; \
     grep 'failed' logs/valgrind_output.txt; \
 	else \
     echo ''; \
-    echo '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
+    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
     echo ''; \
 	fi
+
+bonus_test: bonus all
+	@echo "=== Bonus test ==="
+	@./bonus_full_check.sh
+	@if [ "$(shell grep 'failed' logs/valgrind_output_bonus.txt | wc -l)" > 0 ]; then \
+    echo ''; \
+    echo -e '$(RED)LEAKS KO !$(RESET)'; \
+    echo 'logs/valgrind_output_bonus.txt'; \
+    echo ''; \
+    grep 'failed' logs/valgrind_output.txt; \
+	else \
+    echo ''; \
+    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
+    echo ''; \
+	fi
+
 
 # make: *** [Makefile:278: complexity] Error 1
 complexity: all
