@@ -13,16 +13,15 @@ valgrind_test()
   # echo "testing $test with args : $args"
   OUTPUT=$(valgrind --leak-check=full --show-leak-kinds=all ./push_swap $args 2>&1)
   if [ $(echo "$OUTPUT" | grep "All heap blocks were freed -- no leaks are possible" | wc -l) -eq 0 ]; then
-    echo "KO: $test (./push_swap $args)"
+    echo -e "\033[31mKO\033[0m : $test (./push_swap $args)"
     echo "" >> logs/valgrind_output.txt
     echo "$test failed ./push_swap $args" >> logs/valgrind_output.txt
     echo "" >> logs/valgrind_output.txt
     echo "$OUTPUT" >> logs/valgrind_output.txt
     echo "----------------------------------------" >> logs/valgrind_output.txt
   else
-    echo "OK: $test (./push_swap $args)"
+    echo -e "\033[32mOK\033[0m : $test (./push_swap $args)"
   fi
-
 }
 
 valgrind_test "Empty prompt" ""

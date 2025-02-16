@@ -273,6 +273,7 @@ leaks: all
     echo ''; \
 	fi
 
+# make: *** [Makefile:278: complexity] Error 1
 complexity: all
 	@echo "=== Perf test ==="
 	@./complexity $(SIZE) $(RUNS) $(TARGET) ./checker_linux
