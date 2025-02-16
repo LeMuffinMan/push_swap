@@ -10,17 +10,15 @@
 #                                                                              #
 # **************************************************************************** #
 
-
-# bien checker : 
-# valgrind ./push_swap 1 0 1
-# valgrind ./push_swap 1
-# cas d'erreur pour une seule valeur envoyee 
 # supprimer split ?
-# rallonger mon testeur pour tester SYSTEMATIQUEMENT les leaks
 # mettre es bonus a la norme 
 # tout avec _bonus
 # n'est pas suppose se conneter a push_swap.h ?
 # retenter de bien ranger les obj bonus ?
+
+# incertain !
+# ▶ ARG="1   2 3"; ./push_swap $ARG
+# Error
 
 NAME = push_swap
 BONUS_NAME = checker
@@ -126,7 +124,8 @@ BONUS = $(addprefix $(BONUS_OBJ_DIR)/,$(BONUS_OBJ_FILES))
 LIBFT_A = libft/libft.a
 
 SIZE ?= 100
-RUNS ?= 10
+RUNS ?= 100
+TARGET ?= 700
 LIST = $(shell cat random_ints.txt)
 
 GREEN=\033[32m
@@ -135,13 +134,13 @@ RESET=\033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_A) Makefile ./includes/push_swap.h
+$(NAME): $(OBJ) $(LIBFT_A)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(LIBFT_A) -o $(NAME)
 	@echo 
-	@echo -e "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
+	@echo "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
 	@echo 
 
-$(LIBFT_A): $(LIBFT_SRC_FILES) libft/Makefile ./libft/include/libft.h
+$(LIBFT_A): $(LIBFT_SRC_FILES)
 	@$(MAKE) --no-print-directory -C libft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
@@ -154,10 +153,10 @@ $(BONUS_OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c ./bonus/include/checker.h
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 
-$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ) ./bonus/include/checker.h Makefile
+$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ) ./bonus/include/checker.h 
 	$(CC) $(CFLAGS) $(BONUS_OBJ_FILES) $(LIBFT_A) $(LIBFT_FLAGS) -o $(BONUS_NAME)
 	@echo 
-	@echo -e "$(GREEN)compilation successful ✅ $(BONUS_NAME)$(RESET)"
+	@echo "$(GREEN)compilation successful ✅ $(BONUS_NAME)$(RESET)"
 	@echo
 
 clean:
@@ -173,82 +172,120 @@ re: fclean all
 tests: all
 	@./tests.sh $(SIZE) $(RUNS); \
 
-test_leaks_parsing:
-	@./leaks_check.sh
-	@if [ "$(shell cat logs/valgrind_output.txt | grep "Test failed" | wc -l)" -gt 0 ]; then \
-		echo -e "Leaks on parsing : '$(shell awk '/Test failed/' logs/valgrind_output.txt)'"; \
-	fi
-
 test: all
 	@./random_ints.sh $(SIZE) > random_ints.txt
-	@echo "=== Valgrind Output ==="
-	@valgrind --leak-check=full ./push_swap $(LIST) 2>&1 | tail -n 9
-	@echo 
 	@echo "=== list used ==="
 	@echo $(LIST)
 	@echo
-	@echo -e "=== parsing tests ==="
-	@if [ "$(shell ./push_swap | wc -l)" -eq 0 ]; then \
-		echo -e "Empty prompt : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Empty prompt : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap 2147483648 1 2>&1)" = "Error" ]; then \
-		echo -e "INT_MAX+1 : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "INT_MAX+1 : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap -2147483649 1 2>&1)" = "Error" ]; then \
-		echo -e "INT_MIN-1 : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "INT_MIN-1 : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap -9223372036854775808 1 2>&1)" = "Error" ]; then \
-		echo -e "LONG_INT : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "LONG_INT : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap "53 54" 5 6 2>&1)" = "Error" ]; then \
-		echo -e "Mixed quoted/unquoted : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Mixed quoted/unquoted : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap 54 57 g 15 2>&1)" = "Error" ]; then \
-		echo -e "Non-integer character : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Non-integer character : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap 45/85/45/74 2>&1)" = "Error" ]; then \
-		echo -e "Invalid number format : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Invalid number format : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap 1 2 3 2 2>&1)" = "Error" ]; then \
-		echo -e "Duplicate numbers : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Duplicate numbers : $(RED)KO$(RESET)"; \
-	fi
-	@if [ -z "$(shell ./push_swap 1 2 3 4 5 2>&1)" ]; then \
-		echo -e "Sorted list : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Sorted list : $(RED)KO$(RESET)"; \
-	fi
-	@if [ -z "$(shell ./push_swap 42 2>&1)" ]; then \
-		echo -e "Single element : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Single element : $(RED)KO$(RESET)"; \
-	fi
-	@if [ "$(shell ./push_swap -2gfd47 1 2>&1)" = "Error" ]; then \
-		echo -e "Letters : $(GREEN)OK$(RESET)"; \
-	else \
-		echo -e "Letters : $(RED)KO$(RESET)"; \
-	fi
-	@echo
+	@echo "=== Valgrind Output ==="
+	@valgrind --leak-check=full ./push_swap $(LIST) 2>&1 | tail -n 9
+	@echo 
 	@echo TOTAL_OPS : $(shell ./push_swap $(LIST) | wc -l)
 	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(LIST))" = "OK" ]; then \
-		echo -e "checker_linux : $(GREEN)OK$(RESET)"; \
+		echo "checker_linux : $(GREEN)OK$(RESET)"; \
 	else \
-		echo -e "checker_linux : $(RED)KO$(RESET)"; \
+		echo "checker_linux : $(RED)KO$(RESET)"; \
 	fi
+	@echo
+	@echo "=== parsing tests ==="
+	@# Empty input
+	@if [ "$(shell ./push_swap | wc -l)" -eq 0 ]; then \
+		echo "Empty prompt : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Empty prompt : $(RED)KO$(RESET)"; \
+	fi
+	@# INT_MAX overflow
+	@if [ "$(shell ./push_swap 2147483648 1 2>&1)" = "Error" ]; then \
+		echo "INT_MAX+1 : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "INT_MAX+1 : $(RED)KO$(RESET)"; \
+	fi
+	@# INT_MIN underflow
+	@if [ "$(shell ./push_swap -2147483649 1 2>&1)" = "Error" ]; then \
+		echo "INT_MIN-1 : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "INT_MIN-1 : $(RED)KO$(RESET)"; \
+	fi
+	@# LONG_MIN
+	@if [ "$(shell ./push_swap -9223372036854775808 1 2>&1)" = "Error" ]; then \
+		echo "LONG_MIN : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "LONG_MIN : $(RED)KO$(RESET)"; \
+	fi
+	@# Quoted numbers with spaces (DEVRAIT ÊTRE VALIDE)
+	@if [ "$(shell ./push_swap  2  1    3)" = "sa" ]; then \
+		echo "Quoted numbers with spaces : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Quoted numbers with spaces : $(RED)KO$(RESET)"; \
+	fi
+	@# Mixed quoted/unquoted (CORRECTION SYNTAXE)
+	@if [ "$(shell ./push_swap "53 54" 5 6 2>&1)" = "Error" ]; then \
+		echo "Mixed quoted/unquoted : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Mixed quoted/unquoted : $(RED)KO$(RESET)"; \
+	fi
+	@# Non-integer character
+	@if [ "$(shell ./push_swap 54 57 g 15 2>&1)" = "Error" ]; then \
+		echo "Non-integer character : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Non-integer character : $(RED)KO$(RESET)"; \
+	fi
+	@# Invalid number format
+	@if [ "$(shell ./push_swap 45/85/45/74 2>&1)" = "Error" ]; then \
+		echo "Invalid number format : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Invalid number format : $(RED)KO$(RESET)"; \
+	fi
+	@# Duplicate numbers
+	@if [ "$(shell ./push_swap 1 2 3 2 2>&1)" = "Error" ]; then \
+		echo "Duplicate numbers : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Duplicate numbers : $(RED)KO$(RESET)"; \
+	fi
+	@# Sorted list
+	@if [ -z "$(shell ./push_swap 1 2 3 4 5 2>&1)" ]; then \
+		echo "Sorted list : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Sorted list : $(RED)KO$(RESET)"; \
+	fi
+	@# Single element 
+	@if [ -z "$(shell ./push_swap 42 2>&1)" ]; then \
+		echo "Single element : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Single element : $(RED)KO$(RESET)"; \
+	fi
+	@# Letters in number
+	@if [ "$(shell ./push_swap -2gfd47 1 2>&1)" = "Error" ]; then \
+		echo "Letters : $(GREEN)OK$(RESET)"; \
+	else \
+		echo "Letters : $(RED)KO$(RESET)"; \
+	fi
+	@echo ''
+
+leaks: all
+	@echo "=== Leaks ==="
+	@./leaks_check.sh
+	@if [ "$$(grep -c 'failed' logs/valgrind_output.txt)" -gt 0 ]; then \
+    echo ''; \
+    echo '$(RED)LEAKS KO !$(RESET)'; \
+    echo 'logs/valgrind_output.txt'; \
+    echo ''; \
+    grep 'failed' logs/valgrind_output.txt; \
+	else \
+    echo ''; \
+    echo '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
+    echo ''; \
+	fi
+
+complexity: all
+	@echo "=== Perf test ==="
+	@./complexity $(SIZE) $(RUNS) $(TARGET) ./checker_linux
+
+all_tests: all test leaks 
+	@echo "=== Perf test ==="
+	@./complexity 100 100 700 ./checker_linux
+	@echo ''
+	@./complexity 500 100 5500 ./checker_linux
+
 
 .PHONY: all clean fclean re bonus

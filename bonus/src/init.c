@@ -21,7 +21,7 @@ int	invalid_input(t_stack *l, int *array, char **s)
 	if (array)
 		free(array);
 	if (l)
-		free_list(&l);
+		free(l);
 	write(2, "Error\n", 6);
 	exit(1);
 }
@@ -83,6 +83,8 @@ int	init_stack(t_stack **l, int ac, char **av)
 	else if (ac == 2)
 	{
 		splitted = ft_split(av[1], ' ');
+		if (splitted[1] == NULL)
+			invalid_input(NULL, NULL, splitted);
 		*l = fill_list(splitted);
 		ft_free(splitted);
 		if (duplicate_checker(*l))

@@ -12,12 +12,32 @@
 
 #include "push_swap.h"
 
+static int	is_a_setup(t_stack *la)
+{
+	int		min;
+	t_stack	*tmp;
+	t_stack	*min_node;
+
+	min = get_min_index(&la);
+	tmp = la;
+	min_node = tmp;
+	while (1)
+	{
+		if (tmp->next->i < tmp->i)
+			break ;
+		tmp = tmp->next;
+	}
+	if (tmp->next == min_node)
+		return (1);
+	return (0);
+}
+
 void	partition_stacks(t_stack **la, t_stack **lb, int median, int size)
 {
 	t_stack	*tmp;
 
 	tmp = *la;
-	while (lst_size(*la) > 3)
+	while (lst_size(*la) > 3 && !is_a_setup(*la))
 	{
 		if (tmp->i == size - 1)
 			ra(la);
