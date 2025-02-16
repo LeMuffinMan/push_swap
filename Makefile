@@ -173,6 +173,12 @@ re: fclean all
 tests: all
 	@./tests.sh $(SIZE) $(RUNS); \
 
+test_leaks_parsing:
+	@./leaks_check.sh
+	@if [ "$(shell cat logs/valgrind_output.txt | grep "Test failed" | wc -l)" -gt 0 ]; then \
+		echo -e "Leaks on parsing : '$(shell awk '/Test failed/' logs/valgrind_output.txt)'"; \
+	fi
+
 test: all
 	@./random_ints.sh $(SIZE) > random_ints.txt
 	@echo "=== Valgrind Output ==="
