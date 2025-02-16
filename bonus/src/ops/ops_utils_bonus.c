@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/push_swap.h"
-#include "../../include/checker.h"
+#include "../../include/checker_bonus.h"
 
 void	stack_empty_case(t_stack **l, t_stack **tmp)
 {

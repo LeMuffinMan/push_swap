@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/checker.h"
+#include "../include/checker_bonus.h"
 
 int	is_digits_or_sign(char *s)
 {

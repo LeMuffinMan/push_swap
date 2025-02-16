@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/checker.h"
+#include "../../include/checker_bonus.h"
 
 void	push(t_stack **la, t_stack **lb)
 {

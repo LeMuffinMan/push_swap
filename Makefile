@@ -10,21 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-# supprimer split ?
-# mettre es bonus a la norme 
-# tout avec _bonus
-# n'est pas suppose se conneter a push_swap.h ?
-# retenter de bien ranger les obj bonus ?
-
-# incertain !
-# ▶ ARG="1   2 3"; ./push_swap $ARG
-# Error
+#essayer d'include mes src ?
 
 NAME = push_swap
 BONUS_NAME = checker
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra  
+CFLAGS = -Wall -Werror -Wextra -g3 
 INC = -I includes
 INC_LIBFT = -I libft/include
 INC_BONUS = -I bonus/include
@@ -88,16 +80,16 @@ LIBFT_SRC_FILES = \
 LIBFT_OBJ_FILES = $(LIBFT_SRC_FILES:.c=.o)
 
 BONUS_SRC_FILES = \
-    bonus/src/checker.c \
-    bonus/src/init.c \
-    bonus/src/array_utils.c \
-    bonus/src/lst_utils.c \
-    bonus/src/utils.c \
-    bonus/src/ops/ops.c \
-    bonus/src/ops/execute_ops.c \
-    bonus/src/ops/ops_utils.c 
+    bonus/src/checker_bonus.c \
+    bonus/src/init_bonus.c \
+    bonus/src/array_utils_bonus.c \
+    bonus/src/lst_utils_bonus.c \
+    bonus/src/utils_bonus.c \
+    bonus/src/ops/ops_bonus.c \
+    bonus/src/ops/execute_ops_bonus.c \
+    bonus/src/ops/ops_utils_bonus.c
 
-BONUS_OBJ_FILES = $(BONUS_SRC_FILES:.c=.o)
+BONUS_OBJ_FILES = $(addprefix $(BONUS_OBJ_DIR)/, $(subst bonus/src/, , $(BONUS_SRC_FILES:.c=.o)))
 
 SRC_FILES = \
     push_swap.c \
@@ -134,13 +126,13 @@ RESET=\033[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_A)
+$(NAME): $(OBJ) $(LIBFT_A) Makefile libft/Makefile libft/include/libft.h
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(LIBFT_A) -o $(NAME)
 	@echo 
 	@echo "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
 	@echo 
 
-$(LIBFT_A): $(LIBFT_SRC_FILES)
+$(LIBFT_A): $(LIBFT_SRC_FILES) FORCE
 	@$(MAKE) --no-print-directory -C libft
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
@@ -149,13 +141,17 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c ./includes/push_swap.h
 
 bonus: $(BONUS_NAME)
 
-$(BONUS_OBJ_DIR)/%.o: $(BONUS_SRC_DIR)/%.c ./bonus/include/checker.h
+$(BONUS_OBJ_DIR)/%.o: bonus/src/%.c ./bonus/include/checker_bonus.h
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
 
-$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) $(OBJ) ./bonus/include/checker.h 
+$(BONUS_OBJ_DIR)/ops/%.o: bonus/src/ops/%.c ./bonus/include/checker_bonus.h
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(INC_BONUS) -c $< -o $@
+
+$(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) ./bonus/include/checker_bonus.h
 	$(CC) $(CFLAGS) $(BONUS_OBJ_FILES) $(LIBFT_A) $(LIBFT_FLAGS) -o $(BONUS_NAME)
-	@echo 
+	@echo
 	@echo "$(GREEN)compilation successful ✅ $(BONUS_NAME)$(RESET)"
 	@echo
 
@@ -286,6 +282,7 @@ all_tests: all test leaks
 	@./complexity 100 100 700 ./checker_linux
 	@echo ''
 	@./complexity 500 100 5500 ./checker_linux
+	@echo ''
 
-
+FORCE:
 .PHONY: all clean fclean re bonus

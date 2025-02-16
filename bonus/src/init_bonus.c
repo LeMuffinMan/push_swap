@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/checker.h"
+#include "../include/checker_bonus.h"
 #include <stdlib.h>
 #include <unistd.h>
 

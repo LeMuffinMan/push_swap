@@ -10,13 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CHECKER_H
-# define CHECKER_H
+#ifndef CHECKER_BONUS_H
+# define CHECKER_BONUS_H
 
 # define TRUE 1
 # define FALSE 0
 
-# include "../../includes/push_swap.h"
+typedef char		t_bool;
+
+typedef struct s_stack
+{
+	struct s_stack	*prev;
+	t_bool			start;
+	int				n;
+	int				i;
+	struct s_stack	*next;
+}					t_stack;
+
+
 # include "../../libft/include/libft.h"
 
 typedef char	t_bool;
@@ -59,5 +70,11 @@ int				is_digits_or_sign(char *s);
 int				skip_spaces(const char *nptr);
 int				ft_atoi_limits_check(const char *nptr, t_stack *l);
 int				is_sorted_check(t_stack *la);
+
+//ops_utils_bonus.c
+void	stack_empty_case(t_stack **l, t_stack **tmp);
+void	take_out_stack_top(t_stack **la, t_stack **lb, t_stack **node);
+void	stack_one_node_case(t_stack **l, t_stack **tmp);
+void	plug_on_stack(t_stack **l, t_stack **tmp);
 
 #endif

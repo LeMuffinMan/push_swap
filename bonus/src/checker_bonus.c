@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/push_swap.h"
-#include "../include/checker.h"
+#include "../include/checker_bonus.h"
 #include <limits.h>
 #include <stdlib.h>
 #include <unistd.h>

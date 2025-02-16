@@ -11,16 +11,16 @@ valgrind_test()
   local args="$@"
 
   # echo "testing $test with args : $args"
-  OUTPUT=$(valgrind --leak-check=full ./push_swap $args 2>&1)
+  OUTPUT=$(valgrind --leak-check=full --show-leak-kinds=all ./push_swap $args 2>&1)
   if [ $(echo "$OUTPUT" | grep "All heap blocks were freed -- no leaks are possible" | wc -l) -eq 0 ]; then
-    echo "$test (./push_swap $args): KO"
+    echo "KO: $test (./push_swap $args)"
     echo "" >> logs/valgrind_output.txt
     echo "$test failed ./push_swap $args" >> logs/valgrind_output.txt
     echo "" >> logs/valgrind_output.txt
     echo "$OUTPUT" >> logs/valgrind_output.txt
     echo "----------------------------------------" >> logs/valgrind_output.txt
   else
-    echo "$test (./push_swap $args): OK"
+    echo "OK: $test (./push_swap $args)"
   fi
 
 }

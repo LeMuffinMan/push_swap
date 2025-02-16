@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/checker.h"
+#include "../include/checker_bonus.h"
 
 static void	swap_elements(int *tab, unsigned int n1, unsigned int n2)
 {
