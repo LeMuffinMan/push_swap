@@ -158,11 +158,72 @@ $(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) ./bonus/include/checker_bonus.h
 clean:
 	rm -rf $(OBJ_DIR)/*
 
+ # ajouter les bonus a clean / fclean ? 
 fclean: clean
 	rm -f $(NAME) $(BONUS_NAME)
 	rm -f $(LIBFT_A)
 
 re: fclean all
+
+
+all_tests: all bonus push_swap_tests bonus_test 
+
+push_swap_tests: all bonus
+	@echo ''
+	@echo "=== PARSING TEST ==="
+	@echo ''
+	@./parsing_check.sh
+	@echo ''
+	@echo "=== LISTS TEST ==="
+	@echo ''
+	@./lists_check.sh
+	@echo 'list used in logs/lists_tested.txt'
+	@echo ''
+	@echo "=== PERF TEST === (Thanks to Scros)"
+	@echo ''
+	@./complexity 100 100 700
+	@echo ''
+	@./complexity 500 100 5500
+	@echo ''
+
+bonus_test: bonus all
+	@echo "=== Bonus parsing test ==="
+	@echo ''
+	@./bonus_full_check.sh
+	@if [ "$(shell grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then \
+    echo ''; \
+    echo -e '$(RED)LEAKS KO !$(RESET)'; \
+    echo 'logs/valgrind_output_bonus.txt'; \
+    echo ''; \
+    grep 'failed' logs/valgrind_output_bonus.txt; \
+	else \
+    echo ''; \
+    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
+    echo ''; \
+	fi
+	@echo "=== Bonus exec test ==="
+	@echo ''
+	@./exec_tests_bonus.sh
+	@if [ "$(shell grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then \
+    echo ''; \
+    echo -e '$(RED)LEAKS KO !$(RESET)'; \
+    echo 'logs/valgrind_output_bonus.txt'; \
+    echo ''; \
+    grep 'failed' logs/valgrind_output_bonus.txt; \
+	else \
+    echo ''; \
+    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
+    echo ''; \
+	fi
+##bonus :
+# parsing output & leaks bonus_full_check
+#
+# exec checker : diviser et garder edege cases 
+# deja triee
+# unsorted no move
+# unsorted incorrect moves
+# unsorted valid move
+# inccorrect ops : rrrr
 
 #a virer !!!!
 tests: all
@@ -214,7 +275,7 @@ test: all
 	else \
 		echo -e "Quoted numbers with spaces : $(RED)KO$(RESET)"; \
 	fi
-	@# Mixed quoted/unquoted (CORRECTION SYNTAXE) A GERER !!!!!!!!!!!!!!!!
+	@# Mixed quoted/unquoted (CORRECTION SYNTAXE) 
 	@if [ "$(shell ./push_swap "53 54" 5 6 2>&1)" = "Error" ]; then \
 		echo -e "Mixed quoted/unquoted : $(GREEN)OK$(RESET)"; \
 	else \
@@ -258,9 +319,9 @@ test: all
 	fi
 	@echo -e ''
 
-leaks: all
+parsing_test: all
 	@echo "=== Leaks ==="
-	@./leaks_check.sh
+	@./parsing_check.sh
 	@if [ "$(shell grep 'failed' logs/valgrind_output.txt)" > 0 ]; then \
     echo ''; \
     echo -e '$(RED)LEAKS KO !$(RESET)'; \
@@ -273,33 +334,10 @@ leaks: all
     echo ''; \
 	fi
 
-bonus_test: bonus all
-	@echo "=== Bonus test ==="
-	@./bonus_full_check.sh
-	@if [ "$(shell grep 'failed' logs/valgrind_output_bonus.txt | wc -l)" > 0 ]; then \
-    echo ''; \
-    echo -e '$(RED)LEAKS KO !$(RESET)'; \
-    echo 'logs/valgrind_output_bonus.txt'; \
-    echo ''; \
-    grep 'failed' logs/valgrind_output.txt; \
-	else \
-    echo ''; \
-    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
-    echo ''; \
-	fi
-
-
 # make: *** [Makefile:278: complexity] Error 1
 complexity: all
 	@echo "=== Perf test ==="
 	@./complexity $(SIZE) $(RUNS) $(TARGET) ./checker_linux
-
-all_tests: all test leaks 
-	@echo "=== Perf test ==="
-	@./complexity 100 100 700 ./checker_linux
-	@echo ''
-	@./complexity 500 100 5500 ./checker_linux
-	@echo ''
 
 FORCE:
 .PHONY: all clean fclean re bonus
