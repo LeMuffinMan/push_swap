@@ -167,24 +167,36 @@ re: fclean all
 
 
 all_tests: all bonus push_swap_tests bonus_test 
+	@echo "=== PERF TEST === (Thanks to Scros)"
+	@echo ''
+	@./complexity 100 100 700 ./checker_linux
+	@echo ''
+	@./complexity 500 100 5500 ./checker_linux
+	@echo ''
 
 push_swap_tests: all bonus
 	@echo ''
 	@echo "=== PARSING TEST ==="
 	@echo ''
 	@./parsing_check.sh
+	@if [ "$(shell grep 'failed' logs/checker_output_bonus.txt)" > 0 ]; then \
+    echo ''; \
+    echo -e '$(RED)LEAKS KO !$(RESET)'; \
+    echo 'logs/parsing_leaks_output.txt'; \
+    echo ''; \
+    grep 'failed' logs/parsing_leaks_output.txt; \
+	else \
+    echo ''; \
+    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
+    echo ''; \
+  fi
 	@echo ''
 	@echo "=== LISTS TEST ==="
 	@echo ''
 	@./lists_check.sh
 	@echo 'list used in logs/lists_tested.txt'
 	@echo ''
-	@echo "=== PERF TEST === (Thanks to Scros)"
-	@echo ''
-	@./complexity 100 100 700
-	@echo ''
-	@./complexity 500 100 5500
-	@echo ''
+
 
 bonus_test: bonus all
 	@echo "=== Bonus parsing test ==="

@@ -80,12 +80,12 @@ lists_check "size : 100" 100
 ./random_ints.sh 500 > random_ints.txt
 lists_check "size : 500" 500
 
-if [ "$(grep 'failed' logs/valgrind_output.txt)" > 0 ]; then 
+if [ "$(grep 'failed' logs/sizes_leaks_output.txt)" > 0 ]; then 
     echo ''
     echo -e '\033[31mLEAKS KO !\033[0m'
-    echo 'logs/valgrind_output.txt'
+    echo 'logs/sizes_leaks_output.txt'
     echo ''; \
-    grep 'failed' logs/valgrind_output.txt
+    grep 'failed' logs/sizes_leaks_output.txt
 	else 
     echo ''
     echo -e '\033[32mNo leaks, but better to\033[0m \033[31mdouble check !\033[0m'
