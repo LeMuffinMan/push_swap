@@ -179,7 +179,7 @@ push_swap_tests: all bonus
 	@echo "=== PARSING TEST ==="
 	@echo ''
 	@./parsing_check.sh
-	@if [ "$(shell grep 'failed' logs/checker_output_bonus.txt)" > 0 ]; then \
+	@if [ "$(shell grep 'failed' logs/parsing_leaks_output.txt)" > 0 ]; then \
     echo ''; \
     echo -e '$(RED)LEAKS KO !$(RESET)'; \
     echo 'logs/parsing_leaks_output.txt'; \
