@@ -55,7 +55,7 @@ parsing_test()
     echo "$VAL" >> logs/parsing_leaks_output.txt
     echo "----------------------------------------" >> logs/parsing_leaks_output.txt
   else
-    echo -e "\033[32mOK\033[0m : $test ./push_swap $args | ./checker $args"
+    echo -e "\033[32mOK\033[0m : $test ./push_swap $args | ./checker_linux $args"
   fi
 }
 

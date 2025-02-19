@@ -38,16 +38,9 @@ int	main(int ac, char **av)
 
 	la = NULL;
 	lb = NULL;
-	if (ac <= 1)
-		exit(1);
-	if (init_stack(&la, ac, av))
-		exit(1);
-	if (!is_sorted(la))
-	{
+	if (ac <= 1 || init_stack(&la, ac, av) || !is_sorted(la))
 		free_list(&la);
-		exit (0);
-	}
-	if (lst_size(la) <= 3)
+	else if (lst_size(la) <= 3)
 		easy_cases(&la);
 	else
 	{

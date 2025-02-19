@@ -61,11 +61,11 @@ static int	duplicate_checker(t_stack *l)
 int	invalid_input(t_stack *l, int *array, char **s)
 {
 	if (s)
-		ft_free(s);
+		/* ft_free(s); */
 	if (array)
-		free(array);
+		/* free(array); */
 	if (l)
-		free_list(&l);
+		/* free_list(&l); */
 	write(2, "Error\n", 6);
 	exit(1);
 }
