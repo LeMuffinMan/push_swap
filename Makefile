@@ -195,16 +195,6 @@ bonus_test: bonus all
 	@echo ''
 	@./exec_tests_bonus.sh
 
-##bonus :
-# parsing output & leaks bonus_full_check
-#
-# exec checker : diviser et garder edege cases 
-# deja triee
-# unsorted no move
-# unsorted incorrect moves
-# unsorted valid move
-# inccorrect ops : rrrr
-
 #a virer !!!!
 tests: all
 	@./tests.sh $(SIZE) $(RUNS); \
