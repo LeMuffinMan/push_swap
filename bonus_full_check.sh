@@ -52,3 +52,15 @@ bonus_parsing_test "Sorted list" "1 2 3 4 5"  # EOF (already sorted)
 bonus_parsing_test "Single element" "42"  # EOF (no operations needed)
 bonus_parsing_test "Letters in number" "-2gfd47 1"  # Invalid input
 
+if [ "$(grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then
+    echo ''
+    echo -e '\033[31mLEAKS KO !\033[0m'
+    echo 'logs/valgrind_output_bonus.txt'
+    echo ''
+    grep 'failed' logs/valgrind_output_bonus.txt
+	else
+    echo ''
+    echo -e '\033[32mNo leaks, but better to\033[0m \033[31mdouble check !\033[0m'
+    echo ''
+	fi
+

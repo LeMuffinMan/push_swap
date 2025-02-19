@@ -59,41 +59,169 @@ bonus_checker_test "Incorrect moves" "1 2 3" "xyz$(echo -n '')" "Error"
 
 
 
-if [ "$(echo -en "pb\nra\nsa\npa\n" | ./$CHECKER 2 1)" = "KO" ]; then
-    echo -e "\033[32mOK\033[0m : unsorted list with invalid input ./push_swap 2 1  | ./$CHECKER 2 1"
+
+if [ "$(echo -en "pb\nra\nsa\npa\n" | ./$CHECKER 2 1)" = "KO" ] &&
+   (echo -en "pb\nra\nsa\npa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "pb\nra\nsa\npa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : unsorted list with invalid input  | ./$CHECKER 2 1"
+elif [ "$(echo -en "pb\nra\nsa\npa\n" | ./$CHECKER 2 1)" = "KO" ] &&
+   !(echo -en "pb\nra\nsa\npa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "pb\nra\nsa\npa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : unsorted list with invalid input  | ./$CHECKER 2 1"
 else
-    echo -e "\033[31mKO\033[0m : unsorted list with invalid input ./push_swap 2 1  | ./$CHECKER 2 1"
-fi
-if [ "$(echo -en "pb\npb\nsa\n" | ./$CHECKER 2 1)" = "KO" ]; then
-    echo -e "\033[32mOK\033[0m : unsorted list with invalid input ./push_swap 2 1  | ./$CHECKER 2 1"
-else
-    echo -e "\033[31mKO\033[0m : unsorted list with invalid input ./push_swap 2 1  | ./$CHECKER 2 1"
-fi
-if [ "$(echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | ./$CHECKER 4 3 2 1)" = "KO" ]; then
-    echo -e "\033[32mOK\033[0m : unsorted list with invalid input ./push_swap  4 3 2 1 | ./$CHECKER 4 3 2 1"
-else
-    echo -e "\033[31mKO\033[0m : unsorted list with invalid input ./push_swap  4 3 2 1 | ./$CHECKER 4 3 2 1"
-fi
-if [ "$(echo -en "ra\n" | ./$CHECKER 3 1 2)" = "OK" ]; then
-    echo -e "\033[32mOK\033[0m : unsorted list with valid input ./push_swap 3 1 2 | ./$CHECKER 3 1 2"
-else
-    echo -e "\033[31mKO\033[0m : unsorted list with valid input ./push_swap 3 1 2 | ./$CHECKER 3 1 2"
-fi
-if [ "$(echo -en "ra\nsa\n" | ./$CHECKER 3 2 1)" = "OK" ]; then
-    echo -e "\033[32mOK\033[0m : unsorted list with valid input ./push_swap 3 2 1 | ./$CHECKER 3 1 2"
-else
-    echo -e "\033[31mKO\033[0m : unsorted list with valid input ./push_swap 3 2 1 | ./$CHECKER 3 1 2"
-fi
-if [ "$(echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | ./$CHECKER 5 4 3 2 1)" = "OK" ]; then
-    echo -e "\033[32mOK\033[0m : unsorted list with valid input ./push_swap 5 4 3 2 1 | ./$CHECKER 5 4 3 2 1"
-else 
-    echo -e "\033[31mKO\033[0m : unsorted list with valid input ./push_swap 5 4 3 2 1 | ./$CHECKER 5 4 3 2 1"
+    echo -e "\033[31mKO\033[0m : unsorted list with invalid input  | ./$CHECKER 2 1"
 fi
 
-# no end \n 
-# b stack not empty
-# VOIR PLUS !
-#faire un autre script
-#rendre plus clair les tests edge cases fait
-#tester des instructions incorrectes
-#tester liste b toujours remplie
+if [ "$(echo -en "pb\npb\nsa\n" | ./$CHECKER 2 1)" = "KO" ] &&
+   !(echo -en "pb\npb\nsa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "pb\npb\nsa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : unsorted list with invalid input | ./$CHECKER 2 1"
+elif [ "$(echo -en "pb\npb\nsa\n" | ./$CHECKER 2 1)" = "KO" ] &&
+   (echo -en "pb\npb\nsa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "pb\npb\nsa\n" | valgrind --check-leaks=full ./$CHECKER 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : unsorted list with invalid input | ./$CHECKER 2 1"
+else
+    echo -e "\033[31mKO\033[0m : unsorted list with invalid input | ./$CHECKER 2 1"
+fi
+
+if [ "$(echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | ./$CHECKER 4 3 2 1)" = "KO" ] &&
+   !(echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | valgrind --check-leaks=full ./$CHECKER 4 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | valgrind --check-leaks=full ./$CHECKER 4 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : unsorted list with invalid input | ./$CHECKER 4 3 2 1"
+elif [ "$(echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | ./$CHECKER 4 3 2 1)" = "KO" ] &&
+   (echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | valgrind --check-leaks=full ./$CHECKER 4 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "ra\npb\npb\nra\nsa\nrra\npa\npa\n" | valgrind --check-leaks=full ./$CHECKER 4 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : unsorted list with invalid input | ./$CHECKER 4 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : unsorted list with invalid input | ./$CHECKER 4 3 2 1"
+fi
+
+if [ "$(echo -en "ra\n" | ./$CHECKER 3 1 2)" = "OK" ] &&
+   !(echo -en "ra\n" | valgrind --check-leaks=full ./$CHECKER 3 1 2 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "ra\n" | valgrind --check-leaks=full ./$CHECKER 3 1 2 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : unsorted list with valid input : ra | ./$CHECKER 3 1 2"
+elif [ "$(echo -en "ra\n" | ./$CHECKER 3 1 2)" = "OK" ] &&
+   (echo -en "ra\n" | valgrind --check-leaks=full ./$CHECKER 3 1 2 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "ra\n" | valgrind --check-leaks=full ./$CHECKER 3 1 2 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : unsorted list with valid input : ra | ./$CHECKER 3 1 2"
+else
+    echo -e "\033[31mKO\033[0m : unsorted list with valid input : ra | ./$CHECKER 3 1 2"
+fi
+
+if [ "$(echo -en "ra\nsa\n" | ./$CHECKER 3 2 1)" = "OK" ] &&
+   !(echo -en "ra\nsa\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "ra\nsa\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : unsorted list with valid input : ra sa | ./$CHECKER 3 2 1"
+elif [ "$(echo -en "ra\nsa\n" | ./$CHECKER 3 2 1)" = "OK" ] &&
+   (echo -en "ra\nsa\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "ra\nsa\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : unsorted list with valid input : ra sa | ./$CHECKER 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : unsorted list with valid input : ra sa | ./$CHECKER 3 2 1"
+fi
+
+if [ "$(echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | ./$CHECKER 5 4 3 2 1)" = "OK" ] &&
+   !(echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | valgrind --check-leaks=full ./$CHECKER 5 4 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | valgrind --check-leaks=full ./$CHECKER 5 4 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : unsorted list with valid input : ra pb pb rb sa rra pa pa rra rra | ./$CHECKER 5 4 3 2 1"
+elif [ "$(echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | ./$CHECKER 5 4 3 2 1)" = "OK" ] &&
+   (echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | valgrind --check-leaks=full ./$CHECKER 5 4 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "ra\npb\npb\nrb\nsa\nrra\npa\npa\nrra\nrra\n" | valgrind --check-leaks=full ./$CHECKER 5 4 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : unsorted list with valid input : ra pb pb rb sa rra pa pa rra rra | ./$CHECKER 5 4 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : unsorted list with valid input : ra pb pb rb sa rra pa pa rra rra | ./$CHECKER 5 4 3 2 1"
+fi
+
+if [ "$(echo -en "ra\nsa" | ./$CHECKER 3 2 1 2>&1)" = "Error" ] &&
+   !(echo -en "ra\nsa" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "ra\nsa" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : no final /n | ./$CHECKER 3 2 1"
+elif [ "$(echo -en "ra\nsa" | ./$CHECKER 3 2 1 2>&1)" = "Error" ] &&
+   (echo -en "ra\nsa" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "ra\nsa" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : no final /n | ./$CHECKER 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : no final /n | ./$CHECKER 3 2 1"
+fi
+
+if [ "$(echo -en "pb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   !(echo -en "pb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "pb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : B stack not empty | ./$CHECKER 3 2 1"
+elif [ "$(echo -en "pb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   (echo -en "pb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "pb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : B stack not empty | ./$CHECKER 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : B stack not empty | ./$CHECKER 3 2 1"
+fi
+
+if [ "$(echo -en "rb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   !(echo -en "rb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "rb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : rotate an empty stack | ./$CHECKER 3 2 1"
+elif [ "$(echo -en "rb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   (echo -en "rb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "rb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : rotate an empty stack | ./$CHECKER 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : rotate an empty stack | ./$CHECKER 3 2 1"
+fi
+
+if [ "$(echo -en "rrb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   !(echo -en "rrb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "rrb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : reverse rotate an empty stack | ./$CHECKER 3 2 1"
+elif [ "$(echo -en "rrb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   (echo -en "rrb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+     echo -en "rrb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : reverse rotate an empty stack | ./$CHECKER 3 2 1"
+else
+    echo -e "\033[31mKO\033[0m : reverse rotate an empty stack | ./$CHECKER 3 2 1"
+fi
+
+if [ "$(echo -en "sb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   !(echo -en "sb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "sb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[32mOK\033[0m : swap an empty stack | ./$CHECKER 3 2 1"
+elif [ "$(echo -en "sb\n" | ./$CHECKER 3 2 1)" = "KO" ] &&
+   (echo -en "sb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "All heap blocks were freed -- no leaks are possible" || 
+    echo -en "sb\n" | valgrind --check-leaks=full ./$CHECKER 3 2 1 2>&1 | grep -q "ERROR SUMMARY: 0 errors from 0 contexts")
+then
+    echo -e "\033[31mLEAKS\033[0m : swap an empty stack | ./$CHECKER 3 2 1"
+else 
+    echo -e "\033[31mKO\033[0m : swap an empty stack | ./$CHECKER 3 2 1"
+fi
+
+if [ "$(grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then
+    echo ''
+    echo -e '\033[31mLEAKS KO !\033[0m'
+    echo 'logs/valgrind_output_bonus.txt'
+    echo ''
+    grep 'failed' logs/valgrind_output_bonus.txt
+else 
+    echo ''
+    echo -e '\033[32mNo leaks, but better to\033[0m \033[31mdouble check !\033[0m'
+    echo ''
+fi

@@ -179,17 +179,6 @@ push_swap_tests: all bonus
 	@echo "=== PARSING TEST ==="
 	@echo ''
 	@./parsing_check.sh
-	@if [ "$(shell grep 'failed' logs/parsing_leaks_output.txt)" > 0 ]; then \
-    echo ''; \
-    echo -e '$(RED)LEAKS KO !$(RESET)'; \
-    echo 'logs/parsing_leaks_output.txt'; \
-    echo ''; \
-    grep 'failed' logs/parsing_leaks_output.txt; \
-	else \
-    echo ''; \
-    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
-    echo ''; \
-  fi
 	@echo ''
 	@echo "=== LISTS TEST ==="
 	@echo ''
@@ -202,31 +191,10 @@ bonus_test: bonus all
 	@echo "=== Bonus parsing test ==="
 	@echo ''
 	@./bonus_full_check.sh
-	@if [ "$(shell grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then \
-    echo ''; \
-    echo -e '$(RED)LEAKS KO !$(RESET)'; \
-    echo 'logs/valgrind_output_bonus.txt'; \
-    echo ''; \
-    grep 'failed' logs/valgrind_output_bonus.txt; \
-	else \
-    echo ''; \
-    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
-    echo ''; \
-	fi
-	@echo "=== Bonus exec test ==="
+		@echo "=== Bonus exec test ==="
 	@echo ''
 	@./exec_tests_bonus.sh
-	@if [ "$(shell grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then \
-    echo ''; \
-    echo -e '$(RED)LEAKS KO !$(RESET)'; \
-    echo 'logs/valgrind_output_bonus.txt'; \
-    echo ''; \
-    grep 'failed' logs/valgrind_output_bonus.txt; \
-	else \
-    echo ''; \
-    echo -e '$(GREEN)No leaks, but better to$(RESET) $(RED)double check !$(RESET)'; \
-    echo ''; \
-	fi
+
 ##bonus :
 # parsing output & leaks bonus_full_check
 #

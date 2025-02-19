@@ -111,3 +111,15 @@ else
     echo -e "\033[31mKO\033[0m : unique value ./push_swap 42 | ./checker_linux 42"
 fi
 
+if [ "$(grep 'failed' logs/parsing_leaks_output.txt)" > 0 ]; then
+    echo ''
+    echo -e '\033[31mLEAKS KO !\033[0m'
+    echo 'logs/parsing_leaks_output.txt'
+    echo ''
+    grep 'failed' logs/parsing_leaks_output.txt
+	else
+    echo ''
+    echo -e '\033[32mNo leaks, but better to \033[31mdouble check !\033[0m'
+    echo ''
+  fi
+
