@@ -111,6 +111,28 @@ else
     echo -e "\033[31mKO\033[0m : unique value ./push_swap 42 | ./checker_linux 42"
 fi
 
+if [ "$(./push_swap 99999999999999999999999999999999999999999999999999999999999 1 2>&1)" == "Error" ]; then
+  if [ $(valgrind --leak-check=full --show-leak-kinds=all ./push_swap 99999999999999999999999999999999999999999999999999999999999 1 2>&1 | grep "All heap blocks were freed -- no leaks are possible" | wc -l) != 0 ] || 
+    [ $(valgrind --leak-check=full --show-leak-kinds=all ./push_swap 99999999999999999999999999999999999999999999999999999999999 1 2>&1 | grep "ERROR SUMMARY: 0 errors from 0 contexts " | wc -l) != 0 ]; then
+    echo -e "\033[31mLEAKS\033[0m : long long int overflow ./push_swap 42 | ./checker_linux 99999999999999999999999999999999999999999999999999999999999 1 "
+  else
+    echo -e "\033[32mOK\033[0m : long long int overflow ./push_swap 42 | ./checker_linux 99999999999999999999999999999999999999999999999999999999999 1 "
+  fi
+else
+    echo -e "\033[31mKO\033[0m : long long int overflow ./push_swap 42 | ./checker_linux 99999999999999999999999999999999999999999999999999999999999 1 "
+fi
+
+if [ "$(./push_swap "-" 2>&1 | ./checker_linux "-"  2>&1)" == "Error" ]; then
+  if [ $(valgrind --leak-check=full --show-leak-kinds=all ./push_swap "-" 2>&1 |  grep "All heap blocks were freed -- no leaks are possible" | wc -l) != 0 ] || 
+    [ $(valgrind --leak-check=full --show-leak-kinds=all ./push_swap "-" 2>&1 |  grep "ERROR SUMMARY: 0 errors from 0 contexts " | wc -l) != 0 ]; then
+    echo -e "\033[31mLEAKS\033[0m : only - ./push_swap 42 | ./checker_linux '-'"
+  else
+    echo -e "\033[32mOK\033[0m : only - ./push_swap 42 | ./checker_linux '-'"
+  fi
+else
+    echo -e "\033[31mKO\033[0m : only - ./push_swap 42 | ./checker_linux '-'"
+fi
+
 if [ "$(grep 'failed' logs/parsing_leaks_output.txt)" > 0 ]; then
     echo ''
     echo -e '\033[31mLEAKS KO !\033[0m'
