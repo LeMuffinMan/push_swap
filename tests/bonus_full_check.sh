@@ -3,7 +3,7 @@
 # set -x
 
 mkdir -p logs
-touch logs/valgrind_output_bonus.txt 
+touch logs/valgrind_output_bonus.txt
 touch logs/checker_output_bonus.txt
 
 echo '' > logs/valgrind_output_bonus.txt
@@ -12,6 +12,7 @@ CHECKER="checker"
 
 if [ ! -f "$CHECKER" ]; then
     echo -e "\033[31mChecker introuvable !\033[0m"
+    echo -e "\033[31mrun wget https://cdn.intra.42.fr/document/document/42944/checker_linux\033[0m"
     exit 1
 fi
 
@@ -39,18 +40,18 @@ bonus_parsing_test()
 
 
 
-bonus_parsing_test "Empty prompt" ""  # no input
-bonus_parsing_test "INT_MAX overflow" "2147483648 1"  # Invalid number
-bonus_parsing_test "INT_MIN underflow" "-2147483649 1"  # Invalid number
-bonus_parsing_test "LONG_INT" "-9223372036854775808 1"  # Invalid number
-bonus_parsing_test "Numbers with spaces" " 2  1    3"  # rra\nsa\nrra\n EOF
-bonus_parsing_test "Mixed quoted/unquoted" "\"2 1\" 3 4"  # sa EOF
-bonus_parsing_test "Non-integer character" "54 57 g 15"  # Invalid input
-bonus_parsing_test "Invalid number format" "45/85/45/74"  # Invalid input
-bonus_parsing_test "Duplicate numbers" "1 2 3 2"  # Invalid input
-bonus_parsing_test "Sorted list" "1 2 3 4 5"  # EOF (already sorted)
-bonus_parsing_test "Single element" "42"  # EOF (no operations needed)
-bonus_parsing_test "Letters in number" "-2gfd47 1"  # Invalid input
+bonus_parsing_test "Empty prompt" ""
+bonus_parsing_test "INT_MAX overflow" "2147483648 1"
+bonus_parsing_test "INT_MIN underflow" "-2147483649 1"
+bonus_parsing_test "LONG_INT" "-9223372036854775808 1"
+bonus_parsing_test "Numbers with spaces" " 2  1    3"
+bonus_parsing_test "Mixed quoted/unquoted" "\"2 1\" 3 4"
+bonus_parsing_test "Non-integer character" "54 57 g 15"
+bonus_parsing_test "Invalid number format" "45/85/45/74"
+bonus_parsing_test "Duplicate numbers" "1 2 3 2"
+bonus_parsing_test "Sorted list" "1 2 3 4 5"
+bonus_parsing_test "Single element" "42"
+bonus_parsing_test "Letters in number" "-2gfd47 1"
 
 if [ "$(grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then
     echo ''
@@ -63,4 +64,3 @@ if [ "$(grep 'failed' logs/valgrind_output_bonus.txt)" > 0 ]; then
     echo -e '\033[32mNo leaks, but better to\033[0m \033[31mdouble check !\033[0m'
     echo ''
 	fi
-

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-SIZE=${1:-100}  
+SIZE=${1:-100}
 TESTS=${2:-10}
 
 KO=0
 
 for I in $(seq 1 "$TESTS"); do
-    ./random_ints.sh "$SIZE" > random_ints.txt 
-    NUMBERS=$(cat random_ints.txt)
+    tests/random_ints.sh "$SIZE" > tests/random_ints.txt
+    NUMBERS=$(cat tests/random_ints.txt)
     OPS=$(./push_swap $NUMBERS | wc -l)
     RESULT=$(./push_swap $NUMBERS | ./checker_linux $NUMBERS)
     echo -e "============= Test #$I =============\nTotal ops : $OPS | checker_linux : $RESULT"
@@ -50,4 +50,3 @@ echo "Standard deviation : $STDDEV"
 echo "Worst run : $MAX ops"
 echo "Best run : $MIN ops"
 echo "Success : $((100 - KO * 100 / TESTS))%"
-

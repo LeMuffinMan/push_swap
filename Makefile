@@ -16,7 +16,7 @@ NAME = push_swap
 BONUS_NAME = checker
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 
+CFLAGS = -Wall -Werror -Wextra -g3
 INC = -I includes
 INC_LIBFT = -I libft/include
 INC_BONUS = -I bonus/include
@@ -128,9 +128,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_A) Makefile libft/Makefile libft/include/libft.h
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) $(LIBFT_A) -o $(NAME)
-	@echo 
+	@echo
 	@echo -e "$(GREEN)compilation successful ✅ $(NAME)$(RESET)"
-	@echo 
+	@echo
 
 $(LIBFT_A): $(LIBFT_SRC_FILES) FORCE
 	@$(MAKE) --no-print-directory -C libft
@@ -158,7 +158,7 @@ $(BONUS_NAME): $(BONUS_OBJ_FILES) $(LIBFT_A) ./bonus/include/checker_bonus.h
 clean:
 	rm -rf $(OBJ_DIR)/*
 
- # ajouter les bonus a clean / fclean ? 
+ # ajouter les bonus a clean / fclean ?
 fclean: clean
 	rm -f $(NAME) $(BONUS_NAME)
 	rm -f $(LIBFT_A)
@@ -166,7 +166,7 @@ fclean: clean
 re: fclean all
 
 
-all_tests: all bonus push_swap_tests bonus_test 
+all_tests: all bonus push_swap_tests bonus_test
 	@echo "=== PERF TEST === (Thanks to Scros)"
 	@echo ''
 	@./complexity 100 100 700 ./checker_linux
@@ -206,7 +206,7 @@ test: all
 	@echo -e
 	@echo -e "=== Valgrind Output ==="
 	@valgrind --leak-check=full ./push_swap $(LIST) 2>&1 | tail -n 9
-	@echo -e 
+	@echo -e
 	@echo -e TOTAL_OPS : $(shell ./push_swap $(LIST) | wc -l)
 	@if [ "$(shell ./push_swap $(LIST) | ./checker_linux $(LIST))" = "OK" ]; then \
 		echo -e "checker_linux : $(GREEN)OK$(RESET)"; \
@@ -245,7 +245,7 @@ test: all
 	else \
 		echo -e "Quoted numbers with spaces : $(RED)KO$(RESET)"; \
 	fi
-	@# Mixed quoted/unquoted (CORRECTION SYNTAXE) 
+	@# Mixed quoted/unquoted (CORRECTION SYNTAXE)
 	@if [ "$(shell ./push_swap "53 54" 5 6 2>&1)" = "Error" ]; then \
 		echo -e "Mixed quoted/unquoted : $(GREEN)OK$(RESET)"; \
 	else \
@@ -275,7 +275,7 @@ test: all
 	else \
 		echo -e "Sorted list : $(RED)KO$(RESET)"; \
 	fi
-	@# Single element 
+	@# Single element
 	@if [ -z "$(shell ./push_swap 42 2>&1)" ]; then \
 		echo -e "Single element : $(GREEN)OK$(RESET)"; \
 	else \

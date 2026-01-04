@@ -15,27 +15,25 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int	main(int ac, char **av)
-{
-	t_stack	*la;
-	t_stack	*lb;
+int main(int ac, char **av) {
+  t_stack *la;
+  t_stack *lb;
 
-	la = NULL;
-	lb = NULL;
-	if (ac <= 1)
-		exit(1);
-	init_stack(&la, ac, av);
-	if (get_ops(&la, &lb))
-	{
-		free_list(&la);
-		free_list(&lb);
-		exit(1);
-	}
-	if (is_sorted_check(la) && lb == NULL)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
-	free_list(&la);
-	free_list(&lb);
-	return (0);
+  la = NULL;
+  lb = NULL;
+  if (ac <= 1)
+    exit(1);
+  init_stack(&la, ac, av);
+  if (get_ops(&la, &lb)) {
+    free_list(&la);
+    free_list(&lb);
+    exit(1);
+  }
+  if (is_sorted_check(la) && lb == NULL)
+    write(1, "OK\n", 3);
+  else
+    write(1, "KO\n", 3);
+  free_list(&la);
+  free_list(&lb);
+  return (0);
 }

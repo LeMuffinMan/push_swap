@@ -80,9 +80,9 @@ all: $(NAME)
 # Créer la bibliothèque .a
 $(NAME): $(OBJ)
 	ar -rcs $(NAME) $(OBJ)
-	@echo 
+	@echo
 	@echo "$(GREEN)compilation successful ✅ $(NAME) $(RESET)"
-	@echo 
+	@echo
 
 # Compilations des fichiers .o à partir des fichiers .c
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/libft.h Makefile
@@ -102,4 +102,3 @@ re: fclean all
 
 .DEFAULT_GOAL = all
 .PHONY: all clean fclean re
-
